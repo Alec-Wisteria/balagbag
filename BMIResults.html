@@ -902,6 +902,19 @@ html, body {
   line-height: 1.5;
 }
 
+.centered-category {
+  text-align: center;
+  font-weight: bold;
+  font-style: italic;
+}
+
+.justified-category {
+  text-align: justify;
+  text-indent: 2em;
+  margin-top: 8px;
+}
+
+
    </style>
 <body>
     <div class="sidebar close">
@@ -1006,9 +1019,8 @@ html, body {
     <h3><i class="bx bx-pie-chart-alt-2"></i> Category</h3>
     <div id="categoryContent">
       <p id="categoryMessage" class="category-message">
-          - You are Underweight, Low body mass may weaken immunity and energy
+        
           <br><br>
-          If you are underweight (BMI less than 18.5kg/m2), you may be malnourished and develop: compromised immune function. respiratory disease. digestive diseases.
 
       </p>
     </div>
@@ -1171,27 +1183,66 @@ const suggestions = {
 };
 
 const categoryMessages = {
-    "Underweight": " <b><i>You are Underweight, Low body mass may weaken immunity and energy.<br><br></i></b>" +
-        "If you are underweight (BMI less than 18.5kg/m2), you may be malnourished and develop: compromised immune function, respiratory disease, and digestive diseases.",
-    "Normal Weight": " <b><i>You are Normal Weight, Keep up the good work maintaining your health.<br><br></i></b>" +
-        "This range supports optimal body function, reduces the risk of chronic diseases, and reflects a balanced relationship between height and weight.",
-    "Overweight": " <b><i>You are Overweight, Consider adopting a healthier lifestyle.<br><br></i></b>" +
-        "Being in this range may signal early weight-related strain on the body, potentially leading to conditions like high blood pressure or insulin resistance.",
-    "Obese": " <b><i>You are Obese, High body fat increases risk of serious health issues.<br><br></i></b>" +
-        "Obesity is a serious, chronic disease. It can lead to other health problems, including diabetes, heart disease, and some cancers",
-    "Class 1 Obesity": " <b><i>You are Obesity Class 1, early stage obesity action now helps prevent complications.<br><br></i></b>" +
-        "This stage marks the beginning of clinical obesity, where lifestyle changes can significantly improve long-term health outcomes",
-    "Class 2 Obesity": " <b><i>You are Obesity Class II: Health risks are higher structured changes are important.<br><br></i></b>" +
-        "This is a more severe level of obesity with a higher risk of obesity-related health problems",
-    "Class 3 Obesity": " <b><i>You are Obesity Class lll: Severe obesity  medical support is often needed<br><br></i></b>" +
-        "This severe level of obesity can drastically affect mobility, organ function, and life expectancy, often necessitating comprehensive medical care."
+  "Underweight": `
+    <p class="centered-category">
+      You are Underweight, Low body mass may weaken immunity and energy.
+    </p>
+    <p class="justified-category">
+      If you are underweight (BMI less than 18.5kg/m²), you may be at increased risk of nutritional deficiencies, weakened immunity, and other health concerns. Consider speaking with a healthcare professional about a personalized diet and lifestyle plan.
+    </p>
+  `,
+
+  "Normal Weight": `
+    <p class="centered-category">
+      You are Normal Weight, Keep up the good work maintaining your health.
+    </p>
+    <p class="justified-category">
+      This range supports optimal body function, reduces the risk of chronic diseases, and reflects a balanced relationship between height and weight.
+    </p>
+  `,
+
+  "Overweight": `
+    <p class="centered-category">
+      You are Overweight, You may benefit from making some healthy lifestyle changes.
+    </p>
+    <p class="justified-category">
+      A BMI in the overweight range (25.0–29.9kg/m²) may increase the risk of chronic conditions like heart disease or diabetes. Incorporating regular exercise and a balanced diet can help you move toward a healthier range.
+    </p>
+  `,
+
+  "Obese Class I": `
+    <p class="centered-category">
+      You are in Obese Class I, Early weight management is encouraged.
+    </p>
+    <p class="justified-category">
+      This category (BMI 30.0–34.9kg/m²) is associated with increased health risks. It’s a good time to consult a healthcare provider about strategies for safe and effective weight loss.
+    </p>
+  `,
+
+  "Obese Class II": `
+    <p class="centered-category">
+      You are in Obese Class II, Health risks are significantly elevated.
+    </p>
+    <p class="justified-category">
+      A BMI of 35.0–39.9kg/m² may lead to serious health complications. A structured weight-loss plan and medical guidance are strongly recommended.
+    </p>
+  `,
+
+  "Obese Class III": `
+    <p class="centered-category">
+      You are in Obese Class III, This is considered severe obesity.
+    </p>
+    <p class="justified-category">
+      With a BMI of 40.0kg/m² or higher, it is critical to seek professional support. Comprehensive lifestyle changes and medical treatment may be necessary to reduce serious health risks.
+    </p>
+  `
 };
 
 // Update the category message dynamically
 if (categoryMessages[category]) {
     document.getElementById("categoryMessage").innerHTML = categoryMessages[category];
 }
-document.getElementById("categoryMessage").innerHTML = `<i class="bx bx-info-circle" style="color:#007acc; font-size: 20px;"></i><br>` + categoryMessages[category];
+document.getElementById("categoryMessage").innerHTML = categoryMessages[category];
 
 
 const suggestionsFromPDF = {
