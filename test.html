@@ -27,26 +27,20 @@ html, body {
 }
 :root {
   --bmi-bg: linear-gradient(135deg, #ffffff 0%, #f0f4ff 100%);
-}
-.sidebar{
+  .sidebar {
   position: fixed;
   top: 0;
   left: 0;
-  height: 100%;
+  height: 100vh;
   width: 260px;
   background: linear-gradient(to bottom right, #c2c2c2, #343447);
-  z-index: 100;
   transition: width 0.4s ease-in-out, background 0.3s ease-in-out;
-}
+  z-index: 1000;
+  overflow: hidden;
+}   
 .sidebar.close{
   width: 78px;
 }
-.sidebar .logo-details img,
-.sidebar .logo-details .logo_name,
-.sidebar .nav-links li a {
-  transition: all 0.3s ease;
-}
-
 .sidebar .logo-details {
     height: 60px;
     width: 100%;
@@ -57,12 +51,13 @@ html, body {
 }
 
 .sidebar .logo-details img {
-    width: 50px;
+    width: 50px; /* Default small size */
     height: 50px;
+    transition: all 0.3s ease; /* Smooth transition */
 }
 
 .sidebar.open .logo-details img {
-    width: 85px;
+    width: 85px; /* Expand when open */
     height: 85px;
 }
 
@@ -80,6 +75,7 @@ html, body {
     opacity: 0;
     pointer-events: none;
 }
+
 .sidebar .nav-links{
   height: 100%;
   padding: 30px 0 150px 0;
@@ -96,10 +92,11 @@ html, body {
   list-style: none;
   transition: all 0.4s ease;
 }
-.sidebar .nav-links li:hover{
-    background: rgba(255, 255, 255, 0.6);
-  backdrop-filter: blur(4px);
-  border-radius: 8px;
+.sidebar .nav-links li:hover {
+  background: rgba(255, 255, 255, 0.4);
+}
+body.dark-mode .sidebar .nav-links li:hover {
+  background: rgba(255, 255, 255, 0.1);
 }
 .sidebar .nav-links li .iocn-link{
   display: flex;
@@ -150,7 +147,7 @@ html, body {
   display: block;
 }
 .sidebar .nav-links li .sub-menu a{
-  color: #fff;
+  color: #f1f1f1;
   font-size: 15px;
   padding: 5px 0;
   white-space: nowrap;
@@ -203,18 +200,11 @@ html, body {
   width: 260px;
   display: flex;
   align-items: center;
-  justify-content: flex-start;
-  gap: 12px; /* or more/less depending on your visual preference */
+  justify-content: space-between;
   background: #c2c1d4;
   padding: 12px 0;
   transition: all 0.5s ease;
 }
-
-.sidebar .profile-details i {
-  font-size: 22px;  /* or 24px if you want it even bigger */
-  cursor: pointer;
-}
-
 .sidebar.close .profile-details{
   background: none;
 }
