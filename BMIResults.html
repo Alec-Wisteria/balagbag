@@ -337,44 +337,6 @@ body.dark-mode {
     display: flex;
     align-items: center;
 }
-.modal {
-        display: none;
-        position: fixed;
-        z-index: 1;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.5);
-      }
-      .modal-content {
-        background-color: white;
-        margin: 15% auto;
-        padding: 20px;
-        border-radius: 8px;
-        width: 300px;
-        text-align: center;
-      }
-      .modal-button {
-  padding: 10px 20px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  margin: 10px;
-  font-size: 16px;
-  transition: background 0.3s ease, transform 0.2s ease;
-}
-.modal-button:hover {
-  transform: scale(1.05);
-}
-      .modal-button.confirm {
-        background-color: #4CAF50;
-        color: white;
-      }
-      .modal-button.cancel {
-        background-color: #f44336;
-        color: white;
-      }
 
 .info-box {
     background: white;
@@ -510,28 +472,6 @@ body.dark-mode .suggestion-box:hover {
   transform: scale(1.02);
 }
 
-.modal {
-  display: none; /* Hidden by default */
-  position: fixed;
-  z-index: 1000;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-  background-color: rgba(0, 0, 0, 0.8); /* Black background with opacity */
-}
-
-.modal-content {
-  display: block;
-  margin: 60px auto;
-  width: 90%;
-  max-width: 720px;
-  height: auto;
-  border-radius: 12px;
-  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.2);
-}
-
 .bmi-meter-section {
   background: var(--bmi-bg);
   padding: 30px 28px;
@@ -637,7 +577,6 @@ body.dark-mode .meter {
 
 body.dark-mode .box,
 body.dark-mode .bmi-meter-section,
-body.dark-mode .modal-content,
 body.dark-mode .sidebar {
   background-color: #2c2c2e !important;
   color: #f5f5f7;
@@ -745,19 +684,6 @@ html, body {
     flex: 1 1 100%;
   }
 }
-.modal .close {
-  position: absolute;
-  top: 20px;
-  right: 32px;
-  font-size: 32px;
-  font-weight: bold;
-  color: #fff;
-  cursor: pointer;
-  z-index: 1001;
-}
-.modal .close:hover {
-  color: #f00;
-}
 
 .fade-in {
   opacity: 0;
@@ -810,6 +736,40 @@ html, body {
   color: #e65100; /* Deep Orange */
 }
 
+.modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+      }
+      .modal-content {
+        background-color: white;
+        margin: 15% auto;
+        padding: 20px;
+        border-radius: 8px;
+        width: 300px;
+        text-align: center;
+      }
+      .modal-button {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin: 10px;
+        font-size: 16px;
+      }
+      .modal-button.confirm {
+        background-color: #4CAF50;
+        color: white;
+      }
+      .modal-button.cancel {
+        background-color: #f44336;
+        color: white;
+      }
    </style>
 <body>
     <div class="sidebar close">
@@ -880,11 +840,11 @@ html, body {
     </div>
     <i class='bx bx-log-out' onclick="showLogoutConfirmation()"></i>
 </div>
-<div id="logoutModale" class="modale">
-    <div class="modale-contente">
+<div id="logoutModal" class="modal">
+    <div class="modal-content">
         <h3>Are you sure you want to log out?</h3>
-        <button class="modale-button confirme" onclick="logout()">Confirm</button>
-        <button class="modale-button cancele" onclick="closeLogoutModal()">Cancel</button>
+        <button class="modale-button confirm" onclick="logout()">Confirm</button>
+        <button class="modale-button cancel" onclick="closeLogoutModal()">Cancel</button>
     </div>
         </div>                
             </li>
@@ -950,14 +910,8 @@ html, body {
       <!-- BMI Meter Section -->
       <section class="bmi-meter-section">
         <h3><i class="bx bx-line-chart"></i> BMI Meter Result</h3>
-        <img id="bmiMeter" src="images/default-meter.png" alt="BMI Meter" class="meter" onclick="openModal()">
+        <img id="bmiMeter" src="images/default-meter.png" alt="BMI Meter" class="meter">
       </section>
-
-      <!-- Modal for Viewing the Image -->
-      <div id="imageModal" class="modal">
-        <span class="close" onclick="closeModal()">&times;</span>
-        <img class="modal-content" id="modalImage">
-      </div>
   </div>
   </section>
 
@@ -1939,21 +1893,6 @@ function getRandomItem(arr) {
 // Show recommendations on load
 showRecommendations(category);
 
-// Modal functionality
-function openModal() {
-  const modal = document.getElementById("imageModal");
-  const modalImage = document.getElementById("modalImage");
-  const bmiMeter = document.getElementById("bmiMeter");
-
-  modal.style.display = "block";
-  modalImage.src = bmiMeter.src; // Set the modal image source to the BMI meter image
-}
-
-function closeModal() {
-  const modal = document.getElementById("imageModal");
-  modal.style.display = "none";
-}
-
 </script>
 
 <script type="module">
@@ -1977,11 +1916,11 @@ document.addEventListener('DOMContentLoaded', async () => {
 });
 
 window.showLogoutConfirmation = function () {
-  document.getElementById('logoutModale').style.display = 'block';
+  document.getElementById('logoutModal').style.display = 'block';
 }
 
 window.closeLogoutModal = function () {
-  document.getElementById('logoutModale').style.display = 'none';
+  document.getElementById('logoutModal').style.display = 'none';
 }
         
 window.logout = async function () {

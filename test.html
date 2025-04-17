@@ -1,52 +1,36 @@
 <!DOCTYPE html>
+<!-- Designined by CodingLab | www.youtube.com/codinglabyt -->
 <html lang="en" dir="ltr">
   <head>
     <meta charset="UTF-8">
-    <title>BMI Results</title>
-    <link rel="stylesheet" href="style.css">
+    <title>BMI Calculator</title>
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
      <meta name="viewport" content="width=device-width, initial-scale=1.0">
    </head>
    <style>
+    /* Google Fonts Import Link */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
-* {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Poppins', sans-serif;
-    }
-html, body {
-  height: 100%; /* Ensure the body and html cover the full height of the viewport */
+*{
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
-  overflow-y: auto; /* Enable vertical scrolling */
-  overflow-x: hidden; /* Prevent horizontal scrolling */
-  background: #E4E9F7; /* Set the background color */
 }
-:root {
-  --bmi-bg: linear-gradient(135deg, #ffffff 0%, #f0f4ff 100%);
-}
-.sidebar{
+
+.sidebar {
   position: fixed;
   top: 0;
   left: 0;
-  height: 100%;
+  height: 100vh;
   width: 260px;
   background: linear-gradient(to bottom right, #c2c2c2, #343447);
-  z-index: 100;
   transition: width 0.4s ease-in-out, background 0.3s ease-in-out;
-}
+  z-index: 1000;
+  overflow: hidden;
+}   
 .sidebar.close{
   width: 78px;
 }
-.sidebar .logo-details img,
-.sidebar .logo-details .logo_name,
-.sidebar .nav-links li a {
-  transition: all 0.3s ease;
-}
-
 .sidebar .logo-details {
     height: 60px;
     width: 100%;
@@ -57,12 +41,13 @@ html, body {
 }
 
 .sidebar .logo-details img {
-    width: 50px;
+    width: 50px; /* Default small size */
     height: 50px;
+    transition: all 0.3s ease; /* Smooth transition */
 }
 
 .sidebar.open .logo-details img {
-    width: 85px;
+    width: 85px; /* Expand when open */
     height: 85px;
 }
 
@@ -80,6 +65,7 @@ html, body {
     opacity: 0;
     pointer-events: none;
 }
+
 .sidebar .nav-links{
   height: 100%;
   padding: 30px 0 150px 0;
@@ -96,10 +82,11 @@ html, body {
   list-style: none;
   transition: all 0.4s ease;
 }
-.sidebar .nav-links li:hover{
-    background: rgba(255, 255, 255, 0.6);
-  backdrop-filter: blur(4px);
-  border-radius: 8px;
+.sidebar .nav-links li:hover {
+  background: rgba(255, 255, 255, 0.4);
+}
+body.dark-mode .sidebar .nav-links li:hover {
+  background: rgba(255, 255, 255, 0.1);
 }
 .sidebar .nav-links li .iocn-link{
   display: flex;
@@ -150,7 +137,7 @@ html, body {
   display: block;
 }
 .sidebar .nav-links li .sub-menu a{
-  color: #fff;
+  color: #f1f1f1;
   font-size: 15px;
   padding: 5px 0;
   white-space: nowrap;
@@ -245,6 +232,167 @@ html, body {
 .sidebar .profile-details .job{
   font-size: 12px;
 }
+.home-section {
+  position: relative;
+  background: #E4E9F7;
+  height: 100vh;
+  left: 260px;
+  width: calc(100% - 260px);
+  transition: all 0.5s ease;
+  padding: 12px;
+}
+.sidebar.close ~ .home-section {
+  left: 78px;
+  width: calc(100% - 78px);
+}
+.home-content{
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.home-section .home-content .bx-menu,
+.home-section .home-content .text{
+  color: var(--menu-color);
+  transition: color 0.3s ease;
+}
+.home-section .home-content .bx-menu{
+  cursor: pointer;
+  margin-right: 10px;
+  font-size: 35px;
+}
+.home-section .home-content .text{
+  font-size: 26px;
+  font-weight: 600;
+}
+
+@media screen and (max-width: 400px){
+  .sidebar{
+    width: 240px;
+  }
+  .sidebar.close{
+    width: 78px;
+  }
+  .sidebar .profile-details{
+    width: 240px;
+  }
+  .sidebar.close .profile-details{
+    background: none;
+  }
+  .sidebar.close .profile-details{
+    width: 78px;
+  }
+  .home-section {
+    position: relative;
+    left: 260px; 
+    width: calc(100% - 260px); 
+    transition: all 0.3s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+  .sidebar.close ~ .home-section{
+    left: 78px;
+    width: calc(100% - 78px);
+  }
+}
+
+
+        .logo-details {
+    display: flex;
+    align-items: center;
+}
+.modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+      }
+      .modal-content {
+        background-color: white;
+        margin: 15% auto;
+        padding: 20px;
+        border-radius: 8px;
+        width: 300px;
+        text-align: center;
+      }
+      .modal-button {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin: 10px;
+        font-size: 16px;
+      }
+      .modal-button.confirm {
+        background-color: #4CAF50;
+        color: white;
+      }
+      .modal-button.cancel {
+        background-color: #f44336;
+        color: white;
+      }
+      :root {
+  --menu-color: #11101d;
+}
+
+body.dark-mode {
+  --menu-color: #f5f5f7;
+  background-color: #1c1c1e;
+  color: #f5f5f7;
+}
+
+body.dark-mode .sidebar,
+body.dark-mode .container, body.dark-mode .home-section {
+  background-color: #2c2c2e !important;
+  color: #f5f5f7 !important;
+}
+
+body.dark-mode input,
+body.dark-mode button {
+  background-color: #3a3a3c;
+  color: #f5f5f7;
+  border: 1px solid #555;
+}
+body.dark-mode label,
+body.dark-mode .quote,
+body.dark-mode h2 {
+  color: #f5f5f7;
+}
+body.dark-mode .sidebar .nav-links li a .link_name,
+body.dark-mode .sidebar .nav-links li i {
+  color: #f5f5f7 !important;
+}
+
+body.dark-mode .sidebar .nav-links li:hover {
+  background: rgba(255, 255, 255, 0.07);
+}
+
+html, body {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+
+
+body {
+  animation: fadeIn 0.8s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .home-section{
   position: relative;
   background: #E4E9F7;
@@ -254,10 +402,7 @@ html, body {
   transition: all 0.5s ease;
   padding: 12px;
 }
-.sidebar.close ~ .home-section{
-  left: 78px;
-  width: calc(100% - 78px);
-}
+
 .home-content{
   display: flex;
   align-items: center;
@@ -337,44 +482,6 @@ body.dark-mode {
     display: flex;
     align-items: center;
 }
-.modal {
-        display: none;
-        position: fixed;
-        z-index: 1;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.5);
-      }
-      .modal-content {
-        background-color: white;
-        margin: 15% auto;
-        padding: 20px;
-        border-radius: 8px;
-        width: 300px;
-        text-align: center;
-      }
-      .modal-button {
-  padding: 10px 20px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  margin: 10px;
-  font-size: 16px;
-  transition: background 0.3s ease, transform 0.2s ease;
-}
-.modal-button:hover {
-  transform: scale(1.05);
-}
-      .modal-button.confirm {
-        background-color: #4CAF50;
-        color: white;
-      }
-      .modal-button.cancel {
-        background-color: #f44336;
-        color: white;
-      }
 
 .info-box {
     background: white;
@@ -510,28 +617,6 @@ body.dark-mode .suggestion-box:hover {
   transform: scale(1.02);
 }
 
-.modal {
-  display: none; /* Hidden by default */
-  position: fixed;
-  z-index: 1000;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-  background-color: rgba(0, 0, 0, 0.8); /* Black background with opacity */
-}
-
-.modal-content {
-  display: block;
-  margin: 60px auto;
-  width: 90%;
-  max-width: 720px;
-  height: auto;
-  border-radius: 12px;
-  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.2);
-}
-
 .bmi-meter-section {
   background: var(--bmi-bg);
   padding: 30px 28px;
@@ -612,7 +697,6 @@ html {
 ::-webkit-scrollbar-thumb:hover {
   background-color: rgba(0, 0, 0, 0.3);
 }
-
 
 @keyframes fadeUp {
   from {
@@ -745,71 +829,11 @@ html, body {
     flex: 1 1 100%;
   }
 }
-.modal .close {
-  position: absolute;
-  top: 20px;
-  right: 32px;
-  font-size: 32px;
-  font-weight: bold;
-  color: #fff;
-  cursor: pointer;
-  z-index: 1001;
-}
-.modal .close:hover {
-  color: #f00;
-}
 
-.fade-in {
-  opacity: 0;
-  transform: translateY(10px);
-  animation: fadeInText 0.6s ease forwards;
+.sidebar.close ~ .home-section{
+  left: 78px;
+  width: calc(100% - 78px);
 }
-
-@keyframes fadeInText {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-@media (min-width: 992px) {
-  .bmi-meter-section {
-    position: sticky;
-    top: 100px;
-    align-self: start;
-  }
-}
-
-.bmi-category {
-  font-weight: bold;
-  font-size: 1.1em;
-  transition: color 0.3s ease;
-}
-
-/* Category-specific colors */
-.bmi-category.underweight {
-  color: #6ec6ff; /* Light Blue */
-}
-
-.bmi-category.healthy {
-  color: #8bc34a; /* Light Green */
-}
-
-.bmi-category.overweight {
-  color: #f4a261; /* Peach */
-}
-
-.bmi-category.obese-1 {
-  color: #ff9800; /* Orange */
-}
-
-.bmi-category.obese-2 {
-  color: #f57c00; /* Darker Orange */
-}
-
-.bmi-category.obese-3 {
-  color: #e65100; /* Deep Orange */
-}
-
    </style>
 <body>
     <div class="sidebar close">
@@ -880,11 +904,11 @@ html, body {
     </div>
     <i class='bx bx-log-out' onclick="showLogoutConfirmation()"></i>
 </div>
-<div id="logOut" class="kapetayo">
-    <div class="kapetayo-content">
+<div id="logoutModal" class="modal">
+    <div class="modal-contente">
         <h3>Are you sure you want to log out?</h3>
-        <button class="kapetayo-content confirm" onclick="logout()">Confirm</button>
-        <button class="kapetayo-content cancel" onclick="closeLogoutKape()">Cancel</button>
+        <button class="modal-button confirme" onclick="logout()">Confirm</button>
+        <button class="modal-button cancele" onclick="closeLogoutModal()">Cancel</button>
     </div>
         </div>                
             </li>
@@ -1977,11 +2001,11 @@ document.addEventListener('DOMContentLoaded', async () => {
 });
 
 window.showLogoutConfirmation = function () {
-  document.getElementById('logoutModale').style.display = 'block';
+  document.getElementById('logoutModal').style.display = 'block';
 }
 
-window.closeLogoutKape = function () {
-  document.getElementById('logoutModale').style.display = 'none';
+window.closeLogoutModal = function () {
+  document.getElementById('logoutModal').style.display = 'none';
 }
         
 window.logout = async function () {
