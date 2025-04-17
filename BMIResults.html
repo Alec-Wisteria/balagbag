@@ -203,11 +203,18 @@ html, body {
   width: 260px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
+  gap: 12px; /* or more/less depending on your visual preference */
   background: #c2c1d4;
   padding: 12px 0;
   transition: all 0.5s ease;
 }
+
+.sidebar .profile-details i {
+  font-size: 22px;  /* or 24px if you want it even bigger */
+  cursor: pointer;
+}
+
 .sidebar.close .profile-details{
   background: none;
 }
@@ -368,6 +375,44 @@ body.dark-mode {
     display: flex;
     align-items: center;
 }
+.modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+      }
+      .modal-content {
+        background-color: white;
+        margin: 15% auto;
+        padding: 20px;
+        border-radius: 8px;
+        width: 300px;
+        text-align: center;
+      }
+      .modal-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin: 10px;
+  font-size: 16px;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+.modal-button:hover {
+  transform: scale(1.05);
+}
+      .modal-button.confirm {
+        background-color: #4CAF50;
+        color: white;
+      }
+      .modal-button.cancel {
+        background-color: #f44336;
+        color: white;
+      }
 
 .info-box {
     background: white;
@@ -496,6 +541,33 @@ body.dark-mode .suggestion-box:hover {
   display: block;
   border-radius: 12px;
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+.meter:hover {
+  transform: scale(1.02);
+}
+
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.8); /* Black background with opacity */
+}
+
+.modal-content {
+  display: block;
+  margin: 60px auto;
+  width: 90%;
+  max-width: 720px;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.2);
 }
 
 .bmi-meter-section {
@@ -516,6 +588,43 @@ body.dark-mode .suggestion-box:hover {
   color: #2b2b2b;
   margin-bottom: 24px;
 }
+
+
+
+.modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+      }
+      .modal-content {
+        background-color: white;
+        margin: 15% auto;
+        padding: 20px;
+        border-radius: 8px;
+        width: 300px;
+        text-align: center;
+      }
+      .modal-button {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin: 10px;
+        font-size: 16px;
+      }
+      .modal-button.confirm {
+        background-color: #4CAF50;
+        color: white;
+      }
+      .modal-button.cancel {
+        background-color: #f44336;
+        color: white;
+      }
 
       h2, h3, h4 {
   color: #1a1a1a;
@@ -602,6 +711,7 @@ body.dark-mode .meter {
 
 body.dark-mode .box,
 body.dark-mode .bmi-meter-section,
+body.dark-mode .modal-content,
 body.dark-mode .sidebar {
   background-color: #2c2c2e !important;
   color: #f5f5f7;
@@ -659,6 +769,14 @@ body.dark-mode .suggestions-container {
   color: #f1f1f1 !important;
 }
 
+/* Sidebar nav text and icons */
+body.dark-mode .sidebar .nav-links li a .link_name,
+body.dark-mode .sidebar .nav-links li i,
+body.dark-mode .sidebar .profile-details .profile_name,
+body.dark-mode .sidebar .profile-details .job {
+  color: #f5f5f7 !important;
+}
+
 /* Hover highlight */
 body.dark-mode .sidebar .nav-links li:hover {
   background-color: rgba(255, 255, 255, 0.07);
@@ -700,6 +818,19 @@ html, body {
   .box {
     flex: 1 1 100%;
   }
+}
+.modal .close {
+  position: absolute;
+  top: 20px;
+  right: 32px;
+  font-size: 32px;
+  font-weight: bold;
+  color: #fff;
+  cursor: pointer;
+  z-index: 1001;
+}
+.modal .close:hover {
+  color: #f00;
 }
 
 .fade-in {
@@ -812,26 +943,28 @@ html, body {
               <li><a class="link_name" href="#">Setting</a></li>
             </ul>
           </li>
-          <li>
-<div class="profile-details" id="profile-details" style="display: none;">
-    <div class="profile-content">
-        <img src="images/placeholder.png" alt="profileImg">
-    </div>
-    <div class="name-job">
-        <div class="profile_name" id="username"></div>
-        <div class="job" id="job"></div>
-    </div>
-    <i class='bx bx-log-out' onclick="showLogoutConfirmation()"></i>
-</div>
-<div id="logoutModal" class="modal">
-    <div class="modal-content">
-        <h3>Are you sure you want to log out?</h3>
-        <button class="modal-button confirm" onclick="logout()">Confirm</button>
-        <button class="modal-button cancel" onclick="closeLogoutModal()">Cancel</button>
-    </div>
-        </div>                
-            </li>
+
              </ul>
+             <div class="profile-details" id="profile-details" style="display: none;">
+              <div class="profile-content">
+                <img src="images/placeholder.png" alt="profileImg">
+              </div>
+              <div class="name-job">
+                <div class="profile_name" id="username">jaym8751</div>
+                <div class="job" id="job"></div>
+              </div>
+              <i class="bx bx-log-out" onclick="showLogoutConfirmation()"></i>
+            </div>
+            
+            <!--  Keep the modal here -->
+            <div id="logoutModal" class="modal">
+              <div class="modal-content">
+                <h3>Are you sure you want to log out?</h3>
+                <button class="modal-button confirm" onclick="logout()">Confirm</button>
+                <button class="modal-button cancel" onclick="closeLogoutModal()">Cancel</button>
+              </div>
+            </div>
+
     </div>
         <section class="home-section">
     <div class="home-content">
@@ -843,7 +976,7 @@ html, body {
       <!-- Top Left: BMI Results -->
       <div class="box box1">
         <h2><i class='bx bx-bar-chart-alt-2'></i> Your BMI Results</h2>
-        <p><i class='bx bx-male-female'></i> <strong>Gender:</strong> <span id="gender" style="color:#333;">--</span></p>
+        <p><i class='bx bx-male-female'></i><strong>Gender:</strong> <span id="gender" style="color:#333;">--</span></p>
 
           <p><strong>Age:</strong> <span id="age">--</span></p>
           <p><i class='bx bx-heart'></i> <strong>BMI Score:</strong> <span id="bmiValue" style="font-size: 1.2em; font-weight: bold;">--</span></p>
@@ -893,8 +1026,14 @@ html, body {
       <!-- BMI Meter Section -->
       <section class="bmi-meter-section">
         <h3><i class="bx bx-line-chart"></i> BMI Meter Result</h3>
-        <img id="bmiMeter" src="images/default-meter.png" alt="BMI Meter" class="meter">
+        <img id="bmiMeter" src="images/default-meter.png" alt="BMI Meter" class="meter" onclick="openModal()">
       </section>
+
+      <!-- Modal for Viewing the Image -->
+      <div id="imageModal" class="modal">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <img class="modal-content" id="modalImage">
+      </div>
   </div>
   </section>
 
@@ -989,20 +1128,43 @@ if (bmiMeterImages[category]) {
     bmiMeter.src = "images/default-meter.png"; // Fallback image
 }
 
+const suggestions = {
+    "Underweight": {
+        diet: ["Increase calorie intake with nutritious food.", "Eat more protein-rich meals."],
+        exercise: ["Focus on strength training.", "Avoid excessive cardio."],
+        health: ["Consult a nutritionist for a balanced diet.", "Monitor your weight regularly."]
+    },
+    "Normal Weight": {
+        diet: ["Maintain a balanced diet.", "Include fruits and vegetables in every meal."],
+        exercise: ["Stay active with regular workouts.", "Try yoga or pilates for flexibility."],
+        health: ["Keep up with healthy habits.", "Get regular health checkups."]
+    },
+    "Overweight": {
+        diet: ["Reduce sugar intake and eat more greens.", "Avoid processed foods."],
+        exercise: ["Increase cardio workouts.", "Incorporate strength training."],
+        health: ["Monitor weight changes and adjust diet.", "Consult a dietitian if needed."]
+    },
+    "Obese": {
+        diet: ["Follow a structured weight-loss plan.", "Avoid high-calorie snacks."],
+        exercise: ["Engage in low-impact exercises.", "Start with short walks and increase gradually."],
+        health: ["Consult a doctor for professional guidance.", "Consider joining a weight-loss program."]
+    }
+};
+
 const categoryMessages = {
-    "Underweight": "- You are Underweight, Low body mass may weaken immunity and energy.<br>" +
+    "Underweight": " You are Underweight, Low body mass may weaken immunity and energy.<br>" +
         "If you are underweight (BMI less than 18.5kg/m2), you may be malnourished and develop: compromised immune function, respiratory disease, and digestive diseases.",
-    "Normal Weight": "- You are Normal Weight, Keep up the good work maintaining your health.<br>" +
+    "Normal Weight": " You are Normal Weight, Keep up the good work maintaining your health.<br>" +
         "This range supports optimal body function, reduces the risk of chronic diseases, and reflects a balanced relationship between height and weight.",
-    "Overweight": "- You are Overweight, Consider adopting a healthier lifestyle.<br>" +
+    "Overweight": " You are Overweight, Consider adopting a healthier lifestyle.<br>" +
         "Being in this range may signal early weight-related strain on the body, potentially leading to conditions like high blood pressure or insulin resistance.",
-    "Obese": "- You are Obese, High body fat increases risk of serious health issues.<br>" +
+    "Obese": " You are Obese, High body fat increases risk of serious health issues.<br>" +
         "Obesity is a serious, chronic disease. It can lead to other health problems, including diabetes, heart disease, and some cancers",
-    "Class 1 Obesity": "- You are Obesity Class 1, early stage obesity action now helps prevent complications.<br>" +
+    "Class 1 Obesity": " You are Obesity Class 1, early stage obesity action now helps prevent complications.<br>" +
         "This stage marks the beginning of clinical obesity, where lifestyle changes can significantly improve long-term health outcomes",
-    "Class 2 Obesity": "- You are Obesity Class II: Health risks are higher structured changes are important.<br>" +
+    "Class 2 Obesity": " You are Obesity Class II: Health risks are higher structured changes are important.<br>" +
         "This is a more severe level of obesity with a higher risk of obesity-related health problems",
-    "Class 3 Obesity": "- You are Obesity Class lll: Severe obesity  medical support is often needed<br>" +
+    "Class 3 Obesity": " You are Obesity Class lll: Severe obesity  medical support is often needed<br>" +
         "This severe level of obesity can drastically affect mobility, organ function, and life expectancy, often necessitating comprehensive medical care."
 };
 
