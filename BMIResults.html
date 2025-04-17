@@ -1989,9 +1989,13 @@ const suggestionsFromPDF = {
 };
 
 function showRecommendations(category) {
-    const dietBox = document.getElementById("diet");
-    const exerciseBox = document.getElementById("exercise");
-    const healthBox = document.getElementById("health");
+  function renderList(tipsArray) {
+    return "<ul>" + tipsArray.slice(0, 3).map(tip => `<li>${tip}</li>`).join("") + "</ul>";
+}
+
+dietBox.innerHTML = renderList(recommendations[category].diet);
+exerciseBox.innerHTML = renderList(recommendations[category].exercise);
+healthBox.innerHTML = renderList(recommendations[category].health);
 
     if (suggestionsFromPDF[category]) {
         const cat = suggestionsFromPDF[category];
