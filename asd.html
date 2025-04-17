@@ -265,9 +265,18 @@ html, body {
 }
 .home-section .home-content .bx-menu,
 .home-section .home-content .text{
-  color: #11101d;
+  color: var(--menu-color);
   font-size: 35px;
+  transition: color 0.3s ease;
 }
+
+:root {
+  --menu-color: #11101d;
+}
+body.dark-mode {
+  --menu-color: #f5f5f7;
+}
+
 .home-section .home-content .bx-menu{
   cursor: pointer;
   margin-right: 10px;
