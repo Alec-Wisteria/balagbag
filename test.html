@@ -203,11 +203,18 @@ html, body {
   width: 260px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
+  gap: 12px; /* or more/less depending on your visual preference */
   background: #c2c1d4;
   padding: 12px 0;
   transition: all 0.5s ease;
 }
+
+.sidebar .profile-details i {
+  font-size: 22px;  /* or 24px if you want it even bigger */
+  cursor: pointer;
+}
+
 .sidebar.close .profile-details{
   background: none;
 }
@@ -957,7 +964,7 @@ html, body {
                 <button class="modal-button cancel" onclick="closeLogoutModal()">Cancel</button>
               </div>
             </div>
-            
+
     </div>
         <section class="home-section">
     <div class="home-content">
