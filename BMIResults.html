@@ -1989,7 +1989,7 @@ const suggestionsFromPDF = {
 };
 
 function showRecommendations(category) {
-  const dietBox = document.getElementById("diet");
+    const dietBox = document.getElementById("diet");
     const exerciseBox = document.getElementById("exercise");
     const healthBox = document.getElementById("health");
 
@@ -2007,7 +2007,7 @@ function showRecommendations(category) {
     }
 
     function renderList(items) {
-        return `<ul>${items.map(item => `<li>${item}</li>`).join("")}</ul>`;
+        return `<ul>${items.map(item => `<li>${item}</li>`).join('')}</ul>`;
     }
 
     dietBox.innerHTML = renderList(getRandomThree(selected.diet));
