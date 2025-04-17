@@ -1993,39 +1993,6 @@ function showRecommendations(category) {
     const exerciseBox = document.getElementById("exercise");
     const healthBox = document.getElementById("health");
 
-    const tips = suggestionsFromPDF[category];
-
-    if (!tips) {
-        dietBox.innerHTML = "<p>No diet tips available.</p>";
-        exerciseBox.innerHTML = "<p>No exercise tips available.</p>";
-        healthBox.innerHTML = "<p>No health tips available.</p>";
-        return;
-    }
-
-    function getRandomThree(array) {
-        const shuffled = array.sort(() => 0.5 - Math.random());
-        return shuffled.slice(0, 3);
-    }
-
-    function renderList(tipsArray) {
-        return `<ul>${tipsArray.map(tip => `<li>${tip}</li>`).join("")}</ul>`;
-    }
-
-    dietBox.innerHTML = renderList(getRandomThree(tips.diet));
-    exerciseBox.innerHTML = renderList(getRandomThree(tips.exercise));
-    healthBox.innerHTML = renderList(getRandomThree(tips.health));
-}
-
-
-    function renderList(tipsArray) {
-        return "<ul>" + tipsArray.slice(0, 3).map(tip => `<li>${tip}</li>`).join("") + "</ul>";
-    }
-
-    dietBox.innerHTML = renderList(suggestions[category].diet);
-    exerciseBox.innerHTML = renderList(suggestions[category].exercise);
-    healthBox.innerHTML = renderList(suggestions[category].health);
-}
-
     if (suggestionsFromPDF[category]) {
         const cat = suggestionsFromPDF[category];
 
@@ -2037,7 +2004,7 @@ function showRecommendations(category) {
         exerciseBox.innerText = "No recommendation available.";
         healthBox.innerText = "No recommendation available.";
     }
-
+}
 
 function getRandomItem(arr) {
     return arr[Math.floor(Math.random() * arr.length)];
