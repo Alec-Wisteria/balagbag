@@ -1,24 +1,32 @@
 <!DOCTYPE html>
-<!-- Designined by CodingLab | www.youtube.com/codinglabyt -->
 <html lang="en" dir="ltr">
   <head>
     <meta charset="UTF-8">
-    <title> Drop Down Sidebar Menu | CodingLab </title>
+    <title>BMI Results</title>
+    <link rel="stylesheet" href="style.css">
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <script src="https://cdn.tailwindcss.com"></script>
    </head>
    <style>
-    /* Google Fonts Import Link */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
-*{
+* {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+html, body {
+  height: 100%; /* Ensure the body and html cover the full height of the viewport */
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
+  overflow-y: auto; /* Enable vertical scrolling */
+  overflow-x: hidden; /* Prevent horizontal scrolling */
+  background: #E4E9F7; /* Set the background color */
 }
-body{
-  overflow: hidden;
+:root {
+  --bmi-bg: linear-gradient(135deg, #ffffff 0%, #f0f4ff 100%);
 }
 .sidebar{
   position: fixed;
@@ -26,13 +34,19 @@ body{
   left: 0;
   height: 100%;
   width: 260px;
-  background: #c8c8d3;
+  background: linear-gradient(to bottom right, #c2c2c2, #343447);
   z-index: 100;
-  transition: all 0.5s ease;
+  transition: width 0.4s ease-in-out, background 0.3s ease-in-out;
 }
 .sidebar.close{
   width: 78px;
 }
+.sidebar .logo-details img,
+.sidebar .logo-details .logo_name,
+.sidebar .nav-links li a {
+  transition: all 0.3s ease;
+}
+
 .sidebar .logo-details {
     height: 60px;
     width: 100%;
@@ -43,13 +57,12 @@ body{
 }
 
 .sidebar .logo-details img {
-    width: 50px; /* Default small size */
+    width: 50px;
     height: 50px;
-    transition: all 0.3s ease; /* Smooth transition */
 }
 
 .sidebar.open .logo-details img {
-    width: 85px; /* Expand when open */
+    width: 85px;
     height: 85px;
 }
 
@@ -67,7 +80,6 @@ body{
     opacity: 0;
     pointer-events: none;
 }
-
 .sidebar .nav-links{
   height: 100%;
   padding: 30px 0 150px 0;
@@ -85,7 +97,9 @@ body{
   transition: all 0.4s ease;
 }
 .sidebar .nav-links li:hover{
-  background: #fbfbfb;
+    background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(4px);
+  border-radius: 8px;
 }
 .sidebar .nav-links li .iocn-link{
   display: flex;
@@ -136,7 +150,7 @@ body{
   display: block;
 }
 .sidebar .nav-links li .sub-menu a{
-  color: #f1f1f1;
+  color: #fff;
   font-size: 15px;
   padding: 5px 0;
   white-space: nowrap;
@@ -239,7 +253,6 @@ body{
   width: calc(100% - 260px);
   transition: all 0.5s ease;
   padding: 12px;
-  
 }
 .sidebar.close ~ .home-section{
   left: 78px;
@@ -280,44 +293,287 @@ body{
   .sidebar.close .profile-details{
     width: 78px;
   }
-  .home-section {
-  position: relative;
-  min-height: 100vh;
-  background: linear-gradient(to right, #6a11cb, #2575fc);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 40px;
-  transition: all 0.3s ease;
-}
-
-.welcome-container {
-  text-align: center;
-  color: #fff;
-  background: rgba(255, 255, 255, 0.1);
-  padding: 40px 60px;
-  border-radius: 20px;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(10px);
-  max-width: 600px;
-}
-
-.welcome-container h1 {
-  font-size: 3rem;
-  margin-bottom: 20px;
-  font-weight: 700;
-}
-
-.welcome-container p {
-  font-size: 1.25rem;
-  line-height: 1.6;
-}
-
+  .home-section{
+    position: relative;
+    left: 260px;
+    width: calc(100% - 260px);
+    transition: all 0.3s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
   .sidebar.close ~ .home-section{
     left: 78px;
     width: calc(100% - 78px);
   }
 }
+.content-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 40px 30px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.container, .suggestions-container {
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    flex: 1; /* Allow sections to take equal space */
+}
+
+.container {
+    max-width: 400px; /* Set a maximum width for the BMI Results section */
+}
+
+.suggestions-container {
+    max-width: 400px; /* Set a maximum width for the Recommendations section */
+    text-align: left; /* Align text to the left for better readability */
+}
+.category-box {
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    margin-top: 20px;
+    text-align: center;
+    max-width: 400px;
+    font-size: 14px;
+    line-height: 1.6;
+}
+.category-box h3 {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+.category-box p {
+    font-size: 14px;
+    color: #333;
+}
+.logo-details {
+    display: flex;
+    align-items: center;
+}
+.modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+      }
+      .modal-content {
+        background-color: white;
+        margin: 15% auto;
+        padding: 20px;
+        border-radius: 8px;
+        width: 300px;
+        text-align: center;
+      }
+      .modal-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin: 10px;
+  font-size: 16px;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+.modal-button:hover {
+  transform: scale(1.05);
+}
+      .modal-button.confirm {
+        background-color: #4CAF50;
+        color: white;
+      }
+      .modal-button.cancel {
+        background-color: #f44336;
+        color: white;
+      }
+
+.info-box {
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    margin-top: 20px; /* Adds spacing between the BMI result and the info box */
+    text-align: left;
+    max-width: 400px;
+    font-size: 17px;
+    line-height: 1.6;
+}
+
+
+.box {
+    height: 225px; /* Set a fixed height */
+    overflow-y: auto; /* Allow scrolling if content exceeds height */
+}
+
+/* Custom scrollbar styling */
+.box::-webkit-scrollbar {
+  width: 8px;
+}
+
+.box::-webkit-scrollbar-thumb {
+  background: #888; /* Scrollbar color */
+  border-radius: 10px;
+}
+
+.box::-webkit-scrollbar-thumb:hover {
+  background: #555; /* Scrollbar hover color */
+}
+
+.box1 {
+    background: rgb(255, 0, 0); /* Red background for Box 1 */
+}
+
+.box2 {
+    background: rgb(255, 253, 163); /* Yellow background for Box 2 */
+}
+
+.box3 {
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    font-size: clamp(12px, 2vw, 18px); /* Automatically scales */
+    line-height: 1.6;
+    word-wrap: break-word; /* Ensures long words break to fit */
+    overflow-wrap: break-word; /* Modern support */
+}
+
+.box4 {
+    background: rgb(255, 172, 78); /* Orange background for Box 4 */
+}
+
+.suggestion-box {
+  background-color: rgba(255, 255, 255, 0.6);
+  padding: 14px 16px;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  margin-top: 10px;
+  cursor: default;
+}
+.suggestion-box:hover {
+  background-color: #f5f5f5;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+}
+body.dark-mode .suggestion-box {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+body.dark-mode .suggestion-box:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+
+.box {
+  background: #ffffff;
+  padding: 28px 24px;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  font-size: 17px;
+  line-height: 1.75;
+  flex: 1 1 48%; /* flex-grow: 1, flex-shrink: 1, flex-basis: 48% */
+  min-width: 320px;
+  min-height: 250px;
+  color: #333;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  gap: 16px;
+}
+
+.box:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 14px 38px rgba(0, 0, 0, 0.18);
+  border: 1px solid #dbeafe;
+}
+
+.box1, .box2, .box3, .box4 {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.box5 {
+  background: white;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  font-size: 16px;
+  line-height: 1.6;
+  width: 48%; /* Adjust width to match other boxes */
+  min-height: 200px; /* Optional: keeps box sizes uniform */
+}
+
+.meter {
+  width: 100%;
+  max-width: 480px;
+  height: auto;
+  margin: 0 auto;
+  display: block;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+.meter:hover {
+  transform: scale(1.02);
+}
+
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.8); /* Black background with opacity */
+}
+
+.modal-content {
+  display: block;
+  margin: 60px auto;
+  width: 90%;
+  max-width: 720px;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.2);
+}
+
+.bmi-meter-section {
+  background: var(--bmi-bg);
+  padding: 30px 28px;
+  margin: 40px auto 60px auto;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+  max-width: 620px;
+  text-align: center;
+  font-family: 'Poppins', sans-serif;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.bmi-meter-section h3 {
+  font-size: 26px;
+  font-weight: 600;
+  color: #2b2b2b;
+  margin-bottom: 24px;
+}
+
+
 
 .modal {
         display: none;
@@ -354,115 +610,420 @@ body{
         color: white;
       }
 
+      h2, h3, h4 {
+  color: #1a1a1a;
+  font-weight: 600;
+  margin-bottom: 12px;
+  letter-spacing: 0.5px;
+  text-shadow: 0 1px 1px rgba(0,0,0,0.05);
+}
+
+p {
+  margin-bottom: 10px;
+  color: #444;
+}
+
+body {
+  animation: fadeIn 0.8s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+html {
+  font-size: 16px;
+}
+
+@media (max-width: 768px) {
+  html {
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  html {
+    font-size: 14px;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+body.dark-mode {
+  background-color: #1c1c1e;
+  color: #f5f5f7;
+  --bmi-bg: #2c2c2e;
+}
+
+body.dark-mode .meter {
+  border: 2px solid #444;
+}
+
+body.dark-mode .box,
+body.dark-mode .bmi-meter-section,
+body.dark-mode .modal-content,
+body.dark-mode .sidebar {
+  background-color: #2c2c2e !important;
+  color: #f5f5f7;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.05);
+}
+
+body.dark-mode .box:hover {
+  box-shadow: 0 14px 38px rgba(255, 255, 255, 0.08);
+}
+
+body.dark-mode .sidebar .nav-links li:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+body.dark-mode .modal-button.confirm {
+  background-color: #0a84ff;
+}
+
+/* Extend dark mode to html and home-section */
+html.dark-mode,
+body.dark-mode {
+  background-color: #1c1c1e;
+  color: #f5f5f7;
+}
+
+body.dark-mode .home-section {
+  background-color: #1c1c1e;
+}
+
+/* Make all paragraph, heading, and span colors readable */
+body.dark-mode h1,
+body.dark-mode h2,
+body.dark-mode h3,
+body.dark-mode h4,
+body.dark-mode p,
+body.dark-mode span,
+body.dark-mode a,
+body.dark-mode .text {
+  color: #f1f1f1 !important;
+}
+
+/* Improve contrast in boxes */
+body.dark-mode .box,
+body.dark-mode .box1,
+body.dark-mode .box2,
+body.dark-mode .box3,
+body.dark-mode .box4,
+body.dark-mode .box5,
+body.dark-mode .category-box,
+body.dark-mode .info-box,
+body.dark-mode .bmi-meter-section,
+body.dark-mode .container,
+body.dark-mode .suggestions-container {
+  background-color: #2a2a2c !important;
+  color: #f1f1f1 !important;
+}
+
+/* Sidebar nav text and icons */
+body.dark-mode .sidebar .nav-links li a .link_name,
+body.dark-mode .sidebar .nav-links li i,
+body.dark-mode .sidebar .profile-details .profile_name,
+body.dark-mode .sidebar .profile-details .job {
+  color: #f5f5f7 !important;
+}
+
+/* Hover highlight */
+body.dark-mode .sidebar .nav-links li:hover {
+  background-color: rgba(255, 255, 255, 0.07);
+}
+
+/* Modal readability */
+body.dark-mode .modal-content {
+  background-color: #2c2c2e;
+  color: #f1f1f1;
+}
+
+/* BMI Category badge */
+body.dark-mode #bmiCategory {
+  background-color: #f9c77d;
+  color: #1a1a1a;
+}
+
+html, body {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.box2 h3 {
+  text-align: center;
+}
+
+.box2 p {
+  text-align: justify;
+}
+
+.box1 h2 {
+  text-align: center;
+}
+
+.box1 p {
+  text-align: left;
+}
+
+@media (max-width: 768px) {
+  .box {
+    flex: 1 1 100%;
+  }
+}
+.modal .close {
+  position: absolute;
+  top: 20px;
+  right: 32px;
+  font-size: 32px;
+  font-weight: bold;
+  color: #fff;
+  cursor: pointer;
+  z-index: 1001;
+}
+.modal .close:hover {
+  color: #f00;
+}
+
+.fade-in {
+  opacity: 0;
+  transform: translateY(10px);
+  animation: fadeInText 0.6s ease forwards;
+}
+
+@keyframes fadeInText {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@media (min-width: 992px) {
+  .bmi-meter-section {
+    position: sticky;
+    top: 100px;
+    align-self: start;
+  }
+}
+
+.bmi-category {
+  font-weight: bold;
+  font-size: 1.1em;
+  transition: color 0.3s ease;
+}
+
+/* Category-specific colors */
+.bmi-category.underweight {
+  color: #6ec6ff; /* Light Blue */
+}
+
+.bmi-category.healthy {
+  color: #8bc34a; /* Light Green */
+}
+
+.bmi-category.overweight {
+  color: #f4a261; /* Peach */
+}
+
+.bmi-category.obese-1 {
+  color: #ff9800; /* Orange */
+}
+
+.bmi-category.obese-2 {
+  color: #f57c00; /* Darker Orange */
+}
+
+.bmi-category.obese-3 {
+  color: #e65100; /* Deep Orange */
+}
+
    </style>
-<body class="bg-[#e9efff] font-sans">
-
-  <div class="sidebar close">
-    <div class="logo-details">
-        <img src="https://scontent.fmnl30-1.fna.fbcdn.net/v/t1.15752-9/491281118_2382492792112310_3443625629718728744_n.png?_nc_cat=106&ccb=1-7&_nc_sid=9f807c&_nc_eui2=AeHaa-S9wOr_C4wWbFu1UdJUkCmQHZHRso-QKZAdkdGyj9__C0kDqG_xqT1EXQSD1kDWOPBaQiw6kT4-5ALMvkWp&_nc_ohc=Gix8QqBnIwQQ7kNvwGOIX6x&_nc_oc=AdkctsmVvCknKonKPe5docstM_SzltiZF4h4k8m_SLwaKwiJMSuN1NlVKMam50cZpbs&_nc_zt=23&_nc_ht=scontent.fmnl30-1.fna&oh=03_Q7cD2AF9EEc9vZLKNXBiqgtq1BQM34ERoV_osAa12Tc3_C4vdA&oe=6826AC37" alt="logo">
-        <span class="logo_name">BodyCheck</span>
+<body>
+    <div class="sidebar close">
+        <div class="logo-details">
+            <img src="images/logo.jpg" alt="logo" style="border-radius: 50%; box-shadow: 0 2px 8px rgba(0,0,0,0.15);">
+            <span class="logo_name" style="color:#333; font-size: 24px;">BodyCheck</span>
+          </div>
+        <ul class="nav-links">
+            <li>
+                <a href="#" onclick="toggleDarkMode()">
+                  <i class='bx bx-moon'></i>
+                  <span class="link_name">Dark Mode</span>
+                </a>
+              </li>
+          <li>
+            <a href="index.html">
+              <i class='bx bx-grid-alt'></i>
+              <span class="link_name">Home</span>
+            </a>
+            <ul class="sub-menu blank">
+              <li><a class="link_name" href="index.html">Home</a></li>
+            </ul>
+          </li>
+          <li>
+            <a href="calculator.html">
+              <i class='bx bx-bar-chart-alt' ></i>
+              <span class="link_name">Calculator</span>
+            </a>
+            <ul class="sub-menu blank">
+              <li><a class="link_name" href="calculator.html">Calculator</a></li>
+            </ul>
+          </li>
+          <li>
+            <a href="profile.html">
+              <i class='bx bx-user' ></i>
+              <span class="link_name">Profile</span>
+            </a>
+            <ul class="sub-menu blank">
+              <li><a class="link_name" href="profile.html">Profile</a></li>
+            </ul>
+          </li>
+          <li>
+            <a href="#">
+              <i class='bx bx-history'></i>
+              <span class="link_name">History</span>
+            </a>
+            <ul class="sub-menu blank">
+              <li><a class="link_name" href="#">History</a></li>
+            </ul>
+          </li>
+          <li>
+            <a href="#">
+              <i class='bx bx-cog' ></i>
+              <span class="link_name">Setting</span>
+            </a>
+            <ul class="sub-menu blank">
+              <li><a class="link_name" href="#">Setting</a></li>
+            </ul>
+          </li>
+          <li>
+<div class="profile-details" id="profile-details" style="display: none;">
+    <div class="profile-content">
+        <img src="images/placeholder.png" alt="profileImg">
     </div>
-    <ul class="nav-links">
-      <li>
-        <a href="index.html">
-          <i class='bx bx-grid-alt'></i>
-          <span class="link_name">Home</span>
-        </a>
-        <ul class="sub-menu blank">
-          <li><a class="link_name" href="index.html">Home</a></li>
-        </ul>
-      </li>
-      <li>
-        <a href="calculator.html">
-          <i class='bx bx-bar-chart-alt' ></i>
-          <span class="link_name">Calculator</span>
-        </a>
-        <ul class="sub-menu blank">
-          <li><a class="link_name" href="calculator.html">Calculator</a></li>
-        </ul>
-      </li>
-      <li>
-        <a href="profile.html">
-          <i class='bx bx-user' ></i>
-          <span class="link_name">Profile</span>
-        </a>
-        <ul class="sub-menu blank">
-          <li><a class="link_name" href="profile.html">Profile</a></li>
-        </ul>
-      </li>
-      <li>
-        <a href="#">
-          <i class='bx bx-history'></i>
-          <span class="link_name">History</span>
-        </a>
-        <ul class="sub-menu blank">
-          <li><a class="link_name" href="#">History</a></li>
-        </ul>
-      </li>
-      <li>
-        <a href="#">
-          <i class='bx bx-cog' ></i>
-          <span class="link_name">Setting</span>
-        </a>
-        <ul class="sub-menu blank">
-          <li><a class="link_name" href="#">Setting</a></li>
-        </ul>
-      </li>
-      <li>
-        <div class="profile-details" id="profile-details" style="display: none;">
-          <div class="profile-content">
-              <img src="image/placeholder.png" alt="profileImg">
-          </div>
-          <div class="name-job">
-              <div class="profile_name" id="username"></div>
-              <div class="job" id="job"></div>
-          </div>
-          <!-- The logout icon now triggers the modal -->
-          <i class='bx bx-log-out' onclick="showLogoutConfirmation()"></i>
-      </div>
-      
-      <!-- Logout Confirmation Modal -->
-      <div id="logoutModal" class="modal">
-          <div class="modal-content">
-              <h3>Are you sure you want to log out?</h3>
-              <button class="modal-button confirm" onclick="logout()">Confirm</button>
-              <button class="modal-button cancel" onclick="closeLogoutModal()">Cancel</button>
-          </div>
-      </div>                
-  </li>
-</ul>
-  </div>
-
-
-  <div class="home-section">
+    <div class="name-job">
+        <div class="profile_name" id="username"></div>
+        <div class="job" id="job"></div>
+    </div>
+    <i class='bx bx-log-out' onclick="showLogoutConfirmation()"></i>
+</div>
+<div id="logoutModal" class="modal">
+    <div class="modal-content">
+        <h3>Are you sure you want to log out?</h3>
+        <button class="modal-button confirm" onclick="logout()">Confirm</button>
+        <button class="modal-button cancel" onclick="closeLogoutModal()">Cancel</button>
+    </div>
+        </div>                
+            </li>
+             </ul>
+    </div>
+        <section class="home-section">
     <div class="home-content">
-      <i class='bx bx-menu'></i>
+        <i class='bx bx-menu' ></i>
+      <span class="text">BodyCheck Fitness</span>
     </div>
+
+    <div class="content-wrapper">
+      <!-- Top Left: BMI Results -->
+      <div class="box box1">
+        <h2><i class='bx bx-bar-chart-alt-2'></i> Your BMI Results</h2>
+        <p><i class='bx bx-male-female'></i> <strong>Gender:</strong> <span id="gender" style="color:#333;">--</span></p>
+
+          <p><strong>Age:</strong> <span id="age">--</span></p>
+          <p><i class='bx bx-heart'></i> <strong>BMI Score:</strong> <span id="bmiValue" style="font-size: 1.2em; font-weight: bold;">--</span></p>
+          <p><i class='bx bx-body'></i> You're <u><strong><span id="bmiCategory" class="bmi-category" title="Category: --">--</span> </strong></u></p>
+      </div>
+<!-- Top Right: Category -->
+<div class="box box3 category-box-enhanced">
+    <h3><i class="bx bx-pie-chart-alt-2"></i> Category</h3>
+    <div id="categoryContent">
+      <p id="categoryMessage" class="category-message">
+          - You are Underweight, Low body mass may weaken immunity and energy
+          <br><br>
+          If you are underweight (BMI less than 18.5kg/m2), you may be malnourished and develop: compromised immune function. respiratory disease. digestive diseases.
+
+      </p>
+    </div>
+</div>  
   
-    <main class="p-10 flex items-center justify-between">
-      <div>
-        <h1 class="text-5xl font-bold text-gray-900 mb-4">Welcome to BodyCheck</h1>
-        <p class="text-lg text-gray-700 max-w-xl mb-6">
-          BodyCheck is your personal health companion. Use our BMI calculator to understand your body mass index and get personalized recommendations to improve your health and fitness.
-        </p>
-        <button class="bg-blue-700 hover:bg-blue-800 text-white font-semibold px-5 py-3 rounded-md">Let's Get Started</button>
+      <!-- Bottom Left: What is BMI -->
+      <div class="box box2">
+          <h3>What is BMI?</h3>
+          <p>
+              Body Mass Index (BMI) is a simple calculation using your height and weight to estimate body fat. 
+              You can use the BodyCheck BMI calculator below to find your BMI. Keep in mind that BMI doesn’t 
+              account for muscle mass, so it’s possible that what appears as excess fat may actually be muscle. 
+              Always consult your doctor for more insight.
+          </p>
+      </div>
+  
+      <!-- Bottom Right: Recommendations -->
+      <div class="box box4">
+        <h3>Recommendations</h3>
+        <div class="suggestion-box">
+            <h4>Diet Recommendation:</h4>
+            <p id="diet"></p>
+        </div>
+        <div class="suggestion-box">
+            <h4>Exercise Tip:</h4>
+            <p id="exercise"></p>
+        </div>
+        <div class="suggestion-box">
+            <h4>Health Guideline:</h4>
+            <p id="health"></p>
+        </div>
       </div>
 
-      <!-- Optional image like the Marlon one -->
-      <div class="hidden md:block">
-        <img src="https://scontent.fmnl30-1.fna.fbcdn.net/v/t1.15752-9/491281118_2382492792112310_3443625629718728744_n.png?_nc_cat=106&ccb=1-7&_nc_sid=9f807c&_nc_eui2=AeHaa-S9wOr_C4wWbFu1UdJUkCmQHZHRso-QKZAdkdGyj9__C0kDqG_xqT1EXQSD1kDWOPBaQiw6kT4-5ALMvkWp&_nc_ohc=Gix8QqBnIwQQ7kNvwGOIX6x&_nc_oc=AdkctsmVvCknKonKPe5docstM_SzltiZF4h4k8m_SLwaKwiJMSuN1NlVKMam50cZpbs&_nc_zt=23&_nc_ht=scontent.fmnl30-1.fna&oh=03_Q7cD2AF9EEc9vZLKNXBiqgtq1BQM34ERoV_osAa12Tc3_C4vdA&oe=6826AC37" alt="Logo" class="rounded-full bg-blue-600 p-2" />
+      <!-- BMI Meter Section -->
+      <section class="bmi-meter-section">
+        <h3><i class="bx bx-line-chart"></i> BMI Meter Result</h3>
+        <img id="bmiMeter" src="images/default-meter.png" alt="BMI Meter" class="meter" onclick="openModal()">
+      </section>
+
+      <!-- Modal for Viewing the Image -->
+      <div id="imageModal" class="modal">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <img class="modal-content" id="modalImage">
       </div>
-    </main>
   </div>
-
-  <script src="https://kit.fontawesome.com/a2e0e6f91b.js" crossorigin="anonymous"></script>
-    
   </section>
+
   <script>
     let arrow = document.querySelectorAll(".arrow");
 for (var i = 0; i < arrow.length; i++) {
   arrow[i].addEventListener("click", (e)=>{
- let arrowParent = e.target.parentElement.parentElement;
+ let arrowParent = e.target.parentElement.parentElement;//selecting main parent of arrow
  arrowParent.classList.toggle("showMenu");
   });
 }
@@ -474,68 +1035,341 @@ sidebarBtn.addEventListener("click", ()=>{
   sidebar.classList.toggle("close");
 });
 
-//profile display
-async function loadProfile() {
-    const token = localStorage.getItem("token");
-    const profileDetails = document.getElementById("profile-details");
-    const usernameElement = document.getElementById("username");
-    const jobElement = document.getElementById("job");
+let params = new URLSearchParams(window.location.search);
+let bmi = params.get("bmi") || "--";
+let category = params.get("category") || "--";
+let gender = params.get("gender") || "--";
+let age = params.get("age") || "--";
 
-    if (!token) {
-      profileDetails.style.display = "none";
-      return;
+function animateBMI(value) {
+  const el = document.getElementById("bmiValue");
+  let current = 0;
+  const target = parseFloat(value);
+  const step = target / 40;
+
+  const interval = setInterval(() => {
+    current += step;
+    if (current >= target) {
+      clearInterval(interval);
+      el.innerText = target.toFixed(1);
+    } else {
+      el.innerText = current.toFixed(1);
     }
+  }, 20);
+}
 
-    try {
-      const response = await fetch("http://localhost:3000/profile", {
-        method: "GET",
-        headers: { "Authorization": "Bearer " + token }
-      });
+animateBMI(bmi);
+const bmiCategoryEl = document.getElementById("bmiCategory");
+bmiCategoryEl.innerText = category;
+bmiCategoryEl.title = `Category: ${category}`;
 
-      const data = await response.json();
-      if (data.error) {
-        localStorage.removeItem("token");
-        profileDetails.style.display = "none";
-      } else {
-        usernameElement.innerText = data.name;
-        jobElement.innerText = data.job || "User";
-        profileDetails.style.display = "flex";
-      }
-    } catch (error) {
-      console.error("Error loading profile:", error);
-      profileDetails.style.display = "none";
+// Remove any previous classes
+bmiCategoryEl.className = "bmi-category";
+
+// Apply category-specific color class
+switch (category) {
+  case "Underweight":
+    bmiCategoryEl.classList.add("underweight");
+    break;
+  case "Normal Weight":
+    bmiCategoryEl.classList.add("healthy");
+    break;
+  case "Overweight":
+    bmiCategoryEl.classList.add("overweight");
+    break;
+  case "Obese":
+  case "Class 1 Obesity":
+    bmiCategoryEl.classList.add("obese-1");
+    break;
+  case "Class 2 Obesity":
+    bmiCategoryEl.classList.add("obese-2");
+    break;
+  case "Class 3 Obesity":
+    bmiCategoryEl.classList.add("obese-3");
+    break;
+}
+document.getElementById("gender").innerText = gender;
+document.getElementById("age").innerText = age; 
+
+// Map categories to BMI meter images
+const bmiMeterImages = {
+    "Underweight": "images/underweight.jpg",
+    "Normal Weight": "images/healthy-weight.jpg",
+    "Overweight": "images/overweight.jpg",
+    "Obese": "images/obesity.jpg",
+    "Class 1 Obesity": "images/class-1-obesity.jpg",
+    "Class 2 Obesity": "images/class-2-obesity.jpg",
+    "Class 3 Obesity": "images/class-3-obesity.jpg",
+};
+
+// Update the BMI meter image dynamically
+const bmiMeter = document.getElementById("bmiMeter");
+if (bmiMeterImages[category]) {
+    bmiMeter.src = bmiMeterImages[category];
+} else {
+    bmiMeter.src = "images/default-meter.png"; // Fallback image
+}
+
+const suggestions = {
+    "Underweight": {
+        diet: ["Increase calorie intake with nutritious food.", "Eat more protein-rich meals."],
+        exercise: ["Focus on strength training.", "Avoid excessive cardio."],
+        health: ["Consult a nutritionist for a balanced diet.", "Monitor your weight regularly."]
+    },
+    "Normal Weight": {
+        diet: ["Maintain a balanced diet.", "Include fruits and vegetables in every meal."],
+        exercise: ["Stay active with regular workouts.", "Try yoga or pilates for flexibility."],
+        health: ["Keep up with healthy habits.", "Get regular health checkups."]
+    },
+    "Overweight": {
+        diet: ["Reduce sugar intake and eat more greens.", "Avoid processed foods."],
+        exercise: ["Increase cardio workouts.", "Incorporate strength training."],
+        health: ["Monitor weight changes and adjust diet.", "Consult a dietitian if needed."]
+    },
+    "Obese": {
+        diet: ["Follow a structured weight-loss plan.", "Avoid high-calorie snacks."],
+        exercise: ["Engage in low-impact exercises.", "Start with short walks and increase gradually."],
+        health: ["Consult a doctor for professional guidance.", "Consider joining a weight-loss program."]
     }
-  }
+};
 
-  // Function to handle logout
-  function logout() {
-    localStorage.removeItem("token");
-    closeLogoutModal();
-    alert("Logged out successfully.");
-    loadProfile(); // Optional: Update profile after logout
-  }
+const categoryMessages = {
+    "Underweight": "- You are Underweight, Low body mass may weaken immunity and energy.<br>" +
+        "If you are underweight (BMI less than 18.5kg/m2), you may be malnourished and develop: compromised immune function, respiratory disease, and digestive diseases.",
+    "Normal Weight": "- You are Normal Weight, Keep up the good work maintaining your health.<br>" +
+        "This range supports optimal body function, reduces the risk of chronic diseases, and reflects a balanced relationship between height and weight.",
+    "Overweight": "- You are Overweight, Consider adopting a healthier lifestyle.<br>" +
+        "Excess weight may increase the risk of chronic diseases such as diabetes and heart disease.",
+    "Obese": "- You are Obese, High body mass may increase health risks.<br>" +
+        "Obesity is associated with a higher risk of cardiovascular diseases, diabetes, and joint problems.",
+    "Class 1 Obesity": "- You are in Obesity Class 1. This indicates moderate health risks.<br>" +
+        "Consider consulting a healthcare provider for a structured weight-loss plan.",
+    "Class 2 Obesity": "- You are in Obesity Class 2. This indicates high health risks.<br>" +
+        "Seek professional medical advice to manage your weight effectively.",
+    "Class 3 Obesity": "- You are in Obesity Class 3 (Severe Obesity). This indicates very high health risks.<br>" +
+        "It is strongly recommended to consult a doctor for a comprehensive weight management plan."
+};
 
-  // Function to show the logout confirmation modal
-  function showLogoutConfirmation() {
-    document.getElementById('logoutModal').style.display = 'block';
-  }
+// Update the category message dynamically
+if (categoryMessages[category]) {
+    document.getElementById("categoryMessage").innerHTML = categoryMessages[category];
+}
+document.getElementById("categoryMessage").innerHTML = `<i class="bx bx-info-circle" style="color:#007acc; font-size: 20px;"></i><br>` + categoryMessages[category];
 
-  // Function to close the logout confirmation modal
-  function closeLogoutModal() {
-    document.getElementById('logoutModal').style.display = 'none';
-  }
 
-  // Event listener for `storage` event to handle logout from other pages
-  window.addEventListener("storage", function(event) {
-    if (event.key === "token" && event.newValue === null) {
-      // If the token is removed (logged out), update the profile
-      loadProfile();
+const suggestionsFromPDF = {
+    "Underweight": {
+        diet: [
+            `Whole Foods Weight Gain Diet: focus on whole grains, nuts, lean meats, and starchy vegetables. <a href="https://www.verywellfit.com/what-is-a-whole-foods-diet-2241974" target="_blank">Learn more</a>`,
+            `High-Calorie Smoothie-Based Diet: smoothies packed with nut butters, protein powder, milk, oats, etc. <a href="https://mattsfitchef.com/high-calorie-smoothie-to-gain-weight/" target="_blank">Learn more</a>`
+        ],
+        exercise: [
+            `Squats: Builds lower body strength and size.`,
+            `Push-Ups: Builds upper body and core strength.`
+        ],
+        health: [
+            `Consult a nutritionist for structured weight gain.`,
+            `Eat every 3–4 hours and add calorie-dense toppings.`
+        ]
+    },
+    "Normal Weight": {
+        diet: [
+            `Mediterranean Diet: mostly veggies, fruits, whole grains, and olive oil. <a href="https://my.clevelandclinic.org/health/articles/16037-mediterranean-diet" target="_blank">Learn more</a>`
+        ],
+        exercise: [
+            `Jogging: improves cardiovascular health and stamina.`,
+            `Cycling: boosts aerobic fitness and burns fat.`
+        ],
+        health: [
+            `Stick to consistent healthy habits.`,
+            `Hydrate well and include omega-3s regularly.`
+        ]
+    },
+    "Overweight": {
+        diet: [
+            `Low-Carb Diet: reduces refined carbs to promote fat burning. <a href="https://www.healthline.com/nutrition/low-carb-diet-meal-plan-and-menu" target="_blank">Learn more</a>`
+        ],
+        exercise: [
+            `HIIT: High-intensity intervals that burn fat effectively.`,
+            `Swimming: Full-body cardio workout with joint support.`
+        ],
+        health: [
+            `Practice portion control and reduce sugar intake.`,
+            `Get enough sleep and manage stress for better metabolism.`
+        ]
+    },
+    "Obese": {
+        diet: [
+            `Calorie-Restricted Diet: structured eating with fewer calories. <a href="https://www.verywellfit.com/what-is-a-very-low-calorie-diet-3496286" target="_blank">Learn more</a>`
+        ],
+        exercise: [
+            `Brisk Walking: accessible, low-impact cardio.`,
+            `Stationary Biking: improves heart and leg strength safely.`
+        ],
+        health: [
+            `Consult a doctor for a long-term plan.`,
+            `Start with gentle routines and increase gradually.`
+        ]
+    },
+    "Obesity Class 1": {
+        diet: [
+            `Low-Calorie Diet: focus on reducing calorie intake while maintaining nutrition. <a href="https://www.healthline.com/nutrition/low-calorie-diet" target="_blank">Learn more</a>`
+        ],
+        exercise: [
+            `Walking: Start with 30 minutes daily and increase gradually.`,
+            `Yoga: Helps with flexibility and stress management.`
+        ],
+        health: [
+            `Consult a healthcare provider for a personalized plan.`,
+            `Monitor your progress regularly and stay consistent.`
+        ]
+    },
+    "Obesity Class 2": {
+        diet: [
+            `Structured Meal Plans: focus on portion control and balanced meals. <a href="https://www.eatright.org/" target="_blank">Learn more</a>`
+        ],
+        exercise: [
+            `Low-Impact Cardio: swimming or cycling for joint-friendly workouts.`,
+            `Strength Training: build muscle to boost metabolism.`
+        ],
+        health: [
+            `Work closely with a dietitian or doctor.`,
+            `Consider joining a weight-loss support group.`
+        ]
+    },
+    "Obesity Class 3": {
+        diet: [
+            `Medically Supervised Diet: consult a doctor for a safe plan. <a href="https://www.webmd.com/diet/obesity/ss/slideshow-weight-loss-surgery" target="_blank">Learn more</a>`
+        ],
+        exercise: [
+            `Chair Exercises: gentle movements to improve mobility.`,
+            `Water Aerobics: low-impact and joint-friendly.`
+        ],
+        health: [
+            `Seek immediate medical advice for weight management.`,
+            `Explore surgical options if recommended by a doctor.`
+        ]
     }
-  });
+};
 
-  // Load the profile when the page is loaded
-  document.addEventListener("DOMContentLoaded", loadProfile);
+function showRecommendations(category) {
+    const dietBox = document.getElementById("diet");
+    const exerciseBox = document.getElementById("exercise");
+    const healthBox = document.getElementById("health");
+
+    if (suggestionsFromPDF[category]) {
+        const cat = suggestionsFromPDF[category];
+
+        dietBox.innerHTML = getRandomItem(cat.diet);
+        exerciseBox.innerHTML = getRandomItem(cat.exercise);
+        healthBox.innerHTML = getRandomItem(cat.health);
+    } else {
+        dietBox.innerText = "No recommendation available.";
+        exerciseBox.innerText = "No recommendation available.";
+        healthBox.innerText = "No recommendation available.";
+    }
+}
+
+function getRandomItem(arr) {
+    return arr[Math.floor(Math.random() * arr.length)];
+}
+
+// Show recommendations on load
+showRecommendations(category);
+
+// Modal functionality
+function openModal() {
+  const modal = document.getElementById("imageModal");
+  const modalImage = document.getElementById("modalImage");
+  const bmiMeter = document.getElementById("bmiMeter");
+
+  modal.style.display = "block";
+  modalImage.src = bmiMeter.src; // Set the modal image source to the BMI meter image
+}
+
+function closeModal() {
+  const modal = document.getElementById("imageModal");
+  modal.style.display = "none";
+}
+
+</script>
+
+<script type="module">
+    import { supabase } from './supabaseClient.js';
+// Profile details elements
+document.addEventListener('DOMContentLoaded', async () => {
+  const { data: { user } } = await supabase.auth.getUser();
+
+  if (user) {
+    // Fetch additional profile info if stored in a 'profiles' table
+    const { data: profile } = await supabase
+      .from('profiles')
+      .select('*')
+      .eq('id', user.id)
+      .single();
+
+    // Show the profile section
+    document.getElementById('profile-details').style.display = 'flex';
+    document.getElementById('username').textContent = profile?.username || 'Guest';
+  }
+});
+
+window.showLogoutConfirmation = function () {
+  document.getElementById('logoutModal').style.display = 'block';
+}
+
+window.closeLogoutModal = function () {
+  document.getElementById('logoutModal').style.display = 'none';
+}
+        
+window.logout = async function () {
+  await supabase.auth.signOut();
+  window.location.href = 'login.html'; // or wherever your login page is
+}
   </script>
-<script src="https://kit.fontawesome.com/a2e0e6f91b.js" crossorigin="anonymous"></script>
+ <script>
+    function toggleDarkMode() {
+      const body = document.body;
+      const html = document.documentElement;
+  
+      body.classList.toggle("dark-mode");
+      html.classList.toggle("dark-mode");
+  
+      // Save preference to localStorage
+      if (body.classList.contains("dark-mode")) {
+        localStorage.setItem("theme", "dark");
+      } else {
+        localStorage.setItem("theme", "light");
+      }
+    }
+  
+    // Auto-load based on preference
+    window.addEventListener("DOMContentLoaded", () => {
+      const savedTheme = localStorage.getItem("theme");
+      if (savedTheme === "dark") {
+        document.body.classList.add("dark-mode");
+        document.documentElement.classList.add("dark-mode");
+      }
+    });
+
+    const resultBox = document.querySelector(".box1");
+
+const categoryColors = {
+  "Underweight": "#ff6b6b",
+  "Normal Weight": "#00c896",
+  "Overweight": "#ffc107",
+  "Obese": "#ff5722",
+  "Class 1 Obesity": "#ff7043",
+  "Class 2 Obesity": "#ff3d00",
+  "Class 3 Obesity": "#dd2c00"
+};
+
+if (categoryColors[category]) {
+  resultBox.style.boxShadow = `0 0 20px ${categoryColors[category]}`;
+  resultBox.style.border = `2px solid ${categoryColors[category]}`;
+}
+document.getElementById("bmiCategory").title = `Category: ${category}`;
+
+  </script>
 </body>
 </html>
