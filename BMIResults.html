@@ -762,14 +762,6 @@ body.dark-mode .suggestions-container {
   color: #f1f1f1 !important;
 }
 
-/* Sidebar nav text and icons */
-body.dark-mode .sidebar .nav-links li a .link_name,
-body.dark-mode .sidebar .nav-links li i,
-body.dark-mode .sidebar .profile-details .profile_name,
-body.dark-mode .sidebar .profile-details .job {
-  color: #f5f5f7 !important;
-}
-
 /* Hover highlight */
 body.dark-mode .sidebar .nav-links li:hover {
   background-color: rgba(255, 255, 255, 0.07);
@@ -1118,29 +1110,6 @@ if (bmiMeterImages[category]) {
 } else {
     bmiMeter.src = "images/default-meter.png"; // Fallback image
 }
-
-const suggestions = {
-    "Underweight": {
-        diet: ["Increase calorie intake with nutritious food.", "Eat more protein-rich meals."],
-        exercise: ["Focus on strength training.", "Avoid excessive cardio."],
-        health: ["Consult a nutritionist for a balanced diet.", "Monitor your weight regularly."]
-    },
-    "Normal Weight": {
-        diet: ["Maintain a balanced diet.", "Include fruits and vegetables in every meal."],
-        exercise: ["Stay active with regular workouts.", "Try yoga or pilates for flexibility."],
-        health: ["Keep up with healthy habits.", "Get regular health checkups."]
-    },
-    "Overweight": {
-        diet: ["Reduce sugar intake and eat more greens.", "Avoid processed foods."],
-        exercise: ["Increase cardio workouts.", "Incorporate strength training."],
-        health: ["Monitor weight changes and adjust diet.", "Consult a dietitian if needed."]
-    },
-    "Obese": {
-        diet: ["Follow a structured weight-loss plan.", "Avoid high-calorie snacks."],
-        exercise: ["Engage in low-impact exercises.", "Start with short walks and increase gradually."],
-        health: ["Consult a doctor for professional guidance.", "Consider joining a weight-loss program."]
-    }
-};
 
 const categoryMessages = {
     "Underweight": "- You are Underweight, Low body mass may weaken immunity and energy.<br>" +
@@ -1505,7 +1474,7 @@ const suggestionsFromPDF = {
            `Build a support network: Engage with friends, family, or support groups for encouragement.`
         ]
     },
-    "Obesity Class 1": {
+    "Class 1 Obesity": {
         diet: [
             `Mediterranean Diet, a heart-healthy, anti-inflammatory diet emphasizing whole grains, vegetables, legumes, olive oil, and moderate fish intake
  <a href="" type="https://www.healthline.com/nutrition/mediterranean-diet-meal-plan"_blank">Learn more</a>`,
@@ -1662,7 +1631,7 @@ const suggestionsFromPDF = {
 
         ]
     },
-    "Obesity Class 2": {
+    "Class 2 Obesity": {
         diet: [
             `Mediterranean Diet, a heart-healthy, anti-inflammatory diet emphasizing whole grains, vegetables, legumes, olive oil, and moderate fish intake
  <a href="https://www.healthline.com/nutrition/mediterranean-diet-meal-plan
@@ -1821,7 +1790,7 @@ const suggestionsFromPDF = {
            `Build a support network: Engage with friends, family, or support groups for encouragement.`
         ]
     },
-    "Obesity Class 3": {
+    "Class 3 Obesity": {
         diet: [
             `Very Low-Calorie Diet (VLCD), a diet that is medically supervised diet providing ≤800 kcal/day, used for rapid weight loss in severe obesity
  <a href="https://www.verywellfit.com/what-is-a-very-low-calorie-diet-3496286
