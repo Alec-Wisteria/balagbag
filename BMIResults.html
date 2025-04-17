@@ -1,22 +1,20 @@
 <!DOCTYPE html>
-<!-- Designined by CodingLab | www.youtube.com/codinglabyt -->
 <html lang="en" dir="ltr">
   <head>
     <meta charset="UTF-8">
-    <title>BMI Calculator</title>
+    <title>BMI Results</title>
+    <link rel="stylesheet" href="style.css">
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
      <meta name="viewport" content="width=device-width, initial-scale=1.0">
    </head>
    <style>
-    /* Google Fonts Import Link */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
-*{
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Poppins', sans-serif;
-}
-
+* {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
 html, body {
   height: 100%; /* Ensure the body and html cover the full height of the viewport */
   margin: 0;
@@ -27,21 +25,28 @@ html, body {
   overflow-x: hidden; /* Prevent horizontal scrolling */
   background: #E4E9F7; /* Set the background color */
 }
-
-.sidebar {
+:root {
+  --bmi-bg: linear-gradient(135deg, #ffffff 0%, #f0f4ff 100%);
+}
+.sidebar{
   position: fixed;
   top: 0;
   left: 0;
-  height: 100vh;
+  height: 100%;
   width: 260px;
   background: linear-gradient(to bottom right, #c2c2c2, #343447);
+  z-index: 100;
   transition: width 0.4s ease-in-out, background 0.3s ease-in-out;
-  z-index: 1000;
-  overflow: hidden;
-}   
+}
 .sidebar.close{
   width: 78px;
 }
+.sidebar .logo-details img,
+.sidebar .logo-details .logo_name,
+.sidebar .nav-links li a {
+  transition: all 0.3s ease;
+}
+
 .sidebar .logo-details {
     height: 60px;
     width: 100%;
@@ -52,13 +57,12 @@ html, body {
 }
 
 .sidebar .logo-details img {
-    width: 50px; /* Default small size */
+    width: 50px;
     height: 50px;
-    transition: all 0.3s ease; /* Smooth transition */
 }
 
 .sidebar.open .logo-details img {
-    width: 85px; /* Expand when open */
+    width: 85px;
     height: 85px;
 }
 
@@ -76,7 +80,6 @@ html, body {
     opacity: 0;
     pointer-events: none;
 }
-
 .sidebar .nav-links{
   height: 100%;
   padding: 30px 0 150px 0;
@@ -93,11 +96,10 @@ html, body {
   list-style: none;
   transition: all 0.4s ease;
 }
-.sidebar .nav-links li:hover {
-  background: rgba(255, 255, 255, 0.4);
-}
-body.dark-mode .sidebar .nav-links li:hover {
-  background: rgba(255, 255, 255, 0.1);
+.sidebar .nav-links li:hover{
+    background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(4px);
+  border-radius: 8px;
 }
 .sidebar .nav-links li .iocn-link{
   display: flex;
@@ -148,7 +150,7 @@ body.dark-mode .sidebar .nav-links li:hover {
   display: block;
 }
 .sidebar .nav-links li .sub-menu a{
-  color: #f1f1f1;
+  color: #fff;
   font-size: 15px;
   padding: 5px 0;
   white-space: nowrap;
@@ -243,237 +245,6 @@ body.dark-mode .sidebar .nav-links li:hover {
 .sidebar .profile-details .job{
   font-size: 12px;
 }
-.home-section {
-  position: relative;
-  background: #E4E9F7;
-  height: 100vh;
-  left: 260px;
-  width: calc(100% - 260px);
-  transition: all 0.5s ease;
-  padding: 12px;
-}
-.sidebar.close ~ .home-section {
-  left: 78px;
-  width: calc(100% - 78px);
-}
-.home-content{
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-}
-.home-section .home-content .bx-menu,
-.home-section .home-content .text{
-  color: var(--menu-color);
-  transition: color 0.3s ease;
-}
-.home-section .home-content .bx-menu{
-  cursor: pointer;
-  margin-right: 10px;
-  font-size: 35px;
-}
-.home-section .home-content .text{
-  font-size: 26px;
-  font-weight: 600;
-}
-
-@media screen and (max-width: 400px){
-  .sidebar{
-    width: 240px;
-  }
-  .sidebar.close{
-    width: 78px;
-  }
-  .sidebar .profile-details{
-    width: 240px;
-  }
-  .sidebar.close .profile-details{
-    background: none;
-  }
-  .sidebar.close .profile-details{
-    width: 78px;
-  }
-  .home-section {
-    position: relative;
-    left: 260px; 
-    width: calc(100% - 260px); 
-    transition: all 0.3s ease;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-}
-  .sidebar.close ~ .home-section{
-    left: 78px;
-    width: calc(100% - 78px);
-  }
-}
-.container {
-    background: white;
-    padding: 30px;
-    border-radius: 15px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-    text-align: center;
-    width: 90%;
-    max-width: 500px;
-    margin: 60px auto 0 auto;
-    position: relative;
-    top: auto;
-    left: auto;
-    transform: none;
-}
-        .form-group {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-        input {
-            width: 60%;
-            padding: 8px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            text-align: center;
-        }
-        button {
-            background-color: blue;
-            color: white;
-            padding: 10px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 16px;
-            transition: 0.3s;
-        }
-        button:hover {
-            background-color: #808080;
-        }
-        .gender-buttons {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 15px;
-        }
-        .gender-btn {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            border: 3px solid #aaa;
-            background-color: #f0f0f0;
-            color: #333;
-            font-size: 18px;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            margin: 0 15px;
-            transition: 0.3s;
-        }
-        .gender-btn.selected-male {
-            background-color: #4d79ff; 
-            border-color: #0033cc;
-            color: white;
-        }
-        .gender-btn.selected-female {
-            background-color: #ff66b2; 
-            border-color: #cc0052;
-            color: white;
-        }
-
-        .logo-details {
-    display: flex;
-    align-items: center;
-}
-.modal {
-        display: none;
-        position: fixed;
-        z-index: 1;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.5);
-      }
-      .modal-content {
-        background-color: white;
-        margin: 15% auto;
-        padding: 20px;
-        border-radius: 8px;
-        width: 300px;
-        text-align: center;
-      }
-      .modal-button {
-        padding: 10px 20px;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        margin: 10px;
-        font-size: 16px;
-      }
-      .modal-button.confirm {
-        background-color: #4CAF50;
-        color: white;
-      }
-      .modal-button.cancel {
-        background-color: #f44336;
-        color: white;
-      }
-      :root {
-  --menu-color: #11101d;
-}
-
-body.dark-mode {
-  --menu-color: #f5f5f7;
-  background-color: #1c1c1e;
-  color: #f5f5f7;
-}
-
-body.dark-mode .sidebar,
-body.dark-mode .container, body.dark-mode .home-section {
-  background-color: #2c2c2e !important;
-  color: #f5f5f7 !important;
-}
-
-body.dark-mode input,
-body.dark-mode button {
-  background-color: #3a3a3c;
-  color: #f5f5f7;
-  border: 1px solid #555;
-}
-body.dark-mode label,
-body.dark-mode .quote,
-body.dark-mode h2 {
-  color: #f5f5f7;
-}
-body.dark-mode .sidebar .nav-links li a .link_name,
-body.dark-mode .sidebar .nav-links li i {
-  color: #f5f5f7 !important;
-}
-
-body.dark-mode .sidebar .nav-links li:hover {
-  background: rgba(255, 255, 255, 0.07);
-}
-
-html, body {
-  transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-
-
-body {
-  animation: fadeIn 0.8s ease-out;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
 .home-section{
   position: relative;
   background: #E4E9F7;
@@ -515,6 +286,37 @@ body.dark-mode {
   font-weight: 600;
 }
 
+@media screen and (max-width: 400px){
+  .sidebar{
+    width: 240px;
+  }
+  .sidebar.close{
+    width: 78px;
+  }
+  .sidebar .profile-details{
+    width: 240px;
+  }
+  .sidebar.close .profile-details{
+    background: none;
+  }
+  .sidebar.close .profile-details{
+    width: 78px;
+  }
+  .home-section{
+    position: relative;
+    left: 260px;
+    width: calc(100% - 260px);
+    transition: all 0.3s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  .sidebar.close ~ .home-section{
+    left: 78px;
+    width: calc(100% - 78px);
+  }
+}
 .content-wrapper {
   display: flex;
   flex-wrap: wrap;
@@ -566,6 +368,44 @@ body.dark-mode {
     display: flex;
     align-items: center;
 }
+.modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+      }
+      .modal-content {
+        background-color: white;
+        margin: 15% auto;
+        padding: 20px;
+        border-radius: 8px;
+        width: 300px;
+        text-align: center;
+      }
+      .modal-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin: 10px;
+  font-size: 16px;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+.modal-button:hover {
+  transform: scale(1.05);
+}
+      .modal-button.confirm {
+        background-color: #4CAF50;
+        color: white;
+      }
+      .modal-button.cancel {
+        background-color: #f44336;
+        color: white;
+      }
 
 .info-box {
     background: white;
@@ -701,6 +541,28 @@ body.dark-mode .suggestion-box:hover {
   transform: scale(1.02);
 }
 
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.8); /* Black background with opacity */
+}
+
+.modal-content {
+  display: block;
+  margin: 60px auto;
+  width: 90%;
+  max-width: 720px;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.2);
+}
+
 .bmi-meter-section {
   background: var(--bmi-bg);
   padding: 30px 28px;
@@ -720,6 +582,42 @@ body.dark-mode .suggestion-box:hover {
   margin-bottom: 24px;
 }
 
+
+
+.modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+      }
+      .modal-content {
+        background-color: white;
+        margin: 15% auto;
+        padding: 20px;
+        border-radius: 8px;
+        width: 300px;
+        text-align: center;
+      }
+      .modal-button {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin: 10px;
+        font-size: 16px;
+      }
+      .modal-button.confirm {
+        background-color: #4CAF50;
+        color: white;
+      }
+      .modal-button.cancel {
+        background-color: #f44336;
+        color: white;
+      }
 
       h2, h3, h4 {
   color: #1a1a1a;
@@ -806,6 +704,7 @@ body.dark-mode .meter {
 
 body.dark-mode .box,
 body.dark-mode .bmi-meter-section,
+body.dark-mode .modal-content,
 body.dark-mode .sidebar {
   background-color: #2c2c2e !important;
   color: #f5f5f7;
@@ -913,6 +812,19 @@ html, body {
     flex: 1 1 100%;
   }
 }
+.modal .close {
+  position: absolute;
+  top: 20px;
+  right: 32px;
+  font-size: 32px;
+  font-weight: bold;
+  color: #fff;
+  cursor: pointer;
+  z-index: 1001;
+}
+.modal .close:hover {
+  color: #f00;
+}
 
 .fade-in {
   opacity: 0;
@@ -964,6 +876,7 @@ html, body {
 .bmi-category.obese-3 {
   color: #e65100; /* Deep Orange */
 }
+
    </style>
 <body>
     <div class="sidebar close">
@@ -997,7 +910,7 @@ html, body {
             </ul>
           </li>
           <li>
-            <a href="#">
+            <a href="profile.html">
               <i class='bx bx-user' ></i>
               <span class="link_name">Profile</span>
             </a>
@@ -1037,8 +950,8 @@ html, body {
 <div id="logoutModal" class="modal">
     <div class="modal-content">
         <h3>Are you sure you want to log out?</h3>
-        <button class="modale-button confirm" onclick="logout()">Confirm</button>
-        <button class="modale-button cancel" onclick="closeLogoutModal()">Cancel</button>
+        <button class="modal-button confirm" onclick="logout()">Confirm</button>
+        <button class="modal-button cancel" onclick="closeLogoutModal()">Cancel</button>
     </div>
         </div>                
             </li>
@@ -1104,8 +1017,14 @@ html, body {
       <!-- BMI Meter Section -->
       <section class="bmi-meter-section">
         <h3><i class="bx bx-line-chart"></i> BMI Meter Result</h3>
-        <img id="bmiMeter" src="images/default-meter.png" alt="BMI Meter" class="meter">
+        <img id="bmiMeter" src="images/default-meter.png" alt="BMI Meter" class="meter" onclick="openModal()">
       </section>
+
+      <!-- Modal for Viewing the Image -->
+      <div id="imageModal" class="modal">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <img class="modal-content" id="modalImage">
+      </div>
   </div>
   </section>
 
@@ -2086,6 +2005,21 @@ function getRandomItem(arr) {
 
 // Show recommendations on load
 showRecommendations(category);
+
+// Modal functionality
+function openModal() {
+  const modal = document.getElementById("imageModal");
+  const modalImage = document.getElementById("modalImage");
+  const bmiMeter = document.getElementById("bmiMeter");
+
+  modal.style.display = "block";
+  modalImage.src = bmiMeter.src; // Set the modal image source to the BMI meter image
+}
+
+function closeModal() {
+  const modal = document.getElementById("imageModal");
+  modal.style.display = "none";
+}
 
 </script>
 
