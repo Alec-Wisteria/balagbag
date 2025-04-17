@@ -1990,7 +1990,7 @@ const suggestionsFromPDF = {
 
 function showRecommendations(category) {
   function renderList(tipsArray) {
-    return "<ul>" + tipsArray.slice(0, 3).map(tip => `<li>${tip}</li>`).join("") + "</ul>";
+    return "<ul>" + tipsArray.slice(3).map(tip => `<li>${tip}</li>`).join("") + "</ul>";
 }
 
 dietBox.innerHTML = renderList(recommendations[category].diet);
