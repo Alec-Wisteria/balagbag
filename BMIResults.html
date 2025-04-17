@@ -877,7 +877,7 @@ html, body {
   color: #e65100; /* Deep Orange */
 }
 
-.modal {
+.modale {
         display: none;
         position: fixed;
         z-index: 1;
@@ -887,7 +887,7 @@ html, body {
         height: 100%;
         background-color: rgba(0, 0, 0, 0.5);
       }
-      .modal-content {
+      .modal-contente {
         background-color: white;
         margin: 15% auto;
         padding: 20px;
@@ -985,8 +985,8 @@ html, body {
     </div>
     <i class='bx bx-log-out' onclick="showLogoutConfirmation()"></i>
 </div>
-<div id="logoutModal" class="modal">
-    <div class="modal-content">
+<div id="logoutModale" class="modale">
+    <div class="modal-contente">
         <h3>Are you sure you want to log out?</h3>
         <button class="modal-button confirm" onclick="logout()">Confirm</button>
         <button class="modal-button cancel" onclick="closeLogoutModal()">Cancel</button>
@@ -2082,11 +2082,11 @@ document.addEventListener('DOMContentLoaded', async () => {
 });
 
 window.showLogoutConfirmation = function () {
-  document.getElementById('logoutModal').style.display = 'block';
+  document.getElementById('logoutModale').style.display = 'block';
 }
 
 window.closeLogoutModal = function () {
-  document.getElementById('logoutModal').style.display = 'none';
+  document.getElementById('logoutModale').style.display = 'none';
 }
         
 window.logout = async function () {
