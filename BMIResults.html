@@ -1989,21 +1989,30 @@ const suggestionsFromPDF = {
 };
 
 function showRecommendations(category) {
-    const dietBox = document.getElementById("diet");
+  const dietBox = document.getElementById("diet");
     const exerciseBox = document.getElementById("exercise");
     const healthBox = document.getElementById("health");
 
-    if (suggestionsFromPDF[category]) {
-        const cat = suggestionsFromPDF[category];
-
-        dietBox.innerHTML = getRandomItem(cat.diet);
-        exerciseBox.innerHTML = getRandomItem(cat.exercise);
-        healthBox.innerHTML = getRandomItem(cat.health);
-    } else {
-        dietBox.innerText = "No recommendation available.";
-        exerciseBox.innerText = "No recommendation available.";
-        healthBox.innerText = "No recommendation available.";
+    const selected = suggestionsFromPDF[category];
+    if (!selected) {
+        dietBox.innerHTML = "<p>No diet tips available.</p>";
+        exerciseBox.innerHTML = "<p>No exercise tips available.</p>";
+        healthBox.innerHTML = "<p>No health tips available.</p>";
+        return;
     }
+
+    function getRandomThree(arr) {
+        const shuffled = [...arr].sort(() => 0.5 - Math.random());
+        return shuffled.slice(0, 3);
+    }
+
+    function renderList(items) {
+        return `<ul>${items.map(item => `<li>${item}</li>`).join("")}</ul>`;
+    }
+
+    dietBox.innerHTML = renderList(getRandomThree(selected.diet));
+    exerciseBox.innerHTML = renderList(getRandomThree(selected.exercise));
+    healthBox.innerHTML = renderList(getRandomThree(selected.health));
 }
 
 function getRandomItem(arr) {
