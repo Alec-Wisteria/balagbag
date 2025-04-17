@@ -16,19 +16,18 @@
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
 }
-body{
-  overflow: hidden;
-}
-.sidebar{
+
+.sidebar {
   position: fixed;
   top: 0;
   left: 0;
-  height: 100%;
+  height: 100vh;
   width: 260px;
-  background: #c8c8d3;
-  z-index: 100;
-  transition: all 0.5s ease;
-}
+  background: linear-gradient(to bottom right, #c2c2c2, #343447);
+  transition: width 0.4s ease-in-out, background 0.3s ease-in-out;
+  z-index: 1000;
+  overflow: hidden;
+}   
 .sidebar.close{
   width: 78px;
 }
@@ -83,8 +82,11 @@ body{
   list-style: none;
   transition: all 0.4s ease;
 }
-.sidebar .nav-links li:hover{
-  background: #fbfbfb;
+.sidebar .nav-links li:hover {
+  background: rgba(255, 255, 255, 0.4);
+}
+body.dark-mode .sidebar .nav-links li:hover {
+  background: rgba(255, 255, 255, 0.1);
 }
 .sidebar .nav-links li .iocn-link{
   display: flex;
@@ -230,7 +232,7 @@ body{
 .sidebar .profile-details .job{
   font-size: 12px;
 }
-.home-section{
+.home-section {
   position: relative;
   background: #E4E9F7;
   height: 100vh;
@@ -239,7 +241,7 @@ body{
   transition: all 0.5s ease;
   padding: 12px;
 }
-.sidebar.close ~ .home-section{
+.sidebar.close ~ .home-section {
   left: 78px;
   width: calc(100% - 78px);
 }
@@ -250,12 +252,13 @@ body{
 }
 .home-section .home-content .bx-menu,
 .home-section .home-content .text{
-  color: #11101d;
-  font-size: 35px;
+  color: var(--menu-color);
+  transition: color 0.3s ease;
 }
 .home-section .home-content .bx-menu{
   cursor: pointer;
   margin-right: 10px;
+  font-size: 35px;
 }
 .home-section .home-content .text{
   font-size: 26px;
@@ -279,44 +282,92 @@ body{
     width: 78px;
   }
   .home-section {
-  position: relative;
-  min-height: 100vh;
-  background: linear-gradient(to right, #6a11cb, #2575fc);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 40px;
-  transition: all 0.3s ease;
+    position: relative;
+    left: 260px; 
+    width: calc(100% - 260px); 
+    transition: all 0.3s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
 }
-
-.welcome-container {
-  text-align: center;
-  color: #fff;
-  background: rgba(255, 255, 255, 0.1);
-  padding: 40px 60px;
-  border-radius: 20px;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(10px);
-  max-width: 600px;
-}
-
-.welcome-container h1 {
-  font-size: 3rem;
-  margin-bottom: 20px;
-  font-weight: 700;
-}
-
-.welcome-container p {
-  font-size: 1.25rem;
-  line-height: 1.6;
-}
-
   .sidebar.close ~ .home-section{
     left: 78px;
     width: calc(100% - 78px);
   }
 }
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    margin-top: 100px;
+  }
+  .text-content {
+    flex: 1;
+    padding-right: 20px;
+  }
 
+  .text-content h1 {
+    font-size: 50px;
+    margin-bottom: 20px;
+  }
+
+  .text-content p {
+    font-size: 18px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+  }
+
+  .text-content button {
+    background-color: blue;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: 0.3s;
+  }
+
+  .text-content button:hover {
+    background-color: #808080;
+  }
+
+  .image-content {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+  }
+
+  .image-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  }
+
+  @media screen and (max-width: 768px) {
+    .container {
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .text-content {
+      padding-right: 0;
+      margin-bottom: 20px;
+    }
+
+    .image-content img {
+      width: 80%;
+    }
+  }
+        .logo-details {
+    display: flex;
+    align-items: center;
+}
 .modal {
         display: none;
         position: fixed;
@@ -351,15 +402,77 @@ body{
         background-color: #f44336;
         color: white;
       }
+      :root {
+  --menu-color: #11101d;
+}
 
+body.dark-mode {
+  --menu-color: #f5f5f7;
+  background-color: #1c1c1e;
+  color: #f5f5f7;
+}
+
+body.dark-mode .sidebar,
+body.dark-mode .container, body.dark-mode .home-section {
+  background-color: #2c2c2e !important;
+  color: #f5f5f7 !important;
+}
+
+body.dark-mode input,
+body.dark-mode button {
+  background-color: #3a3a3c;
+  color: #f5f5f7;
+  border: 1px solid #555;
+}
+body.dark-mode label,
+body.dark-mode .quote,
+body.dark-mode h2 {
+  color: #f5f5f7;
+}
+body.dark-mode .sidebar .nav-links li a .link_name,
+body.dark-mode .sidebar .nav-links li i {
+  color: #f5f5f7 !important;
+}
+
+body.dark-mode .sidebar .nav-links li:hover {
+  background: rgba(255, 255, 255, 0.07);
+}
+
+html, body {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+
+
+body {
+  animation: fadeIn 0.8s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
    </style>
 <body>
   <div class="sidebar close">
     <div class="logo-details">
-        <img src="images/logo.jpg" alt="logo">
+      <img src="images/logo.jpg" alt="logo" style="border-radius: 50%; box-shadow: 0 2px 8px rgba(0,0,0,0.15);">
         <span class="logo_name">BodyCheck</span>
     </div>
     <ul class="nav-links">
+      <li>
+        <a href="#" onclick="toggleDarkMode()">
+          <i class='bx bx-moon'></i>
+          <span class="link_name">Dark Mode</span>
+        </a>
+      </li>
+      <li>
       <li>
         <a href="index.html">
           <i class='bx bx-grid-alt'></i>
@@ -379,7 +492,7 @@ body{
         </ul>
       </li>
       <li>
-        <a href="profile.html">
+        <a href="#">
           <i class='bx bx-user' ></i>
           <span class="link_name">Profile</span>
         </a>
@@ -430,26 +543,21 @@ body{
   </div>
   <section class="home-section">
     <div class="home-content">
-      <i class='bx bx-menu' ></i>
+      <i class='bx bx-menu'></i>
       <span class="text">BodyCheck Fitness</span>
     </div>
-      <div class="container">
-        <h1 style="margin-top: 68px; font-size: 65px;">Welcome to BodyCheck</h1>
-        <p style="margin-top: 20px; font-size: 20px; line-height: 1.6;">
+    <div class="container">
+      <div class="text-content">
+        <h1>Welcome to BodyCheck</h1>
+        <p>
           BodyCheck is your personal health companion. Use our BMI calculator to understand your body mass index and get personalized recommendations to improve your health and fitness.
         </p>
-        <button onclick="window.location.href='calculator.html'" style="
-            background-color: blue;
-            color: white;
-            padding: 10px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 16px;
-            transition: 0.3s;
-        ">Let's Get Started</button>
+        <button onclick="window.location.href='calculator.html'">Let's Get Started</button>
+      </div>
+      <div class="image-content">
+        <img src="images/logo.jpg" alt="logo" style="border-radius: 50%; box-shadow: 0 2px 8px rgba(0,0,0,0.15);">
+      </div>
     </div>
-    
   </section>
   <script>
     let arrow = document.querySelectorAll(".arrow");
@@ -502,5 +610,27 @@ window.logout = async function () {
 }
   </script>
 
+<script>
+  function toggleDarkMode() {
+    const body = document.body;
+    const html = document.documentElement;
+  
+    body.classList.toggle("dark-mode");
+    html.classList.toggle("dark-mode");
+  
+    localStorage.setItem("theme", body.classList.contains("dark-mode") ? "dark" : "light");
+  }
+  
+  window.toggleDarkMode = toggleDarkMode;
+  
+  // Load saved theme
+  window.addEventListener("DOMContentLoaded", () => {
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme === "dark") {
+      document.body.classList.add("dark-mode");
+      document.documentElement.classList.add("dark-mode");
+    }
+  });
+  </script>
 </body>
 </html>

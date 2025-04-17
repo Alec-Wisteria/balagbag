@@ -910,7 +910,7 @@ html, body {
             </ul>
           </li>
           <li>
-            <a href="profile.html">
+            <a href="#">
               <i class='bx bx-user' ></i>
               <span class="link_name">Profile</span>
             </a>
@@ -1148,15 +1148,15 @@ const categoryMessages = {
     "Normal Weight": "- You are Normal Weight, Keep up the good work maintaining your health.<br>" +
         "This range supports optimal body function, reduces the risk of chronic diseases, and reflects a balanced relationship between height and weight.",
     "Overweight": "- You are Overweight, Consider adopting a healthier lifestyle.<br>" +
-        "Excess weight may increase the risk of chronic diseases such as diabetes and heart disease.",
-    "Obese": "- You are Obese, High body mass may increase health risks.<br>" +
-        "Obesity is associated with a higher risk of cardiovascular diseases, diabetes, and joint problems.",
-    "Class 1 Obesity": "- You are in Obesity Class 1. This indicates moderate health risks.<br>" +
-        "Consider consulting a healthcare provider for a structured weight-loss plan.",
-    "Class 2 Obesity": "- You are in Obesity Class 2. This indicates high health risks.<br>" +
-        "Seek professional medical advice to manage your weight effectively.",
-    "Class 3 Obesity": "- You are in Obesity Class 3 (Severe Obesity). This indicates very high health risks.<br>" +
-        "It is strongly recommended to consult a doctor for a comprehensive weight management plan."
+        "Being in this range may signal early weight-related strain on the body, potentially leading to conditions like high blood pressure or insulin resistance.",
+    "Obese": "- You are Obese, High body fat increases risk of serious health issues.<br>" +
+        "Obesity is a serious, chronic disease. It can lead to other health problems, including diabetes, heart disease, and some cancers",
+    "Class 1 Obesity": "- You are Obesity Class 1, early stage obesity action now helps prevent complications.<br>" +
+        "This stage marks the beginning of clinical obesity, where lifestyle changes can significantly improve long-term health outcomes",
+    "Class 2 Obesity": "- You are Obesity Class II: Health risks are higher structured changes are important.<br>" +
+        "This is a more severe level of obesity with a higher risk of obesity-related health problems",
+    "Class 3 Obesity": "- You are Obesity Class lll: Severe obesity  medical support is often needed<br>" +
+        "This severe level of obesity can drastically affect mobility, organ function, and life expectancy, often necessitating comprehensive medical care."
 };
 
 // Update the category message dynamically
@@ -1169,94 +1169,814 @@ document.getElementById("categoryMessage").innerHTML = `<i class="bx bx-info-cir
 const suggestionsFromPDF = {
     "Underweight": {
         diet: [
-            `Whole Foods Weight Gain Diet: focus on whole grains, nuts, lean meats, and starchy vegetables. <a href="https://www.verywellfit.com/what-is-a-whole-foods-diet-2241974" target="_blank">Learn more</a>`,
-            `High-Calorie Smoothie-Based Diet: smoothies packed with nut butters, protein powder, milk, oats, etc. <a href="https://mattsfitchef.com/high-calorie-smoothie-to-gain-weight/" target="_blank">Learn more</a>`
+            `Whole Foods Weight Gain Diet, focus on whole grains, nuts, lean meats, and starchy vegetables. <a href="https://www.verywellfit.com/what-is-a-whole-foods-diet-2241974" target="_blank">Learn more</a>`,
+            `High-Calorie Smoothie-Based Diet, uses smoothies packed with nut butters, protein powder, milk, oats, etc. <a href="https://mattsfitchef.com/high-calorie-smoothie-to-gain-weight/" target="_blank">Learn more</a>`,
+            `Mediterranean Diet with Increased Portions, emphasizes healthy fats (olive oil, fish) with more frequent meals/snacks. <a href="https://my.clevelandclinic.org/health/articles/16037-mediterranean-diet" type="_blank">Learn more</a>`,
+            `High-Protein Muscle-Building Diet, great for underweight individuals looking to gain lean mass. <a href="https://www.verywellhealth.com/high-protein-foods-for-muscle-building-8751345" type="_blank">Learn more</a>`,
+            `Animal-Based High-Protein Diet, prioritizes eggs, red meat, fish, and dairy. <a href="https://www.cleaneatingkitchen.com/animal-based-diet/" type="_blank">Learn more</a>`,
+            `Plant-Based High-Protein Diet, uses legumes, tofu, quinoa, and soy milk with calorie-dense additions. <a href="https://storyofnialam.blogspot.com/2017/05/famous-high-protein-foods-for-plant.html" type="_blank">Learn more</a>`,
+            `Healthy Fat Gain Diet, emphasizes avocados, nuts, seeds, and olive oil for dense calories. <a href="https://www.loseit.com/articles/understanding-fats-health-benefits-daily-recommendations-and-its-role-in-weight-loss/" type="_blank">Learn more</a>`,
+            `Keto for Weight Gain, high fat version adapted for weight gain. <a href="https://www.dietdoctor.com/low-carb/keto" type="_blank">Learn more</a>`,
+            `Meal Replacement Diet, uses commercial shakes like Ensure, Boost, or DIY smoothies. <a href="https://topsupplements.com/pages/best-meal-replacement-powders-bing?ls=C-GArIp_pQ_47TcKUMZjc&msclkid=3402c8be14ff19a98ed0af51a42567d2" type="_blank">Learn more</a>`,
+            `GOMAD (Gallon of Milk a Day), a traditional bulking diet for skinny individuals (mostly athletes). <a href="https://www.healthline.com/health/food-nutrition/gomad-diet" type="_blank">Learn more</a>`,
+            `Ayurvedic Diet for Weight Gain, emphasizes warming foods, ghee, milk, and herbs like ashwagandha. <a href="https://adyantayurveda.com/healthy-weight-gain-with-ayurveda/" type="_blank">Learn more</a>`,
+            `Low-FODMAP Weight Gain Adaptation, for underweight individuals with gut sensitivities. <a href="https://www.monashfodmap.com/" type="_blank">Learn more</a>`,
+            `Anti-Inflammatory Weight Gain Diet, combines whole foods with omega-3s, leafy greens, and calorie boosters. <a href="https://www.eatingwell.com/article/7866186/30-day-anti-inflammatory-meal-plan/" type="_blank">Learn more</a>`,
+            `South Asian Diet, focuses on calorie-dense traditional foods like rice, lentils, and full-fat dairy. <a href="https://fareehajay.com/blog/eating-healthy-on-a-south-asian-diet/" type="_blank">Learn more</a>`,
+            `West African High-Energy Diet, uses plantains, cassava, groundnuts, and stews rich in oil and protein. <a href="https://foodandnutrition.com/discover-the-richness-of-the-west-african-diet/" type="_blank">Learn more</a>`,
+            `Arepa & Beans Diet, combines high-carb staples with protein and fats. <a href="https://thewanderingveggie.com/arepas-with-black-beans-and-plantain/" type="_blank">Learn more</a>`,
+            `Calorie-Rich Diet, focus on hummus, olive oil, meats, rice, and tahini-based sweets.`,
+            `Rice & Protein Diet, balanced meals with rice, fatty fish, soy products, and sauces for extra calories.`,
+            `Reverse Dieting, gradually increases intake to reset metabolism & promote healthy weight gain. <a href="https://www.forbes.com/health/nutrition/diet/reverse-dieting/" type="_blank">Learn more</a>`,
+            `Bulking Diet, structured to aim lean muscle gain and maximize nutrient timing. <a href="https://www.strengthlog.com/how-to-bulk/" type="_blank">Learn more</a>`,
+            `IIFYM (If It Fits Your Macros), track macros for personalized, flexible dieting and weight gain.`,
+            `Cheat-Meal-Integrated Diet, combines healthy meals with calorie-rich treats to boost intake <a href="https://www.bistromd.com/blogs/nutrition/healthy-cheat-meal-ideas" type="_blank">Learn more</a>`,
+            `Intermittent Energy Restriction, periods of high-calorie intake with strategic lower-calorie days to aid metabolism.`,
+            `Mindful Eating with Energy Boosters, focus on hunger signals and regular snacks (nuts, protein bars, dried fruits). `,
+            `Add-On Diet Strategy, maintain regular meals but add calorie-rich toppings: cheese, oils, seeds, etc. `
+
         ],
         exercise: [
-            `Squats: Builds lower body strength and size.`,
-            `Push-Ups: Builds upper body and core strength.`
+            `Squats: Squats are undoubtedly the best exercise for gaining weight. This exercise is considered important for increasing the strength and size of the lower body muscles.`,
+            `Push-Ups: Push-ups are a perfect exercise to build both your upper body and core strength. It is a difficult yet effective exercise to gain bodyweight.`,
+            `Bench Dips: Bench Dips are simple yet useful exercises to gain body weight.  This exercise mainly targets the triceps but it also focuses on your chest and the front part of your shoulder.`,
+            `Lunges: Just like squats, lunges also help in building the lower body. It helps in bulking up the thighs and hip muscles.`,
+            `Crunches: It is usually believed that crunches help in losing belly fat but crunches also help in increasing your core strength and gain weight.`,
+            `Glute Kickback: Glute kickbacks mainly benefit your gluteal muscles. It also targets your hamstrings and strengthens your buttocks.`,
+            `Pull-Ups: Pull-ups are one the most effective exercises for gaining weight. Pull-ups help in getting chiseled shoulders and ripped arms. Pull-ups focus on your biceps and latissimus dorsi primarily.`,
+            `Bench Press: Bench presses are great for bulking up. This exercise helps in building shoulders, chest muscles, and triceps.  Doing Bench press will help to gain weight.`,
+            `Deadlift: Deadlift exercise aids in weight gain, muscle mass, tones leg muscles, and develops strength in upper back, low back, hamstrings, and glutes.`,
+            `Burpees: Burpees are a challenging, full-body workout that targets the chest, arms, glutes, abs, quads, and hamstrings, providing a comprehensive workout experience.`,
+            `Overhead press: You’ll need a weighted bar to perform this exercise. Overhead presses will help bulk up the muscles in your arms, shoulders, back, abs, and legs.`,
+            `Bicep Curls: The bicep curl is a traditional exercise that enhances bicep size and strength by lifting weight from the shoulders while standing shoulder-width apart.`,
+            `Leg Extensions: Leg extension workouts enhance weight gain by building quadriceps and large thigh muscles, improving leg strength and size, and supporting compound exercises like squats and deadlifts.`,
+            `Calf Raises:  The calf raise is a popular exercise for weight gain and muscle development, particularly in the calf muscles, which are often overlooked but significantly impact the overall physique.`,
+            `Planks: Planks are a core exercise that strengthens abdominals, obliques, and lower back areas. They involve isometric holds, maintaining body stability for compound movements. `,
+            `Russian Twists: Russian twists are abdominal exercises that strengthen the abdominals by twisting against resistance, forming a strong, chiseled midsection, performed in a sitting position with bent thighs and lifted feet.`,
+            `Bird Dogs: The bird dog exercise enhances core strength, stability, form, and power output through compound movements, involving quadruped position, arm and leg extension, and side switching.`,
+            `Bench Dips: Bench dips are a versatile exercise that can strengthen muscles in triceps, chest, and shoulders, making them easy to scale and suitable for both pressure and challenge.`,
+            `Glute Kickback:Glute kickbacks, a popular exercise, target glute muscles, improving lower body stability, while the Aroleap's adjustable resistance enhances intensity, control, and muscle engagement.`,
+            `Tricep Dips: TRicep dips are a home exercise for arms and back that aids weight gain, promotes upper-body muscle growth, and strengthens for bench press exercises.`,
+            `Leg raises: Leg lifts target core muscles like rectus abdominis, internal and external obliques, low back, hips flexors, and inner thighs, primarily as an ab workout.`,
+            `Calf raises: Calf raises enhance ankle joint mobility, balance, and control, promoting proprioception and stability in lower extremities. They can be integrated into daily activities, preventing musculoskeletal disorders.`,
+            `Dumbbell Rows: Dumbbell rows are a powerful exercise that strengthens the back, arms, shoulders, and core by engaging multiple muscles simultaneously, resulting in maximum workout results.`,
+            `Plank Rotion: improves joint stability and works many of the muscles in your body, such as your core muscles and abs.`,
+            `Forward Lunge with twist: Lunges are a great workout for quadriceps, hamstrings, glutes, and core, improving balance and proprioception. Regular practice can enhance running and cycling performance.`
+
         ],
         health: [
-            `Consult a nutritionist for structured weight gain.`,
-            `Eat every 3–4 hours and add calorie-dense toppings.`
+            `Eat more frequently – Aim for 5-6 smaller meals a day to boost your calorie intake throughout the day.`,
+            `Include protein in every meal – Protein helps build muscle, so include foods like chicken, fish, eggs, and legumes to support healthy weight gain.`,
+            `Choose nutrient-dense foods – Opt for whole grains, nuts, seeds, and dairy, which provide essential vitamins, minerals, and healthy calories.`,
+            `Eat calorie-dense foods – Foods like peanut butter, avocado, and cheese are high in calories and healthy fats to help you gain weight.`,
+            `Add healthy fats – Incorporate fats like olive oil, coconut oil, and fatty fish into meals for extra calories and overall health.`,
+            `Drink smoothies – Blend fruits, yogurt, and protein powder to create calorie-packed drinks that are easy to consume.`,
+            `Avoid empty-calorie foods – Skip sugary snacks and drinks that don’t provide nutritional value and focus on more wholesome, calorie-rich options.`,
+            `Strength train – Building muscle with weight lifting can help increase your body mass and prevent weight gain from fat alone.`,
+            `Snack on nuts and seeds – These are small but powerful sources of healthy fats, protein, and calories for on-the-go nourishment.`,
+            `Incorporate whole milk – Full-fat milk is higher in calories and helps add protein and fat to your daily intake.`,
+            `Add dried fruits to meals – Dried fruits like apricots, raisins, and dates are high in calories and easy to add to snacks or meals.`,
+            `Use meal replacement shakes – High-calorie shakes are a convenient way to meet calorie goals without feeling too full.`,
+            `Choose whole-grain carbs – Brown rice, quinoa, and oats provide steady energy and are nutrient-rich compared to refined carbs.`,
+            `Add extra toppings – Boost the calories in meals by adding toppings like cheese, nuts, or avocado for extra nutrients and flavor.`,
+            `Stay hydrated – Drinking enough water is important, but avoid drinking too much right before meals so you can eat more.`,
+            `Get enough sleep – Adequate sleep (7-9 hours) is vital for recovery and overall health, including muscle growth.`,
+            `Stay consistent – Regular eating habits and exercise routines will help you steadily gain weight and muscle mass.`,
+            `Consult a doctor or dietitian – A professional can help tailor a weight gain plan suited to your specific needs and monitor your progress.`,
+            `Avoid excessive cardio – Too much cardio can burn too many calories, so focus on strength training to build muscle instead.`,
+            `Use high-calorie snacks – Snacking on high-calorie options like granola bars, protein bars, or trail mix helps increase daily calorie intake.`,
+            `Choose high-calorie snacks – Yogurt, cheese, and hummus are packed with calories and provide essential nutrients.`,
+            `Cook with extra oil or butter – Adding oils or butter to cooking can significantly increase the calorie content of your meals.`,
+            `Drink whole-fat smoothies – Use ingredients like coconut milk and protein powder to make smoothies that provide both protein and healthy fats.`,
+            `Use avocado in dishes – Avocado is a nutrient-dense food that can easily be added to salads, sandwiches, or smoothies for extra calories.`,
+            `Be patient and track progress – Weight gain takes time, so track your meals, exercise, and progress to stay motivated and consistent.`
         ]
     },
     "Normal Weight": {
         diet: [
-            `Mediterranean Diet: mostly veggies, fruits, whole grains, and olive oil. <a href="https://my.clevelandclinic.org/health/articles/16037-mediterranean-diet" target="_blank">Learn more</a>`
+            `Mediterranean Diet, this diet emphasizes plant based foods and healthy fats and you eat mostly veggies, fruits and whole grains which extra virgin olive oil is the main source of fat. <a href="https://my.clevelandclinic.org/health/articles/16037-mediterranean-diet" type="_blank">Learn more</a>`,
+            `DASH Diet (Lower Blood Pressure with Whole Foods), the diet focuses on fruits, vegetables, lean protein, and low sodium to support heart and vascular health. <a href="https://www.mayoclinic.org/healthy-lifestyle/nutrition-and-healthy-eating/in-depth/dash-diet/art-20047110" type="_blank">Learn more</a>`,
+            `Flexitarian Diet, this diet focuses on fruits, vegetables, lean protein, and low sodium to support heart and vascular health. <a href="https://www.healthline.com/nutrition/flexitarian-diet-guide" type="_blank">Learn more</a>`,
+            `Whole30 Diet, this diet removes added sugar, dairy, grains, and legumes for 30 days to identify food sensitivities <a href="https://www.healthline.com/nutrition/whole-30" type="_blank">Learn more</a>`,
+            `Blue Zones Diet, this diet mimics diets from longevity hotspots like Okinawa and Sardinia, mostly plant-based and moderate portions. <a href="https://www.everydayhealth.com/diet-nutrition/a-complete-blue-zones-diet-food-list-and-meal-plan/" type="_blank">Learn more</a>`,
+            `Time-Restricted Eating, a form of intermittent fasting shown to improve insulin sensitivity and metabolic flexibility <a href="https://www.healthline.com/nutrition/time-restricted-eating" type="_blank">Learn more</a>`,
+            `Mindful Eating, this can improves digestion and helps prevent overeating by paying attention during meals. <a href="https://www.healthline.com/nutrition/mindful-eating-guide" type="_blank">Learn more</a>`,
+            `Protein Pacing, this helps build lean mass and manage appetite better than loading protein in one meal. <a href="https://www.seniorfitness.org/protein-pacing-diet/" type="_blank">Learn more</a>`,
+            `Volume Eating, a concept, strategy, or method of eating that allows for large consumption of food while minimizing calorie intake. <a href="https://kaynutrition.com/volume-eating/" type="_blank">Learn more</a>`,
+            `The 80/20 Rule, this rule is eat Clean 80% of the Time and enjoy 20% Flexibility which encourages consistency without strict deprivation. <a href="https://www.verywellfit.com/what-is-the-8020-diet-3495281" type="_blank">Learn more</a>`,
+            `Low-FODMAP Diet, this diet was originally for IBS but can improve digestion and reduce bloating even in non-IBS individuals. <a href="https://www.healthline.com/nutrition/fodmaps-101" type="_blank">Learn more</a>`,
+            `Anti-Inflammatory Diet, this diet reduces Chronic Low-Level Inflammation which focuses on berries, leafy greens, omega-3s, and spices like turmeric to support long-term wellness. <a href="https://www.healthline.com/nutrition/anti-inflammatory-diet-101" type="_blank">Learn more</a>`,
+            `Glycemic Index Awareness, it chooses Lower-GI Carbs which helps regulate blood sugar and reduce cravings by avoiding blood sugar spikes <a href="https://www.healthline.com/nutrition/glycemic-index" type="_blank">Learn more</a>`,
+            `Nutrigenomics, eat based on your Genetic Profile and use DNA testing to tailor diet choices based on individual metabolism and nutrient needs. <a href="https://health.clevelandclinic.org/how-does-nutrigenomics-work" type="_blank">Learn more</a>`,
+            `Cycle-Based Eating (Women), adjust nutrition around menstrual phases and supports hormone balance and energy levels by syncing carbs, fats, and calories with your cycle. <a href="https://mallorythedietitian.com/cycle-syncing-diet/" type="_blank">Learn more</a>`,
+            `Add Omega-3s, from fatty fish or algae, it improves heart, brain, and joint health and also reduces post-exercise soreness <a href="https://www.healthline.com/nutrition/12-omega-3-rich-foods" type="_blank">Learn more</a>`,
+            `Hydrate Strategically, water before meals which enhances digestion and performance without extra calories <a href="https://www.nutrisense.io/blog/hydration-strategies-recommended-by-nutritionists" type="_blank">Learn more</a>`,
+            `Fermented Foods, which includes Yogurt, Kefir, Kimchi, or Sauerkraut which supports gut health and may improve immune function <a href="https://draxe.com/nutrition/fermented-foods/" type="_blank">Learn more</a>`,
+            `Green Smoothie Habit, easy way to boost micronutrient intake and fiber, especially for breakfast`,
+            `Color Diversity (“Eat the Rainbow” of Fruits & Veggies), ensures broad-spectrum intake of antioxidants and phytonutrients <a href="https://www.healthline.com/nutrition/eat-the-rainbow" type="_blank">Learn more</a>`,
+            `Minimize Ultra-Processed Foods`,
+            `Limit Added Sugars`,
+            `Avoid Seed Oils in Excess`,
+            `Watch Liquid Calories`,
+            `Reduce Late-Night Snacking`
+
         ],
         exercise: [
-            `Jogging: improves cardiovascular health and stamina.`,
-            `Cycling: boosts aerobic fitness and burns fat.`
+            `Brisk Walking: Walking outside or using a treadmill indoors are examples of low-impact aerobic exercises that can improve heart health, elevate mood, and help burn calories.`,
+            `Jogging: Better cardio health. Running, or jogging, is one of the best cardio exercises you can do. Running for at least 10 minutes a day can significantly lower your risk of cardiovascular disease. Runners lower their chances of dying from heart disease by half.`,
+            `Squats: Squats work the glutes, quadriceps, and core to strengthen your lower body. Additionally, they increase bone mineral density, improve flexibility, and improve balance, all of which lower the risk of ankle and knee injuries.`,
+            `Cycling: Cycling is mainly an aerobic activity, which means that your heart, blood vessels and lungs all get a workout. You will breathe deeper, perspire and experience increased body temperature, which will improve your overall fitness level.`,
+            `Jump rope: Jump rope is a fantastic cardiovascular exercise that strengthens your heart and improves circulation.`,
+            `Tricep Dips: Tricep dips are a simple, home-based exercise that aids in weight gain, upper-body muscle growth, and strength building when performed correctly. other exercises like the bench press.`,
+            `forward Lunge with twist: Lunges are a great workout for quadriceps, hamstrings, glutes, and core, improving balance and proprioception. Regular practice can enhance running and cycling performance.`,
+            `Pull-Ups: Pull-ups are one the most effective exercises for gaining weight. Pull-ups help in getting chiseled shoulders and ripped arms. Pull-ups focus on your biceps and latissimus dorsi primarily.`,
+            `Squats: Squats are undoubtedly the best exercise for gaining weight. This exercise is considered important for increasing the strength and size of the lower body muscles.`,
+            `Planks: Planks are a core exercise that strengthens abdominals, obliques, and lower back areas. They involve isometric holds, maintaining body stability for compound movements. A plank involves a push-up position.`,
+            `Plank rows: Targets the muscles of the middle and upper back, shoulders and arms. It is performed by doing a row with a set of dumbbells from the plank pose.`,
+            `Jump squats: Bodyweight and weighted squats are focused on building muscle and strength. Jump squats, on the other hand, are more focused on building power.`,
+            `Wall angels: Wall angels strengthen upper back muscles, chest, spinal, and trunk muscles, while also stabilizing the trunk and maintaining a neutral position.`,
+            `Seated leg extension: Leg extensions not only burn calories but also increase muscle mass, leading to higher metabolism and weight loss.`,
+            `Walking: Walking is a great way to improve or maintain your overall health. Just 30 minutes every day can increase cardiovascular fitness, strengthen bones, reduce excess body fat, and boost muscle power and endurance.`,
+            `Elbow-to-knee taps: improve cardiovascular health, decrease back and joint stiffness, and strengthen core muscles that help the spine balance weight`,
+            `Wall push-ups: work the muscles in your arms, chest, back, and abs (as well as your glutes, hamstrings, and calves`,
+            `Knee push-ups: Knee push-ups are a legit upper-body exercise. They’re the perfect intro to standard push-ups or other difficult arm or shoulder workouts.`,
+            `Leg swings (front to back): Increased blood flow and leg swing movement improve joint capsule mobility and hip openness, making it a good primer for tightness in hip flexors`,
+            `Shoulder Press Machine:  The exercise enhances shoulder strength and stability by working the deltoid muscle of the shoulder, while also engaging the core throughout the movement.`,
+            `Dumbbell Shoulder Press: The exercise enhances shoulder strength and stability by working the deltoid muscle of the shoulder, while also engaging the core throughout the movement.`,
+            `Cable Row: Increased Strength, Better Posture, Stronger Upper Back, Better Back Definition, Better Core Stability, Increased Core Strength, Improved, and Muscular Balance`,
+            `Barbell Squats: Barbell squats are a powerful calorie burner, engaging all muscle groups simultaneously and burning more calories than any other exercise.`,
+            `Stationary Bike: Riding a stationary bike can help build strength in your legs and lower body, especially if you use a higher resistance.`
+
         ],
         health: [
-            `Stick to consistent healthy habits.`,
-            `Hydrate well and include omega-3s regularly.`
+            `●	Eat a balanced diet – Ensure you get a variety of foods from all food groups to support overall health and weight maintenance.`,
+            `●	Watch portion sizes – Avoid overeating by keeping portions in check, using smaller plates or mindful eating techniques.`,
+            `●	Include lean proteins – Protein helps keep you full longer, so include lean sources like chicken, fish, beans, and tofu in your meals.`,
+            `●	Eat whole grains – Choose whole grains like brown rice, oats, and quinoa for added fiber and long-lasting energy.`,
+            `●	Consume healthy fats – Incorporate healthy fats like avocado, nuts, and olive oil to support your heart and overall health.`,
+            `●	Limit processed foods – Avoid foods with added sugars and artificial ingredients, opting for fresh, whole foods whenever possible.`,
+            `●	Snack wisely – Choose nutritious snacks like fruits, yogurt, or nuts instead of chips or sweets to maintain stable energy levels.`,
+            `●	Stay hydrated – Drink plenty of water throughout the day to keep your metabolism running efficiently and avoid overeating due to thirst.`,
+            `●	Exercise regularly – Aim for a mix of cardio and strength training exercises to maintain muscle mass and healthy metabolism.`,
+            `●	Get enough sleep – Ensure 7-9 hours of quality sleep to support healthy metabolism and reduce the risk of weight gain.`,
+            `●	Practice mindful eating – Pay attention to hunger cues and enjoy your meals without distractions to avoid overeating.`,
+            `●	Reduce sugary drinks – Cut back on sodas, sweetened teas, and energy drinks, opting for water or unsweetened beverages instead.`,
+            `●	Eat plenty of fruits and vegetables – These are nutrient-dense, low-calorie foods that provide vitamins, minerals, and fiber.`,
+            `●	Include probiotics – Yogurt, kefir, and fermented foods promote a healthy gut, which supports metabolism and overall well-being.`,
+            `●	Limit alcohol intake – Alcohol is calorie-dense and can contribute to weight gain if consumed in excess.`,
+            `●	Control stress – High stress can lead to emotional eating, so practice stress-relieving activities like yoga, meditation, or deep breathing.`,
+            `●	Avoid eating late at night – Try to have your last meal a few hours before bedtime to prevent unnecessary weight gain.`,
+            `●	Cook at home – Preparing your own meals helps you control ingredients, portions, and ensures you eat healthier.`,
+            `●	Track your food intake – Keeping a food journal or using an app helps you stay mindful of your eating habits.`,
+            `●	Listen to your body – Eat when you’re hungry and stop when you’re satisfied to maintain a healthy weight.`,
+            `●	Avoid extreme dieting – Extreme calorie restrictions or fad diets can slow down metabolism and are unsustainable in the long term.`,
+            `●	Eat fiber-rich foods – Foods like beans, vegetables, and whole grains help with digestion and promote satiety.`,
+            `●	Avoid binge eating – Prevent large overeating episodes by eating regular, balanced meals throughout the day.`,
+            `●	Stay active throughout the day – Even small activities like walking or stretching can add up to improved metabolism and energy expenditure.`,
+            `●	Be consistent – Make healthy eating and regular physical activity part of your daily routine for long-term weight management.`
+            
         ]
     },
     "Overweight": {
         diet: [
-            `Low-Carb Diet: reduces refined carbs to promote fat burning. <a href="https://www.healthline.com/nutrition/low-carb-diet-meal-plan-and-menu" target="_blank">Learn more</a>`
+            `Mediterranean Diet, heart-healthy, the diet is rich in healthy fats, fiber, and antioxidants which promotes gradual weight loss <a href="https://www.healthline.com/nutrition/mediterranean-diet-meal-plan" target="_blank">Learn more</a>`,
+            `DASH Diet (Dietary Approaches to Stop Hypertension), the diet is designed to lower blood pressure and also supports weight loss through nutrient-dense foods <a href="https://www.healthline.com/nutrition/dash-diet" type="_blank">Learn more</a>`,
+            `Low-Carb Diet, this diet reduces refined carbs to promote fat burning and stabilize insulin <a href="https://www.healthline.com/nutrition/low-carb-diet-meal-plan-and-menu" type="_blank">Learn more</a>`,
+            `Ketogenic Diet, very low in carbs, high in fat; induces ketosis for fat loss <a href="https://www.ruled.me/guide-keto-diet/" type="_blank">Learn more</a>`,
+            `Plant-Based Diet, this diet emphasizes plant-based foods like fruits, vegetables, legumes, whole grains, and nuts <a href="https://www.forksoverknives.com/how-tos/plant-based-primer-beginners-guide-starting-plant-based-diet/" type="_blank">Learn more</a>`,
+            `High-Protein Diet, the diet helps preserve lean muscle and reduce appetite <a href="https://www.healthline.com/nutrition/high-protein-diet-plan" type="_blank">Learn more</a>`,
+            `Volumetrics Diet, this diet focuses on low-calorie, high-volume foods to promote fullness <a href="https://www.everydayhealth.com/diet-nutrition/the-volumetrics-diet.aspx" type="_blank">Learn more</a>`,
+            `Whole 30 Diet, this diet eliminates processed foods, sugars, and grains for 30 days <a href="https://www.thespruceeats.com/whole30-food-list-what-you-can-and-cannot-eat-4775509" type="_blank">Learn more</a>`,
+            `Intermittent Fasting, the diet involves time-restricted eating, shown to aid fat loss and insulin sensitivity <a href="https://www.healthline.com/nutrition/intermittent-fasting-guide" type="_blank">Learn more</a>`,
+            `Low-Glycemic Index Diet, this diet supports stable blood sugar and reduced cravings <a href="https://www.healthline.com/nutrition/low-glycemic-diet" type="_blank">Learn more</a>`,
+            `Flexitarian Diet, this diet is mostly plant-based with flexibility for occasional meat, reducing calorie density <a href="https://www.healthline.com/nutrition/flexitarian-diet-guide" type="_blank">Learn more</a>`,
+            `Zone Diet, this diet is 40% carbs, 30% fat, 30% protein which helps reduce inflammation and control hunger <a href="https://www.healthline.com/nutrition/zone-diet" type="_blank">Learn more</a>`,
+            `Paleo Diet, the diet eliminates processed foods and grains; promotes protein and vegetables <a href="https://www.healthline.com/nutrition/paleo-diet-meal-plan-and-menu" type="_blank">Learn more</a>`,
+            `Anti-Inflammatory Diet, this diet prioritizes whole foods that lower inflammation and metabolic stress <a href="https://www.healthline.com/nutrition/anti-inflammatory-diet-101" type="_blank">Learn more</a>`,
+            `Low-FODMAP Diet, this diet helps reduce bloating and discomfort, which can support adherence to healthy eating <a href="https://www.healthline.com/nutrition/fodmaps-101" type="_blank">Learn more</a>`,
+            `Alternate-Day Fasting (ADF), the diet says eat one day, fast or eat very little the next day which shown to reduce body fat and improve insulin sensitivity <a href="https://www.healthline.com/nutrition/alternate-day-fasting-guide" type="_blank">Learn more</a>`,
+            `Time-Restricted Eating, eating all meals within a shorter window (e.g., 8-10 hours) without calorie counting <a href="https://www.healthline.com/nutrition/time-restricted-eating" type="_blank">Learn more</a>`,
+            `Therapeutic Lifestyle Changes (TLC) Diet, this diet was created by the NIH to lower cholesterol and weight <a href="https://www.nhlbi.nih.gov/education/TLC-Therapeutic-Lifestyle-Changes-Lower-Cholesterol" type="_blank">Learn more</a>`,
+            `High-Fiber Diet, eating more fiber like vegetables, whole grains, and legumes promotes fullness and improves digestion <a href="https://www.healthline.com/nutrition/22-high-fiber-foods" type="_blank">Learn more</a>`,
+            `Portion Control, by simply reducing meal size or using smaller plates can lead to reduced caloric intake without major dietary changes <a href="https://www.healthline.com/nutrition/portion-control" type="_blank">Learn more</a>`,
+            `Mindful Eating, paying attention while eating reduces overeating and emotional eating <a href="https://www.healthline.com/nutrition/mindful-eating-guide" type="_blank">Learn more</a>`,
+            `Meal Replacement shakes, replacing one to two meals per day with low-calorie, high-protein shakes can support structured weight loss <a href="https://www.healthline.com/nutrition/best-meal-replacement" type="_blank">Learn more</a>`,
+            `Low-Calorie Diet (LCD), A medically supervised plan (e.g., 800–1200 kcal/day) can result in rapid weight loss for obese individuals <a href="https://www.healthline.com/nutrition/low-calorie-foods" type="_blank">Learn more</a>`,
+            `Nordic Diet, similar to the Mediterranean Diet but includes local foods from Nordic countries, emphasis on whole grains, berries, and fish <a href="https://health.clevelandclinic.org/nordic-diet" type="_blank">Learn more</a>`,
+            `Protein-Paced Diet, this diet is an consistent intake of protein with each meal (20–30g) to boost satiety and preserve muscle mass during weight loss <a href="https://www.seniorfitness.org/protein-pacing-diet/" type="_blank">Learn more</a>`
+
         ],
         exercise: [
-            `HIIT: High-intensity intervals that burn fat effectively.`,
-            `Swimming: Full-body cardio workout with joint support.`
+            `Walking: Walking for half an hour can burn 150 more calories than usual, especially for beginners. Start with shorter journeys and gradually increase intensity.`,
+            `Jumping Rope: Jump-rope is a cost-effective workout equipment that burns calories quickly, works multiple muscle groups, and improves coordination, making it a great option for trips and a portable workout option.`,
+            `High-Intensity Interval Training (HIIT): HIIT is a workout that alternates between intense and less-intense exercises, effectively aiding weight loss by burning more calories than steady cardio and maintaining fat-burning mode for up to 24 hours.`,
+            `Cycling: Cycling is a low-impact, adaptable exercise that can burn 400-750 calories an hour, depending on weight, speed, and cycling type.`,
+            `Swimming: swimming is an ideal exercise. It's easy on your joints, you’ll use both your upper and lower body, and you'll get a good cardio workout.`,
+            `Strength Training: Strength training, using resistance, aids in weight loss and muscle building while also promoting fat burning. It should be done 3-5 times a week, with daily rest.`,
+            `Pilates: Pilates, a core strength-focused exercise, can enhance strength and promote healthy weight management, with class intensity varying based on individual needs and available online or at local gyms.`,
+            `Jogging: Jogging, an aerobic exercise, uses oxygen to aid weight loss and boost metabolic rate for up to 24 hours, promoting fat-burning even after daily workouts.`,
+            `Yoga: Yoga, a combination of physical activity and meditation, is a popular mindfulness practice. Overweight individuals who practice yoga for 30 minutes weekly lose weight and lower their BMIs, and become more mindful eaters.`,
+            `Stair Climbing: Stair climbing is a low-cost, versatile exercise for weight loss, requiring only stairs. Daily climbing can lead to 6 pounds of weight loss, improve cholesterol levels, and maintain joint and muscle health.`,
+            `Hiking: If you’re looking for a more adventurous way of losing weight, hiking might be your move. It usually involves walking in nature and avoiding the obstacles around you, like tree roots and rocks. Hiking can lead to weight loss, especially if you do it regularly`,
+            `Brisk Walking: Boosts cardiovascular health, burns calories, improves mood`,
+            `Dancing with Fitness Videos: Boosts heart rate, burns calories, easy to do at home`,
+            `Cleaning Activities (Sweeping, Vacuuming): Moderate-intensity movement that improves daily calorie burn`,
+            `Zumba (Low-Intensity): 39-minute Zumba class burned an average of 9.5 calories per minute. This adds up to 369 calories in total throughout the class.`,
+            `Jumping Jacks: Increases heart rate, burns calories, low impact with modifications`,
+            `High Knees Marching: Boosts heart rate, strengthens core, and engages lower body muscles`,
+            `Power Walking: Person who weighs 160 lbs can burn around 119 calories on a 30-minute brisk walk (3 mph). If that person power walks (4 mph) for 30 minutes, they can burn around 181 calories.`,
+            `Walking Lunges: a great exercise for overweight individuals seeking to build lower body strength and endurance. They can be performed with or without added weights, and variations can be incorporated to adjust the intensity.`,
+            `Side-to-side Step Touch: are a low-impact cardio exercise that can be beneficial for overweight individuals seeking to burn calories and improve fitness. This exercise involves stepping sideways, touching the floor with one foot and then the other, engaging various muscles and improving coordination. `,
+            `Walking with Weights: Adding weights to your walking workouts can increase the intensity, helping to burn more calories and enhance muscle engagement`,
+            `Lunges: Just like squats, lunges also help in building the lower body. It helps in bulking up the thighs and hip muscles.`,
+            `Lateral Leg Raises: Performing high repetitions of side leg raises can help to increase muscle endurance and stamina in the inner thighs and adductors`,
+            `Rowing Machine: Rowing uses both your upper and lower body with every stroke, you'll strengthen and sculpt muscles while improving your endurance.`,
+            `Bicycling (Stationary): Burn calories and body fat while strengthening your heart, lungs, and muscles`
         ],
         health: [
-            `Practice portion control and reduce sugar intake.`,
-            `Get enough sleep and manage stress for better metabolism.`
+            `Adopt a balanced diet: Focus on whole, unprocessed foods.`,
+            `●	Increase physical activity: Aim for at least 150 minutes of moderate exercise per week.`,
+            `Drink plenty of water: Staying hydrated supports metabolism.`,
+            `Eat more fruits and vegetables: They are high in fiber and low in calories.`,
+            `Limit added sugars: Reduce intake of sweets, sodas, and sugary snacks.`,
+            `Choose whole grains: Replace refined grains with whole grain options.`,
+            `Control portion sizes: Use smaller plates and be mindful of serving sizes.`,
+            `Avoid processed foods: They often contain unhealthy fats, sugars, and additives.`,
+            `Keep a food diary: Tracking meals can help you stay accountable.`,
+            `Plan your meals ahead: Preparing meals in advance can prevent unhealthy choices.`,
+            `Eat slowly: Taking time to chew and savor your food can aid digestion and satiety.`,
+            `Reduce saturated and trans fats: Opt for lean protein and healthy fats instead.`,
+            `Incorporate lean protein: Include sources like chicken, fish, legumes, and tofu.`,
+            `Include healthy fats: Use olive oil, nuts, and avocados in moderation.`,
+            `Skip high-calorie beverages: Replace them with water, herbal tea, or other low-calorie drinks.`,
+            `Get adequate sleep: Aim for 7–9 hours per night to help regulate appetite hormones.`,
+            `Manage stress: Practice stress-relief techniques like deep breathing or meditation.`,
+            `Set realistic goals: Small, achievable steps can lead to lasting changes.`,
+            `Schedule regular health checkups: Monitor your progress with your healthcare provider.`,
+            `Consult a dietitian: A professional can provide personalized advice.`,
+            `Incorporate strength training: Building muscle boosts metabolism and overall health.`,
+            `Practice mindful eating: Pay attention to hunger cues and avoid distractions while eating.`,
+            `Increase dietary fiber: Fiber helps you feel full longer and supports digestive health.`,
+            `Monitor your progress: Keep track of changes in your weight and health markers.`,
+            `Build a support network: Connect with friends, family, or support groups for encouragement.`
         ]
     },
     "Obese": {
         diet: [
-            `Calorie-Restricted Diet: structured eating with fewer calories. <a href="https://www.verywellfit.com/what-is-a-very-low-calorie-diet-3496286" target="_blank">Learn more</a>`
+            `Mediterranean Diet, the diet’s approach is to emphasise vegetables, fruits, legumes, whole grains, olive oil, and moderate fish intake <a href="https://www.healthline.com/nutrition/mediterranean-diet-meal-plan" type="_blank">Learn more</a>`,
+            `DASH Diet (Dietary Approaches to Stop Hypertension), the diet was developed to lower blood pressure and also helps in weight loss which is high in fruits, vegetables, low-fat dairy, and low in sodium and red meat <a href="https://www.healthline.com/nutrition/dash-diet" type="_blank">Learn more</a>`,
+            `Low-Carbohydrate Diet, this diet helps stabilize insulin levels and support fat reduction <a href="https://www.healthline.com/nutrition/low-carb-diet-meal-plan-and-menu" type="_blank">Learn more</a>`,
+            `Ketogenic Diet, this diet is popular for weight loss and it also includes very low-carb, high-fat to induce ketosis which is the fat burning state <a href="https://www.healthline.com/nutrition/ketogenic-diet-foods#animal-proteins" type="_blank">Learn more</a>`,
+            `High-Protein Diet, this diet boosts protein consumption to comprise 25 to 30 percent of daily caloric intake which supports satiety and muscle retention <a href="https://www.healthline.com/nutrition/high-protein-diet-plan" type="_blank">Learn more</a>`,
+            `Intermittent Fasting, this diet cycles between eating and fasting periods and limits eating to a specific window which reduces total calorie intake <a href="https://www.healthline.com/nutrition/intermittent-fasting-guide" type="_blank">Learn more</a>`,
+            `Plant-Based Diet, this diet emphasizes plant-based foods like fruits, vegetables, legumes, whole grains, and nuts <a href="https://www.forksoverknives.com/how-tos/plant-based-primer-beginners-guide-starting-plant-based-diet/" type="_blank">Learn more</a>`,
+            `Volumetrics Diet, this diet focuses on food density to reduce calorie intake and encourages foods low in energy density <a href="https://www.healthline.com/nutrition/volumetrics-diet" type="_blank">Learn more</a>`,
+            `Paleo Diet, this diet avoids processed foods, dairy, and grains and includes lean meat, fruits, and vegetables <a href="https://www.healthline.com/nutrition/paleo-diet-meal-plan-and-menu" type="_blank">Learn more</a>`,
+            `Flexitarian Diet, this diet is a semi-vegetarian diet allowing flexibility and mostly plant-based with occasional meat or fish <a href="https://www.healthline.com/nutrition/flexitarian-diet-guide" type="_blank">Learn more</a>`,
+            `Low-Glycemic Index (GI) Diet, this diet controls blood sugar for better appetite regulation which prioritizes foods that don't spike blood sugar <a href="https://www.healthline.com/nutrition/low-glycemic-diet" type="_blank">Learn more</a>`,
+            `Whole-Food Plant-Based Diet, this diet is based on unprocessed plant foods and emphasizes fruits, vegetables, legumes, and whole grains which excludes animal products and processed food <a href="https://www.healthline.com/nutrition/plant-based-diet-guide" type="_blank">Learn more</a>`,
+            `Ornish Diet, this diet is a very low-fat vegetarian diet with lifestyle changes which supports weight lose <a href="https://www.everydayhealth.com/diet-and-nutrition/the-ornish-diet.aspx" type="_blank">Learn more</a>`,
+            `Nordic Diet, a whole grain, root vegetables, fatty fish, and berries diet <a href="https://health.clevelandclinic.org/nordic-diet" type="_blank">Learn more</a>`,
+            `Zone Diet, a balanced macronutrients to reduce inflammation.with 40% carbs, 30% protein,and  30% fat diet <a href="https://www.healthline.com/nutrition/zone-diet" type="_blank">Learn more</a>`,
+            `Anti-Inflammatory Diet, this diet is rich in vegetables, healthy fats, whole grains; low in sugar and processed foods <a href="https://www.healthline.com/nutrition/anti-inflammatory-diet-101" type="_blank">Learn more</a>`,
+            `Vegetarian Diet, this diet excludes meat; includes grains, legumes, fruits, and vegetables <a href="https://www.healthline.com/nutrition/vegetarian-diet-plan" type="_blank">Learn more</a>`,
+            `Vegan Diet, excludes all animal products while focuses on whole, plant-based foods <a href="https://www.healthline.com/nutrition/vegan-diet-guide" type="_blank">Learn more</a>`,
+            `Time-Restricted Eating, a form of intermittent fasting in which you could eat only during a fixed daily window <a href="https://www.healthline.com/nutrition/time-restricted-eating" type="_blank">Learn more</a>`,
+            `Calorie-Restricted Diet, a diet based purely on reducing calorie intake <a href="https://www.livestrong.com/article/263725-calorie-restriction-diet-meal-plans/#google_vignette" type="_blank">Learn more</a>`,
+            `Low-FODMAP Diet, a diet developed for gut health but can aid weight loss by removing processed carbs and limits fermentable carbohydrates <a href="https://www.healthline.com/nutrition/fodmaps-101" type="_blank">Learn more</a>`,
+            `Gluten-Free Diet, this diet originally designed for managing celiac disease and gluten sensitivity but when combined with whole foods and calorie control it may assist in weight loss for people with severe obesity <a href="https://www.healthline.com/nutrition/gluten-free-diet" type="_blank">Learn more</a>`,
+            `Raw Food Diet, this diet focuses on unprocessed, uncooked foods and high intake of fruits, vegetables, nuts, and seeds <a href="https://www.healthline.com/nutrition/raw-food-diet#guidelines" type="_blank">Learn more</a>`,
+            `Very Low-Calorie Diet (VLCD), this diet is used under medical supervision for rapid weight loss <a href="https://www.verywellfit.com/what-is-a-very-low-calorie-diet-3496286" type="_blank">Learn more</a>`,
+            `MIND Diet, combines Mediterranean and DASH diets with emphasis on berries and greens <a href="https://www.healthline.com/nutrition/mind-diet" type="_blank">Learn more</a>`
+
         ],
         exercise: [
-            `Brisk Walking: accessible, low-impact cardio.`,
-            `Stationary Biking: improves heart and leg strength safely.`
+            `Brisk Walking: Increases heart rate, burns calories, and is accessible for beginners.`,
+            `Push-ups: Burns calories, protects your shoulders and lower back from injuries, Improves your balance and posture, and improves your flexibility`,
+            `Lunges: Building strength in muscles used for walking, running, or high-intensity exercise.`,
+            `Leg swings (front to back): Increased blood flow and leg swing movement improve joint capsule mobility and hip openness, making it a good primer for tightness in hip flexors`,
+            `Plank rows: Targets the muscles of the middle and upper back, shoulders and arms. It is performed by doing a row with a set of dumbbells from the plank pose.`,
+            `Wall angels: Wall angels strengthen upper back muscles, chest, spinal, and trunk muscles while also stabilizing the trunk and maintaining a neutral position`,
+            `Brisk Walking: Walking outside or using a treadmill indoors are examples of low-impact aerobic exercises that can improve heart health, elevate mood, and help burn calories.`,
+            `Pull-Ups: Pull-ups are one the most effective exercises for gaining weight. Pull-ups help in getting chiseled shoulders and ripped arms. Pull-ups focus on your biceps and latissimus dorsi primarily.`,
+            `Squats: Squats are undoubtedly the best exercise for gaining weight. This exercise is considered important for increasing the strength and size of the lower body muscles.`,
+            `Burpees: Burpees are a challenging, full-body workout that targets the chest, arms, glutes, abs, quads, and hamstrings, providing a comprehensive workout experience.`,
+            `Walking: Walking is a great way to improve or maintain your overall health. Just 30 minutes every day can increase cardiovascular fitness, strengthen bones, reduce excess body fat, and boost muscle power and endurance`,
+            `Squats: Squats are undoubtedly the best exercise for gaining weight. This exercise is considered important for increasing the strength and size of the lower body muscles.`,
+            `Deadlift: Deadlift exercise aids in weight gain, muscle mass, tones leg muscles, and develops strength in upper back, low back, hamstrings, and glutes.`,
+            `Jogging: Jogging, an aerobic exercise, uses oxygen to aid weight loss and boost metabolic rate for up to 24 hours, promoting fat-burning even after daily workouts.`,
+            `Supermans: The superman exercise is effective for all fitness levels, targeting the lower back, glutes, and hamstrings. Additionally, it complements other core exercises that mainly focus on abs.`,
+            `Squat Pulses: Build strength and endurance, as well as coordination and stability, and even improve hip mobility.`,
+            `Standing Calf Raises: Strengthening your calf muscles improves physical performance, balance, stability, and ankle and foot support, reducing injury risk during various activities.`,
+            `Tricep Dips: Tricep dips are a simple, home-based exercise that aids in weight gain, upper-body muscle growth, and strength building when performed correctly. other exercises like the bench press.`,
+            ` Barbell Squats: Barbell squats are a powerful calorie burner, engaging all muscle groups simultaneously and burning more calories than any other exercise.`,
+            `Step-ups: Develops Lower Body Strength, Improves Balance & Coordination, and Boosts Functional Fitness`,
+            `Glute Kickbacks: Helps to strengthen your hamstrings, calves, and core.`,
+            `Dancing with Fitness Videos: Boosts heart rate, burns calories, easy to do at home`,
+            `Shoulder Press Machine:  The exercise enhances shoulder strength and stability by working the deltoid muscle of the shoulder, while also engaging the core throughout the movement.`,
+            `Bicycling (Stationary): Burn calories and body fat while strengthening your heart, lungs, and muscles`,
+            `Pull-Ups: Pull-ups are one the most effective exercises for gaining weight. Pull-ups help in getting chiseled shoulders and ripped arms. Pull-ups focus on your biceps and latissimus dorsi primarily.`
         ],
         health: [
-            `Consult a doctor for a long-term plan.`,
-            `Start with gentle routines and increase gradually.`
+           `Adopt a balanced diet: Focus on whole, unprocessed foods.`,
+           `Increase physical activity: Aim for at least 150 minutes of moderate exercise per week.`,
+           `Stay hydrated: Drink plenty of water throughout the day.`,
+           `Eat more fruits and vegetables: They are high in fiber and essential nutrients.`,
+           `Limit added sugars: Cut back on sweets, sodas, and sugary snacks.`,
+           `Choose whole grains: Replace refined grains with whole grain alternatives.`,
+           `Control portion sizes: Use smaller plates and measure servings when possible.`,
+           `Avoid processed foods: They often contain unhealthy fats, sugars, and additives.`,
+           `Keep a food diary: Track meals to stay accountable and monitor intake.`,
+           `Plan meals ahead: Prepare healthy meals in advance to avoid impulsive choices.`,
+           `Eat slowly: Chew thoroughly to aid digestion and recognize fullness.`,
+           `Reduce saturated and trans fats: Opt for lean protein and healthier fat sources.`,
+           `Include lean protein: Add chicken, fish, legumes, or tofu to your meals.`,
+           `Incorporate healthy fats: Use olive oil, nuts, and avocados in moderation.`,
+           `Skip high-calorie beverages: Choose water, herbal tea, or other low-calorie drinks.`,
+           `Ensure adequate sleep: Aim for 7–9 hours per night to help regulate appetite hormones.`,
+           `Manage stress effectively: Practice relaxation techniques like deep breathing or meditation.`,
+           `Set realistic goals: Establish small, achievable targets for gradual improvement.`,
+           `Schedule regular checkups: Monitor health markers with your healthcare provider.`,
+           `Consult a dietitian: Get personalized advice tailored to your needs.`,
+           `Include strength training: Build muscle to boost metabolism and overall health.`,
+           `Practice mindful eating: Focus on hunger cues and avoid distractions while eating.`,
+           `Increase dietary fiber: Fiber helps you feel full longer and supports digestion.`,
+           `Monitor progress: Track changes in weight and other health markers.`,
+           `Build a support network: Engage with friends, family, or support groups for encouragement.`
         ]
     },
     "Obesity Class 1": {
         diet: [
-            `Low-Calorie Diet: focus on reducing calorie intake while maintaining nutrition. <a href="https://www.healthline.com/nutrition/low-calorie-diet" target="_blank">Learn more</a>`
+            `Mediterranean Diet, a heart-healthy, anti-inflammatory diet emphasizing whole grains, vegetables, legumes, olive oil, and moderate fish intake
+ <a href="" type="https://www.healthline.com/nutrition/mediterranean-diet-meal-plan"_blank">Learn more</a>`,
+            `DASH Diet (Dietary Approaches to Stop Hypertension), the diet was designed to lower blood pressure, rich in fruits, vegetables, and low-fat dairy with limited sodium and red meats
+ <a href="https://www.healthline.com/nutrition/dash-diet
+" type=""_blank">Learn more</a>`,
+            `Low-Carbohydrate Diet, this diet  reduces carb intake to lower insulin levels and promote fat burning and satiety <a href="https://www.healthline.com/nutrition/low-carb-diet-meal-plan-and-menu
+" type=""_blank">Learn more</a>`,
+            `Ketogenic Diet, a very low-carb, high-fat diet that puts the body into ketosis, encouraging fat loss
+ <a href="https://www.healthline.com/nutrition/ketogenic-diet-foods#animal-proteins
+" type=""_blank">Learn more</a>`,
+            `High-Protein Diet, this diet boosts protein consumption to comprise 25 to 30 percent of daily caloric intake which supports satiety and muscle retention
+ <a href="https://www.healthline.com/nutrition/high-protein-diet-plan
+" type=""_blank">Learn more</a>`,
+            `Intermittent Fasting, this diet involves eating within a time-restricted window to reduce calorie intake and improve metabolism.
+ <a href="https://www.healthline.com/nutrition/intermittent-fasting-guide
+" type=""_blank">Learn more</a>`,
+            `Plant-Based Diet, this diet emphasizes plant-based foods like fruits, vegetables, legumes, whole grains, and nuts
+ <a href="https://www.forksoverknives.com/how-tos/plant-based-primer-beginners-guide-starting-plant-based-diet/
+" type=""_blank">Learn more</a>`,
+            `Volumetrics Diet, this diet prioritizes foods low in calorie density to help increase fullness with fewer calories
+ <a href="https://www.healthline.com/nutrition/volumetrics-diet
+" type=""_blank">Learn more</a>`,
+            `Ornish Diet, this diet is a very low-fat vegetarian diet with lifestyle changes which supports weight lose
+ <a href="https://www.everydayhealth.com/diet-and-nutrition/the-ornish-diet.aspx
+" type=""_blank">Learn more</a>`,
+            `Paleo Diet, this diet avoids processed foods, dairy, and grains and includes lean meat, fruits, and vegetables
+ <a href="https://www.healthline.com/nutrition/paleo-diet-meal-plan-and-menu
+" type=""_blank">Learn more</a>`,
+            `Flexitarian Diet, this diet primarily plant-based with occasional meat, offering flexibility and reduced calorie intake
+ <a href="https://www.healthline.com/nutrition/flexitarian-diet-guide
+" type=""_blank">Learn more</a>`,
+            `Low-Glycemic Index (GI) Diet, this diet controls blood sugar for better appetite regulation which prioritizes foods that don't spike blood sugar
+ <a href="https://www.healthline.com/nutrition/low-glycemic-diet
+" type=""_blank">Learn more</a>`,
+            `Whole-Food Plant-Based Diet, focuses on unprocessed plant foods, limiting fat and calorie-dense options
+ <a href="https://www.healthline.com/nutrition/plant-based-diet-guide
+" type=""_blank">Learn more</a>`,
+            `Zone Diet, a balanced macronutrients to reduce inflammation.with 40% carbs, 30% protein,and  30% fat diet
+ <a href="https://www.healthline.com/nutrition/zone-diet
+" type=""_blank">Learn more</a>`,
+            `Nordic Diet, this diet is similar to Mediterranean but based on traditional Scandinavian foods, promoting whole grains, fish, and root vegetables
+ <a href="https://health.clevelandclinic.org/nordic-diet
+" type=""_blank">Learn more</a>`,
+            `Anti-Inflammatory Diet, this diet targets chronic inflammation by including nutrient-dense, antioxidant-rich foods
+ <a href="https://www.healthline.com/nutrition/anti-inflammatory-diet-101
+" type=""_blank">Learn more</a>`,
+            `Vegan Diet, excludes all animal products while focuses on whole, plant-based foods
+ <a href="https://www.healthline.com/nutrition/vegan-diet-guide
+" type=""_blank">Learn more</a>`,
+            `Time-Restricted Eating, a form of intermittent fasting in which you could eat only during a fixed daily window
+ <a href="https://www.healthline.com/nutrition/time-restricted-eating
+" type=""_blank">Learn more</a>`,
+            `Calorie-Restricted Diet, a diet based purely on reducing calorie intake
+ <a href="https://www.livestrong.com/article/263725-calorie-restriction-diet-meal-plans/#google_vignette
+" type=""_blank">Learn more</a>`,
+            `Low-FODMAP Diet, a diet developed for gut health but can aid weight loss by removing processed carbs and limits fermentable carbohydrates
+ <a href="https://www.healthline.com/nutrition/fodmaps-101
+" type=""_blank">Learn more</a>`,
+            `MIND Diet, a blend of Mediterranean and DASH diets emphasizing brain-healthy foods like leafy greens and berries, also supports weight loss
+ <a href="https://www.healthline.com/nutrition/mind-diet
+" type=""_blank">Learn more</a>`,
+            `Gluten-Free Diet, this diet originally designed for managing celiac disease and gluten sensitivity but when combined with whole foods and calorie control it may assist in weight loss for people with severe obesity
+ <a href="https://www.healthline.com/nutrition/gluten-free-diet
+" type=""_blank">Learn more</a>`,
+            `Raw Food Diet, this diet based on uncooked, unprocessed plant foods, naturally lower in calories and high in fiber
+ <a href="https://www.healthline.com/nutrition/raw-food-diet#guidelines
+" type=""_blank">Learn more</a>`,
+            `Vegetarian Diet, this diet excludes meat and can reduce calorie intake and improve metabolic markers if well-balanced
+ <a href="https://www.healthline.com/nutrition/vegetarian-diet-plan
+" type=""_blank">Learn more</a>`,
+            `Very Low-Calorie Diet (VLCD), this diet is used under medical supervision for rapid weight loss
+ <a href="https://www.verywellfit.com/what-is-a-very-low-calorie-diet-3496286
+" type=""_blank">Learn more</a>`
         ],
         exercise: [
-            `Walking: Start with 30 minutes daily and increase gradually.`,
-            `Yoga: Helps with flexibility and stress management.`
+            `Push-ups: While pushups are primarily considered a strength-building exercise, knowing the number of calories you can burn while performing them is important, especially if you’re trying to lose weight. 
+`,
+            `Lunges: Building strength in muscles used for walking, running, or high-intensity exercise.
+`,
+            `Leg swings (front to back): Increased blood flow and leg swing movement improve joint capsule mobility and hip openness, making it a good primer for tightness in hip flexors. 
+`,
+            `Plank rows: Targets the muscles of the middle and upper back, shoulders and arms. It is performed by doing a row with a set of dumbbells from the plank pose.:
+`,
+            `Wall angels: Wall angels strengthen upper back muscles, chest, spinal, and trunk muscles while also stabilizing the trunk and maintaining a neutral position
+`,
+            `Brisk Walking: Walking outside or using a treadmill indoors are examples of low-impact aerobic exercises that can improve heart health, elevate mood, and help burn calories.
+`,
+            `Pull-Ups: Pull-ups are one the most effective exercises for gaining weight. Pull-ups help in getting chiseled shoulders and ripped arms. Pull-ups focus on your biceps and latissimus dorsi primarily.
+`,
+            `Squats: Squats are undoubtedly the best exercise for gaining weight. This exercise is considered important for increasing the strength and size of the lower body muscles.
+`,
+            `Burpees: Burpees are a challenging, full-body workout that targets the chest, arms, glutes, abs, quads, and hamstrings, providing a comprehensive workout experience.
+`,
+            `Supermans: The superman exercise is effective for all fitness levels, targeting the lower back, glutes, and hamstrings. Additionally, it complements other core exercises that mainly focus on abs.
+`,
+            `Cycling: Improves heart health and Strengthens leg muscles
+`,
+            `Walking:  Enhances cardiovascular fitness and Aids in weight management
+`,
+            `Standing  Side Leg Raises: Easier daily movement. Having more mobility and strength makes activities like walking on uneven ground or stepping sideways to catch yourself from falling when you get off balance feel less difficult.
+`,
+            `Step-ups: Develops Lower Body Strength, Improves Balance & Coordination, and Boosts Functional Fitness.
+`,
+            `Glute Kickbacks: Helps to strengthen your hamstrings, calves, and core.
+`,
+            `Jogging: Jogging, an aerobic exercise, uses oxygen to aid weight loss and boost metabolic rate for up to 24 hours, promoting fat-burning even after daily workouts.
+`,
+            `Bench Dips: Bench Dips are simple yet useful exercises to gain body weight.  This exercise mainly targets the triceps but it also focuses on your chest and the front part of your shoulder.
+`,
+            `Planks: Planks are a core exercise that strengthens abdominals, obliques, and lower back areas. They involve isometric holds, maintaining body stability for compound movements. 
+`,
+            `Power Walking: Person who weighs 160 lbs can burn around 119 calories on a 30-minute brisk walk (3 mph). If that person power walks (4 mph) for 30 minutes, they can burn around 181 calories.
+`,
+            `Leg Press: Leg presses stimulate muscle hypertrophy, a process where the body repairs damage to muscle cells, resulting in increased muscle mass.
+`,
+            `Deadlift: Deadlift exercise aids in weight gain, muscle mass, tones leg muscles, and develops strength in upper back, low back, hamstrings, and glutes.
+`,
+            `Zumba (Low-Intensity): 39-minute Zumba class burned an average of 9.5 calories per minute. This adds up to 369 calories in total throughout the class.
+`,
+            `forward Lunge with twist: Lunges are a great workout for quadriceps, hamstrings, glutes, and core, improving balance and proprioception. Regular practice can enhance running and cycling performance.
+`,
+            `Yoga:  Yoga helps you to be physically active, burns calories, and may help prevent weight gain`,
+            `Bicycling (Stationary): Burn calories and body fat while strengthening your heart, lungs, and muscles
+`
+
         ],
         health: [
-            `Consult a healthcare provider for a personalized plan.`,
-            `Monitor your progress regularly and stay consistent.`
+            `Adopt a balanced diet: Focus on whole, unprocessed foods.`,
+            `Increase physical activity: Aim for at least 150 minutes of moderate exercise per week.`,
+            `Stay hydrated: Drink plenty of water throughout the day.`,
+            `Eat more fruits and vegetables: They are high in fiber and essential nutrients.`,
+            `Limit added sugars: Cut back on sweets, sodas, and sugary snacks.`,
+            `Choose whole grains: Replace refined grains with whole grain alternatives.`,
+            `Control portion sizes: Use smaller plates and measure servings when possible.`,
+            `Avoid processed foods: They often contain unhealthy fats, sugars, and additives.`,
+            `Keep a food diary: Track meals to stay accountable and monitor intake.`,
+            `Plan meals ahead: Prepare healthy meals in advance to avoid impulsive choices.`,
+            `Eat slowly: Chew thoroughly to aid digestion and recognize fullness.`,
+            `Reduce saturated and trans fats: Opt for lean protein and healthier fat sources.`,
+            `Include lean protein: Add chicken, fish, legumes, or tofu to your meals.`,
+            `Incorporate healthy fats: Use olive oil, nuts, and avocados in moderation.`,
+            `Skip high-calorie beverages: Choose water, herbal tea, or other low-calorie drinks.`,
+            `Ensure adequate sleep: Aim for 7–9 hours per night to help regulate appetite hormones.`,
+            `Manage stress effectively: Practice relaxation techniques like deep breathing or meditation.`,
+            `Set realistic goals: Establish small, achievable targets for gradual improvement.`,
+            `Schedule regular checkups: Monitor health markers with your healthcare provider.`,
+            `Consult a dietitian: Get personalized advice tailored to your needs.`,
+            `Practice mindful eating: Focus on hunger cues and avoid distractions while eating.`,
+            `Include strength training: Build muscle to boost metabolism and overall health.`,
+            `Increase dietary fiber: Fiber helps you feel full longer and supports digestion.`,
+            `Monitor progress: Track changes in weight and other health markers.`,
+            `Build a support network: Engage with friends, family, or support groups for encouragement.`
+
         ]
     },
     "Obesity Class 2": {
         diet: [
-            `Structured Meal Plans: focus on portion control and balanced meals. <a href="https://www.eatright.org/" target="_blank">Learn more</a>`
+            `Mediterranean Diet, a heart-healthy, anti-inflammatory diet emphasizing whole grains, vegetables, legumes, olive oil, and moderate fish intake
+ <a href="https://www.healthline.com/nutrition/mediterranean-diet-meal-plan
+" type=""_blank">Learn more</a>`,
+            `DASH Diet (Dietary Approaches to Stop Hypertension), the diet was designed to lower blood pressure, rich in fruits, vegetables, and low-fat dairy with limited sodium and red meats
+ <a href="https://www.healthline.com/nutrition/dash-diet
+" type=""_blank">Learn more</a>`,
+            `Low-Carbohydrate Diet, this diet  reduces carb intake to lower insulin levels and promote fat burning and satiety <a href="https://www.healthline.com/nutrition/low-carb-diet-meal-plan-and-menu
+" type=""_blank">Learn more</a>`,
+            `Ketogenic Diet, a very low-carb, high-fat diet that puts the body into ketosis, encouraging fat loss
+ <a href="https://www.healthline.com/nutrition/ketogenic-diet-foods#animal-proteins
+" type=""_blank">Learn more</a>`,
+            `Intermittent Fasting, this diet involves eating within a time-restricted window to reduce calorie intake and improve metabolism.
+ <a href="https://www.healthline.com/nutrition/intermittent-fasting-guide
+" type=""_blank">Learn more</a>`,
+            `Whole-Food Plant-Based Diet, a diet that focuses on unprocessed plant foods, limiting fat and calorie-dense options
+ <a href="https://www.healthline.com/nutrition/plant-based-diet-guide
+" type=""_blank">Learn more</a>`,
+            `High-Protein Diet, this diet increases satiety and preserves muscle mass while promoting fat loss
+ <a href="https://www.healthline.com/nutrition/high-protein-diet-plan
+" type=""_blank">Learn more</a>`,
+            `Very Low-Calorie Diet (VLCD), this diet is  a medically supervised diet and used for rapid weight loss
+ <a href="https://www.verywellfit.com/what-is-a-very-low-calorie-diet-3496286
+" type=""_blank">Learn more</a>`,
+            `Low-Glycemic Index (GI) Diet, this diet prioritizes slow-digesting carbs to improve blood sugar control and reduce hunger
+ <a href="https://www.healthline.com/nutrition/low-glycemic-diet
+" type=""_blank">Learn more</a>`,
+            `Time-Restricted Eating,  a form of fasting that limits food intake to specific hours, aiding in calorie control
+ <a href="https://www.healthline.com/nutrition/time-restricted-eating
+" type=""_blank">Learn more</a>`,
+            `Volumetrics Diet, this diet prioritizes foods low in calorie density to help increase fullness with fewer calories
+ <a href="https://www.healthline.com/nutrition/volumetrics-diet
+" type=""_blank">Learn more</a>`,
+            `Flexitarian Diet, this diet primarily plant-based with occasional meat, offering flexibility and reduced calorie intake
+ <a href="https://www.healthline.com/nutrition/flexitarian-diet-guide
+" type=""_blank">Learn more</a>`,
+            `Ornish Diet, this diet is a very low-fat vegetarian diet with lifestyle changes which supports weight lose
+ <a href="https://www.everydayhealth.com/diet-and-nutrition/the-ornish-diet.aspx
+" type=""_blank">Learn more</a>`,
+            `Zone Diet, a balanced macronutrients to reduce inflammation.with 40% carbs, 30% protein,and  30% fat diet
+ <a href="https://www.healthline.com/nutrition/zone-diet
+" type=""_blank">Learn more</a>`,
+            `Nordic Diet, this diet emphasizes whole grains, root vegetables, and fatty fish, supporting weight and metabolic health
+ <a href="https://health.clevelandclinic.org/nordic-diet
+" type=""_blank">Learn more</a>`,
+            `Paleo Diet, this diet removes processed foods and grains to focus on lean meats, fruits, and vegetables
+ <a href="https://www.healthline.com/nutrition/paleo-diet-meal-plan-and-menu
+" type=""_blank">Learn more</a>`,
+            `MIND Diet, combines DASH and Mediterranean diets to promote brain and body health, with weight benefits
+ <a href="https://www.healthline.com/nutrition/mind-diet
+" type=""_blank">Learn more</a>`,
+            `Calorie-Restricted Diet, a diet that simply reduces daily caloric intake to induce weight loss
+ <a href="https://www.livestrong.com/article/263725-calorie-restriction-diet-meal-plans/#google_vignette
+" type=""_blank">Learn more</a>`,
+            `Vegan Diet, excludes all animal products while focuses on whole, plant-based foods
+ <a href="https://www.healthline.com/nutrition/vegan-diet-guide" type=""_blank">Learn more</a>`,
+            `Vegetarian Diet, this diet excludes meat and can reduce calorie intake and improve metabolic markers if well-balanced
+ <a href="https://www.healthline.com/nutrition/vegetarian-diet-plan
+" type=""_blank">Learn more</a>`,
+            `Anti-Inflammatory Diet, this diet reduces inflammation by avoiding processed foods and including whole, healthy fats
+ <a href="https://www.healthline.com/nutrition/anti-inflammatory-diet-101
+" type=""_blank">Learn more</a>`,
+            `Low-FODMAP Diet, a diet developed for gut health but can aid weight loss by removing processed carbs and limits fermentable carbohydrates
+ <a href="https://www.healthline.com/nutrition/fodmaps-101
+" type=""_blank">Learn more</a>`,
+            `Meal Replacement Diet, uses shakes or bars for some meals to control portions and total calorie intake <a href="https://www.healthline.com/nutrition/best-meal-replacement
+" type=""_blank">Learn more</a>`,
+            `Plant-Forward Diet, this diet emphasizes increasing plant food intake while still allowing moderate animal products to promote nutrient density and weight control
+ <a href="" type="https://moreplantsnutrition.com/plant-forward-diet/
+"_blank">Learn more</a>`,
+            `Eco-Atkins Diet, a plant-based low-carb diet, designed to support weight loss and improve cardiovascular health while avoiding animal products
+ <a href="https://www.atkins.com/how-it-works/library/articles/the-eco-atkins-diet
+" type=""_blank">Learn more</a>`
+
+
         ],
         exercise: [
-            `Low-Impact Cardio: swimming or cycling for joint-friendly workouts.`,
-            `Strength Training: build muscle to boost metabolism.`
+          `Walking on a Treadmill (Flat or Low Incline): Endurance and muscle-building
+`,
+            `Stationary Biking: Support your overall health, cardiovascular fitness, and lower body muscles
+`,
+            `Elliptical Trainer: An elliptical machine provides a low impact cardio workout. It can benefit your overall fitness, including increasing your stamina and strengthening your upper and lower body.
+`,
+            `Single leg stand: This exercise works the abdominal muscles.
+`,
+            `Supine snow angel (wipers) exercise: A person should perform this exercise while lying down, which works the abdominal muscles, chest, and shoulders.
+`,
+            `Trunk rotation: The trunk rotation works the abdominal muscles while testing the cardiovascular system.
+`,
+            `Air squats:  Air squats work the thigh muscles, hamstrings, quadriceps, and glutes. Since good balance is required, they are an excellent way to engage the core muscles as well.
+`,
+            `Walking: As your body becomes accustomed to and more muscular.
+`,
+            `Jogging in place: Jogging in place is a simple and effective exercise to increase heart rate. This is also a suitable beginner warm-up activity.
+`,
+            `Cycling:  Regular cycling strengthens the body, improves insulin sensitivity, and reduces the risk of heart disease and cancer compared to those who do not cycle regularly.
+`,
+            `Weight Training: Weight training is a resistance exercise that enhances strength and muscle growth, increasing the metabolic rate even at rest.
+`,
+            `Yoga: In addition to physical benefits, yoga reduces stress, enhances emotional balance, and strengthens body and mind.
+`,
+            `Pilates: Moreover, Pilates helps reduce back pain and enhances strength, flexibility, endurance, and overall body resilience.
+`,
+            `Jumping Rope: Jump-rope is a cost-effective workout equipment that burns calories quickly, works multiple muscle groups, and improves coordination, making it a great option for trips and a portable workout option.
+`,
+            `Brisk Walking: Increases heart rate, burns calories, and is accessible for beginners.
+`,
+            `High-Intensity Interval Training (HIIT): HIIT is a workout that alternates between intense and less-intense exercises, effectively aiding weight loss by burning more calories than steady cardio and maintaining fat-burning mode for up to 24 hours.
+`,
+            `Brisk Walking: Increases heart rate, burns calories, and is accessible for beginners.
+`,
+            `Push-ups: Burns calories, protects your shoulders and lower back from injuries, Improves your balance and posture, and improves your flexibility 
+`,
+            `Lunges: Building strength in muscles used for walking, running, or high-intensity exercise.
+`,
+            `Leg swings (front to back): Increased blood flow and leg swing movement improve joint capsule mobility and hip openness, making it a good primer for tightness in hip flexors. 
+`,
+            `Plank rows: Targets the muscles of the middle and upper back, shoulders and arms. It is performed by doing a row with a set of dumbbells from the plank pose.:
+`,
+            `Wall angels: Wall angels strengthen upper back muscles, chest, spinal, and trunk muscles while also stabilizing the trunk and maintaining a neutral position
+`,
+            `Dancing with Fitness Videos: Boosts heart rate, burns calories, easy to do at home
+`,
+            `Cleaning Activities (Sweeping, Vacuuming): Moderate-intensity movement that improves daily calorie burn
+`,
+            `Pull-Ups: Pull-ups are one the most effective exercises for gaining weight. Pull-ups help in getting chiseled shoulders and ripped arms. Pull-ups focus on your biceps and latissimus dorsi primarily.
+`,
+            ` Biceps Curls: Perform the bicep curl regularly to build upper arm strength and learn proper arm muscle use, focusing on the brachialis and brachioradialis muscles, which are commonly used in daily life.
+`
+
         ],
         health: [
-            `Work closely with a dietitian or doctor.`,
-            `Consider joining a weight-loss support group.`
+           `Adopt a balanced diet: Focus on whole, unprocessed foods.`,
+           `Increase physical activity: Aim for at least 150 minutes of moderate exercise per week.`,
+           `Stay hydrated: Drink plenty of water throughout the day.`,
+           `Eat more fruits and vegetables: They are high in fiber and essential nutrients.`,
+           `Limit added sugars: Cut back on sweets, sodas, and sugary snacks.`,
+           `Monitor progress: Track changes in weight and other health markers.`,           `●	Choose whole grains: Replace refined grains with whole grain alternatives.`,
+           `Control portion sizes: Use smaller plates and measure servings when possible.`,
+           `Avoid processed foods: They often contain unhealthy fats, sugars, and additives.`,
+           `Keep a food diary: Track meals to stay accountable and monitor intake.`,
+           `Plan meals ahead: Prepare healthy meals in advance to avoid impulsive choices.`,
+           `Eat slowly: Chew thoroughly to aid digestion and recognize fullness.`,
+           `Reduce saturated and trans fats: Opt for lean protein and healthier fat sources.`,
+           `Include lean protein: Add chicken, fish, legumes, or tofu to your meals.`,
+           `Incorporate healthy fats: Use olive oil, nuts, and avocados in moderation.`,
+           `Skip high-calorie beverages: Choose water, herbal tea, or other low-calorie drinks.`,
+           `Ensure adequate sleep: Aim for 7–9 hours per night to help regulate appetite hormones.`,
+           `Manage stress effectively: Practice relaxation techniques like deep breathing or meditation.`,
+           `Set realistic goals: Establish small, achievable targets for gradual improvement.`,
+           `Schedule regular checkups: Monitor health markers with your healthcare provider.`,
+           `Consult a dietitian: Get personalized advice tailored to your needs.`,
+           `Include strength training: Build muscle to boost metabolism and overall health.`,
+           `Practice mindful eating: Focus on hunger cues and avoid distractions while eating.`,
+           `Increase dietary fiber: Fiber helps you feel full longer and supports digestion.`,
+           `Build a support network: Engage with friends, family, or support groups for encouragement.`
         ]
     },
     "Obesity Class 3": {
         diet: [
-            `Medically Supervised Diet: consult a doctor for a safe plan. <a href="https://www.webmd.com/diet/obesity/ss/slideshow-weight-loss-surgery" target="_blank">Learn more</a>`
+            `Very Low-Calorie Diet (VLCD), a diet that is medically supervised diet providing ≤800 kcal/day, used for rapid weight loss in severe obesity
+ <a href="https://www.verywellfit.com/what-is-a-very-low-calorie-diet-3496286
+" type=""_blank">Learn more</a>`,
+            `High-Protein Diet, a diet that prioritizes protein (25–30% of calories) to preserve muscle and enhance satiety in calorie-restricted plans
+ <a href="https://www.healthline.com/nutrition/high-protein-diet-plan
+" type=""_blank">Learn more</a>`,
+            `Low-Carbohydrate Diet, a diet that limits carbohydrate intake to lower insulin and enhance fat burning
+ <a href="https://www.healthline.com/nutrition/low-carb-diet-meal-plan-and-menu
+" type=""_blank">Learn more</a>`,
+            `Ketogenic Diet, a very low-carb, high-fat diet inducing ketosis; may reduce appetite and promote fat loss, under medical supervision
+ <a href="https://www.healthline.com/nutrition/ketogenic-diet-foods#animal-proteins
+" type=""_blank">Learn more</a>`,
+            `Intermittent Fasting, this diet restricts eating to a time window, reducing calorie intake and improving insulin sensitivity
+ <a href="https://www.healthline.com/nutrition/intermittent-fasting-guide
+" type=""_blank">Learn more</a>`,
+            `Time-Restricted Eating, a diet similar to intermittent fasting which limits food intake to six to ten hours daily and supports weight regulation
+ <a href="https://www.healthline.com/nutrition/time-restricted-eating
+" type=""_blank">Learn more</a>`,
+            `Mediterranean Diet, a balanced, anti-inflammatory diet which emphasises healthy fats, fruits, vegetables, and lean proteins
+ <a href="https://www.healthline.com/nutrition/mediterranean-diet-meal-plan
+" type=""_blank">Learn more</a>`,
+            `DASH Diet, this diet is designed for blood pressure control, also effective for weight loss and metabolic health in obese individuals
+ <a href="https://www.healthline.com/nutrition/dash-diet
+" type=""_blank">Learn more</a>`,
+            `Volumetrics Diet, Promotes high-satiety, low-calorie foods (like soups and fruits) to reduce total calorie intake
+ <a href="https://www.healthline.com/nutrition/volumetrics-diet
+" type=""_blank">Learn more</a>`,
+            `Plant-Based Whole Foods Diet, Eliminates processed foods and focuses on plant sources, often reducing caloric density
+ <a href="https://www.healthline.com/nutrition/plant-based-diet-guide
+" type=""_blank">Learn more</a>`,
+            `Meal Replacement Diet, Replaces 1–2 meals/day with shakes or bars to control calories and improve adherence
+ <a href="https://www.healthline.com/nutrition/best-meal-replacement
+" type=""_blank">Learn more</a>`,
+            `Diabetes Prevention Program (DPP) Diet, Lifestyle-focused low-calorie, low-fat diet shown to reduce weight and diabetes risk
+ <a href="https://www.niddk.nih.gov/about-niddk/research-areas/diabetes/diabetes-prevention-program-dpp
+" type=""_blank">Learn more</a>`,
+            `Anti-Inflammatory Diet, Focuses on whole foods that reduce chronic inflammation associated with obesity
+ <a href="https://www.healthline.com/nutrition/anti-inflammatory-diet-101
+" type=""_blank">Learn more</a>`,
+            `Nordic Diet, Whole-grain and fish-rich diet based on Scandinavian foods, promoting weight and metabolic health
+ <a href="https://health.clevelandclinic.org/nordic-diet
+" type=""_blank">Learn more</a>`,
+            `Ornish Diet, Very low-fat, plant-based diet with lifestyle changes, shown to reduce weight and improve heart health
+ <a href="https://www.everydayhealth.com/diet-and-nutrition/the-ornish-diet.aspx
+" type=""_blank">Learn more</a>`,
+            `Zone Diet, Balances macronutrients (40% carbs, 30% protein, 30% fat) to regulate hormones and control hunger
+ <a href="https://www.healthline.com/nutrition/zone-diet
+" type=""_blank">Learn more</a>`,
+            `Calorie Counting Diet, Tracks every calorie consumed to maintain a calorie deficit and promote weight loss
+ <a href="https://www.healthline.com/nutrition/counting-calories-101
+" type=""_blank">Learn more</a>`,
+            `Mindful Eating Approach, Not a strict diet, but a structured method to reduce overeating and improve food awareness
+ <a href="https://www.healthline.com/nutrition/mindful-eating-guide
+" type=""_blank">Learn more</a>`,
+            `Engine 2 Diet, A low-fat, plant-based diet that focused on heart and weight health with whole, unprocessed plant foods
+ <a href="https://www.verywellfit.com/engine-2-diet-4685593
+" type=""_blank">Learn more</a>`,
+            `Eco-Atkins Diet, A plant-based diet, emphasizing low-carb, high-protein plant foods like soy, nuts, and legumes for weight and cholesterol management
+ <a href="https://www.atkins.com/how-it-works/library/articles/the-eco-atkins-diet
+" type=""_blank">Learn more</a>`,
+            `Protein-Sparing Modified Fast (PSMF), A very low-calorie, high-protein, medically supervised diet that preserves lean muscle while promoting rapid fat loss
+ <a href="https://www.dietvsdisease.org/protein-sparing-modified-fast/
+" type=""_blank">Learn more</a>`,
+            `Elimination Diet (Obesity-Focused), Identifies and removes food triggers (e.g., sugar, processed carbs) that lead to overeating or inflammation, potentially aiding weight loss.
+ <a href="https://www.healthline.com/nutrition/elimination-diet
+" type=""_blank">Learn more</a>`,
+            `Blue Zones Diet, Inspired by diets from the world’s longest-living populations (e.g., Okinawa), focusing on plant-based, whole foods and lifestyle patterns that support weight loss.
+ <a href="https://www.everydayhealth.com/diet-nutrition/a-complete-blue-zones-diet-food-list-and-meal-plan/
+" type=""_blank">Learn more</a>`,
+            `SMART Goal-Based Diet Plan, A personalized dietary approach built around Specific, Measurable, Achievable, Relevant, and Time-bound goals, enhancing adherence and weight outcomes.
+ <a href="https://successindepth.com/smart-goals-for-healthy-eating/
+" type=""_blank">Learn more</a>`,
+            `Pegan Diet, this diet is environmentally friendly because it focuses on plant-based and sustainable foods
+ <a href="https://health.clevelandclinic.org/pegan-diet
+" type=""_blank">Learn more</a>`
         ],
         exercise: [
-            `Chair Exercises: gentle movements to improve mobility.`,
-            `Water Aerobics: low-impact and joint-friendly.`
+            `Push-ups: While pushups are primarily considered a strength-building exercise, knowing the number of calories you can burn while performing them is important, especially if you’re trying to lose weight. 
+`,
+            `Lunges: Building strength in muscles used for walking, running, or high-intensity exercise.
+`,
+            `Leg swings (front to back): Increased blood flow and leg swing movement improve joint capsule mobility and hip openness, making it a good primer for tightness in hip flexors. 
+`,
+            `Plank rows: Targets the muscles of the middle and upper back, shoulders and arms. It is performed by doing a row with a set of dumbbells from the plank pose.:
+`,
+            `Wall angels: Wall angels strengthen upper back muscles, chest, spinal, and trunk muscles while also stabilizing the trunk and maintaining a neutral position
+`,
+            `Brisk Walking: Walking outside or using a treadmill indoors are examples of low-impact aerobic exercises that can improve heart health, elevate mood, and help burn calories.
+`,
+            `Pull-Ups: Pull-ups are one the most effective exercises for gaining weight. Pull-ups help in getting chiseled shoulders and ripped arms. Pull-ups focus on your biceps and latissimus dorsi primarily.
+`,
+            `Squats: Squats are undoubtedly the best exercise for gaining weight. This exercise is considered important for increasing the strength and size of the lower body muscles.
+`,
+            `Burpees: Burpees are a challenging, full-body workout that targets the chest, arms, glutes, abs, quads, and hamstrings, providing a comprehensive workout experience.
+`,
+            `Supermans: The superman exercise is effective for all fitness levels, targeting the lower back, glutes, and hamstrings. Additionally, it complements other core exercises that mainly focus on abs.
+`,
+            `Yoga: In addition to physical benefits, yoga reduces stress, enhances emotional balance, and strengthens body and mind. 
+`,
+            `Jumping Rope: Jumping rope is a fantastic way to burn calories fast. In fact, you’ll burn more of them by jumping rope than walking on a treadmill for the same amount of time. You'll also work multiple muscle groups
+`,
+            `Bench Dips: Bench Dips are simple yet useful exercises to gain body weight.  This exercise mainly targets the triceps but it also focuses on your chest and the front part of your shoulder.
+`,
+            `Lunges: Just like squats, lunges also help in building the lower body. It helps in bulking up the thighs and hip muscles.
+`,
+            `Crunches: It is usually believed that crunches help in losing belly fat but crunches also help in increasing your core strength and gain weight.
+`,
+            `Glute Kickback: Glute kickbacks mainly benefit your gluteal muscles. It also targets your hamstrings and strengthens your buttocks.
+`,
+            `Walking: You could burn about 150 more calories than you usually do each day. The faster and longer you walk, the more calories you burn
+`,
+            `Bench Press: Bench presses are great for bulking up. This exercise helps in building shoulders, chest muscles, and triceps.  Doing Bench press will help to gain weight.
+`,
+            ` Strength Training: This type of exercise uses resistance to build strength and muscle. It not only helps you lose weight, but also helps you keep the weight off by building muscle.
+`,
+            `. Stair Climbing:  Climbing just two flights of stairs every day can lead to 6 pounds of weight loss in a year. It can also add to the amount of good cholesterol in your blood and help keep your joints, muscles, and bones healthy.
+`,
+            `.Biceps Curls: Perform the bicep curl regularly to build upper arm strength and learn proper arm muscle use, focusing on the brachialis and brachioradialis muscles, which are commonly used in daily life.
+`,
+            `. Weight Training: Weight training is a resistance exercise that enhances strength and muscle growth, increasing the metabolic rate even at rest.
+`,
+            `.Supine snow angel (wipers) exercise: A person should perform this exercise while lying down, which works the abdominal muscles, chest, and shoulders.
+`,
+            `Trunk rotation: The trunk rotation works the abdominal muscles while testing the cardiovascular system.
+`,
+            `Air squats:  Air squats work the thigh muscles, hamstrings, quadriceps, and glutes. Since good balance is required, they are an excellent way to engage the core muscles as well.
+`
+
         ],
         health: [
-            `Seek immediate medical advice for weight management.`,
-            `Explore surgical options if recommended by a doctor.`
+            `Adopt a balanced diet: Focus on whole, unprocessed foods.`,
+           `Increase physical activity: Aim for at least 150 minutes of moderate exercise per week.`,
+           `Stay hydrated: Drink plenty of water throughout the day.`,
+           `Eat more fruits and vegetables: They are high in fiber and essential nutrients.`,
+           `Limit added sugars: Cut back on sweets, sodas, and sugary snacks.`,
+           `Monitor progress: Track changes in weight and other health markers.`,           `●	Choose whole grains: Replace refined grains with whole grain alternatives.`,
+           `Control portion sizes: Use smaller plates and measure servings when possible.`,
+           `Avoid processed foods: They often contain unhealthy fats, sugars, and additives.`,
+           `Keep a food diary: Track meals to stay accountable and monitor intake.`,
+           `Plan meals ahead: Prepare healthy meals in advance to avoid impulsive choices.`,
+           `Eat slowly: Chew thoroughly to aid digestion and recognize fullness.`,
+           `Reduce saturated and trans fats: Opt for lean protein and healthier fat sources.`,
+           `Include lean protein: Add chicken, fish, legumes, or tofu to your meals.`,
+           `Incorporate healthy fats: Use olive oil, nuts, and avocados in moderation.`,
+           `Skip high-calorie beverages: Choose water, herbal tea, or other low-calorie drinks.`,
+           `Ensure adequate sleep: Aim for 7–9 hours per night to help regulate appetite hormones.`,
+           `Manage stress effectively: Practice relaxation techniques like deep breathing or meditation.`,
+           `Set realistic goals: Establish small, achievable targets for gradual improvement.`,
+           `Schedule regular checkups: Monitor health markers with your healthcare provider.`,
+           `Consult a dietitian: Get personalized advice tailored to your needs.`,
+           `Include strength training: Build muscle to boost metabolism and overall health.`,
+           `Practice mindful eating: Focus on hunger cues and avoid distractions while eating.`,
+           `Increase dietary fiber: Fiber helps you feel full longer and supports digestion.`,
+           `Build a support network: Engage with friends, family, or support groups for encouragement.`
         ]
     }
 };

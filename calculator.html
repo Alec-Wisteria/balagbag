@@ -466,7 +466,7 @@ body {
 <body>
   <div class="sidebar close">
     <div class="logo-details">
-        <img src="images/logo.jpg" alt="logo">
+      <img src="images/logo.jpg" alt="logo" style="border-radius: 50%; box-shadow: 0 2px 8px rgba(0,0,0,0.15);">
         <span class="logo_name">BodyCheck</span>
     </div>
     <ul class="nav-links">
@@ -495,7 +495,7 @@ body {
         </ul>
       </li>
       <li>
-        <a href="profile.html">
+        <a href="#">
           <i class='bx bx-user' ></i>
           <span class="link_name">Profile</span>
         </a>
@@ -623,11 +623,11 @@ let selectedGender = "";
 
             const bmi = (weight / (height * height)).toFixed(2);
             const category = bmi < 18.5 ? "Underweight" :
-                            bmi < 19.5 ? "Normal Weight" :
-                            bmi < 24.5 ? "Overweight" :
-                            bmi < 29.5 ? "Obese":
-                            bmi < 34.5 ? "Class 1 Obesity" :
-                            bmi < 40.5 ? "Class 2 Obesity" : "Class 3 Obesity"; 
+                            bmi < 24.9 ? "Normal Weight" :
+                            bmi < 29.9 ? "Overweight" :
+                            bmi < 29.9 ? "Obese":
+                            bmi < 34.9 ? "Class 1 Obesity" :
+                            bmi < 40.9 ? "Class 2 Obesity" : "Class 3 Obesity"; 
 
                             window.location.href = `BMIResults.html?bmi=${bmi}&category=${category}&age=${age}&gender=${selectedGender}`;
         }
