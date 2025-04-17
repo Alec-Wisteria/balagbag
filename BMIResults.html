@@ -337,7 +337,7 @@ body.dark-mode {
     display: flex;
     align-items: center;
 }
-.modale {
+.modal {
         display: none;
         position: fixed;
         z-index: 1;
@@ -551,42 +551,6 @@ body.dark-mode .suggestion-box:hover {
   margin-bottom: 24px;
 }
 
-
-
-.modal {
-        display: none;
-        position: fixed;
-        z-index: 1;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.5);
-      }
-      .modal-content {
-        background-color: white;
-        margin: 15% auto;
-        padding: 20px;
-        border-radius: 8px;
-        width: 300px;
-        text-align: center;
-      }
-      .modal-button {
-        padding: 10px 20px;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        margin: 10px;
-        font-size: 16px;
-      }
-      .modal-button.confirm {
-        background-color: #4CAF50;
-        color: white;
-      }
-      .modal-button.cancel {
-        background-color: #f44336;
-        color: white;
-      }
 
       h2, h3, h4 {
   color: #1a1a1a;
@@ -856,7 +820,7 @@ html, body {
         height: 100%;
         background-color: rgba(0, 0, 0, 0.5);
       }
-      .modal-contente {
+      .modale-contente {
         background-color: white;
         margin: 15% auto;
         padding: 20px;
@@ -864,7 +828,7 @@ html, body {
         width: 300px;
         text-align: center;
       }
-      .modal-button {
+      .modale-button {
         padding: 10px 20px;
         border: none;
         border-radius: 5px;
@@ -872,11 +836,11 @@ html, body {
         margin: 10px;
         font-size: 16px;
       }
-      .modal-button.confirme {
+      .modale-button.confirme {
         background-color: #4CAF50;
         color: white;
       }
-      .modal-button.cancele {
+      .modale-button.cancele {
         background-color: #f44336;
         color: white;
       }
@@ -955,10 +919,10 @@ html, body {
     <i class='bx bx-log-out' onclick="showLogoutConfirmation()"></i>
 </div>
 <div id="logoutModale" class="modale">
-    <div class="modal-contente">
+    <div class="modale-contente">
         <h3>Are you sure you want to log out?</h3>
-        <button class="modal-button confirme" onclick="logout()">Confirm</button>
-        <button class="modal-button cancele" onclick="closeLogoutModal()">Cancel</button>
+        <button class="modale-button confirme" onclick="logout()">Confirm</button>
+        <button class="modale-button cancele" onclick="closeLogoutModal()">Cancel</button>
     </div>
         </div>                
             </li>
