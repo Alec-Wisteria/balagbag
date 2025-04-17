@@ -883,6 +883,12 @@ html, body {
   color: #e65100; /* Deep Orange */
 }
 
+
+.recommendation-line {
+  padding-left: 2em;
+  text-indent: -1em;
+  line-height: 1.6;
+}
    </style>
 <body>
     <div class="sidebar close">
@@ -1989,31 +1995,34 @@ const suggestionsFromPDF = {
 };
 
 function showRecommendations(category) {
-    const dietBox = document.getElementById("diet");
-    const exerciseBox = document.getElementById("exercise");
-    const healthBox = document.getElementById("health");
+  const dietBox = document.getElementById("diet");
+  const exerciseBox = document.getElementById("exercise");
+  const healthBox = document.getElementById("health");
 
-    const selected = suggestionsFromPDF[category];
-    if (!selected) {
-        dietBox.innerHTML = "<p>No diet tips available.</p>";
-        exerciseBox.innerHTML = "<p>No exercise tips available.</p>";
-        healthBox.innerHTML = "<p>No health tips available.</p>";
-        return;
-    }
+  const selected = suggestionsFromPDF[category];
+  if (!selected) {
+    dietBox.innerHTML = "<p>No diet tips available.</p>";
+    exerciseBox.innerHTML = "<p>No exercise tips available.</p>";
+    healthBox.innerHTML = "<p>No health tips available.</p>";
+    return;
+  }
 
-    function getRandomThree(arr) {
-        const shuffled = [...arr].sort(() => 0.5 - Math.random());
-        return shuffled.slice(0, 3);
-    }
+  function getRandomThree(arr) {
+    const shuffled = [...arr].sort(() => 0.5 - Math.random());
+    return shuffled.slice(0, 3);
+  }
 
-    function renderList(items) {
-        return `<ul>${items.map(item => `<li>${item}</li>`).join('')}</ul>`;
-    }
+  function renderLines(arr) {
+    return getRandomThree(arr)
+      .map(tip => `<div class="recommendation-line">• ${tip.replace(/^●\s*/, "")}</div>`)
+      .join("");
+  }
 
-    dietBox.innerHTML = renderList(getRandomThree(selected.diet));
-    exerciseBox.innerHTML = renderList(getRandomThree(selected.exercise));
-    healthBox.innerHTML = renderList(getRandomThree(selected.health));
+  dietBox.innerHTML = renderLines(selected.diet);
+  exerciseBox.innerHTML = renderLines(selected.exercise);
+  healthBox.innerHTML = renderLines(selected.health);
 }
+
 
 function getRandomItem(arr) {
     return arr[Math.floor(Math.random() * arr.length)];
