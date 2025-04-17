@@ -892,6 +892,16 @@ html, body {
   text-indent: -1em;
   line-height: 1.6;
 }
+
+.bmi-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 24px;
+  row-gap: 10px;
+  font-size: 1em;
+  line-height: 1.5;
+}
+
    </style>
 <body>
     <div class="sidebar close">
@@ -984,10 +994,12 @@ html, body {
       <!-- Top Left: BMI Results -->
       <div class="box box1">
         <h2><i class='bx bx-bar-chart-alt-2'></i> Your BMI Results</h2>
-        <p><i class='bx bx-male-female'></i><strong>Gender:</strong> <span id="gender" style="color:#333;">--</span></p>
-          <p><strong>Age:</strong> <span id="age">--</span></p>
-          <p><i class='bx bx-heart'></i> <strong>BMI Score:</strong> <span id="bmiValue" style="font-size: 1.2em; font-weight: bold;">--</span></p>
-          <p><i class='bx bx-body'></i> You're <u><strong><span id="bmiCategory" class="bmi-category" title="Category: --">--</span> </strong></u></p>
+        <div class="bmi-grid">
+          <div><i class='bx bx-male-female'></i> <strong>Gender:</strong> <span id="gender" style="color:#333;">--</span></div>
+          <div><strong>Age:</strong> <span id="age">--</span></div>
+          <div><i class='bx bx-heart'></i> <strong>BMI Score:</strong> <span id="bmiValue" style="font-size: 1.2em; font-weight: bold;">--</span></div>
+          <div><i class='bx bx-body'></i> You're <strong><u><span id="bmiCategory" class="bmi-category" title="Category: --">--</span></u></strong></div>
+        </div>
       </div>
 <!-- Top Right: Category -->
 <div class="box box3 category-box-enhanced">
