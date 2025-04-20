@@ -332,7 +332,7 @@ document.getElementById('registerForm').addEventListener('submit', async (e) => 
 
             const success = await signUpUser(username, email, password, confirmPassword);
             if (success) {
-                alert('User account created successfully!');
+                alert('User account created successfully! Please check your email and click the link to activate your account.');
             } else {
                 alert('Registration failed. Please try again.');
             }
