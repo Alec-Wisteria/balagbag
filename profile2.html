@@ -732,7 +732,6 @@ sidebarBtn.addEventListener("click", ()=>{
     } else {
       alert('Profile updated successfully!');
       // Update the sidebar image immediately
-      document.querySelector('.sidebarProfileImg').src = avatarUrl || 'images/placeholder.png';
       document.getElementById('sidebarProfileImg').src = avatarUrl || 'images/placeholder.png';
     }
   });
@@ -744,6 +743,7 @@ sidebarBtn.addEventListener("click", ()=>{
       const reader = new FileReader();
       reader.onload = (e) => {
         document.getElementById('previewImage').src = e.target.result;
+        document.getElementById('sidebarProfileImg').src = e.target.result; // Add this line
       };
       reader.readAsDataURL(file);
     }
