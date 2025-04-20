@@ -290,7 +290,7 @@ export async function fetchMessages(otherUserId) {
     const userId = session.session.user.id;
 
     const { data: messages, error } = await supabase
-        .from('bmi_history') // Replace with your actual table name
+        .from('messages')
         .select('*')
         .or(`sender_id.eq.${userId},receiver_id.eq.${userId}`)
         .and(`sender_id.eq.${otherUserId},receiver_id.eq.${otherUserId}`)
@@ -369,115 +369,5 @@ export async function fetchChatParticipants() {
     });
 
     return Array.from(uniqueParticipants.values());
-}
-
-/**
- * Fetches BMI history for the current user.
- * @returns {Promise<Array>} - An array of BMI history records.
- */
-export async function fetchBMIHistory() {
-    try {
-        const { data: session, error: sessionError } = await supabase.auth.getSession();
-
-        if (sessionError || !session || !session.session || !session.session.user) {
-            console.error("No user session found or error fetching session:", sessionError?.message);
-            alert("You must be logged in to save your BMI record.");
-            return [];
-        }
-
-        const userId = session.session.user.id;
-
-        const { data: bmiHistory, error } = await supabase
-            .from('bmi_history') // Replace with your actual table name
-            .select('*')
-            .eq('user_id', userId) // Filter by the current user's ID
-            .order('created_at', { ascending: false }); // Order by most recent first
-
-        if (error) {
-            console.error("Error fetching BMI history:", error.message);
-            return [];
-        }
-
-        return bmiHistory;
-    } catch (err) {
-        console.error("Unexpected error fetching BMI history:", err.message);
-        return [];
-    }
-}
-
-/**
- * Clears BMI history for the current user.
- * @returns {Promise<boolean>} - True if the history was cleared successfully.
- */
-export async function clearBMIHistory() {
-    try {
-        const { data: session, error: sessionError } = await supabase.auth.getSession();
-        if (sessionError || !session || !session.session || !session.session.user) {
-            console.error("No user session found or error fetching session:", sessionError?.message);
-            return false;
-        }
-
-        const userId = session.session.user.id;
-
-        const { error } = await supabase
-            .from('bmi_history') // Replace with your actual table name
-            .delete()
-            .eq('user_id', userId); // Delete only the current user's history
-
-        if (error) {
-            console.error("Error clearing BMI history:", error.message);
-            return false;
-        }
-
-        return true;
-    } catch (err) {
-        console.error("Unexpected error clearing BMI history:", err.message);
-        return false;
-    }
-}
-
-/**
- * Saves a BMI record for the current user.
- * @param {number} bmi - The calculated BMI value.
- * @param {string} category - The BMI category (e.g., "Underweight", "Normal weight").
- * @param {number} age - The age of the user.
- * @param {string} selectedGender - The gender of the user.
- */
-export async function saveBMIRecord(bmi, category, age, selectedGender) {
-    console.log("BMI Data to Insert:", {
-        bmi: bmi,
-        category: category,
-        age: age,
-        gender: selectedGender,
-        created_at: new Date().toISOString()
-    });
-
-    try {
-        const { data, error } = await supabase
-            .from('bmi_history')
-            .insert([
-                {
-                    bmi: bmi,
-                    category: category,
-                    age: age,
-                    gender: selectedGender,
-                    created_at: new Date().toISOString()
-                }
-            ]);
-
-        console.log("Supabase Response:", { data, error });
-
-        if (error) {
-            console.error("Error saving BMI record:", error);
-            alert("Failed to save BMI record. Please try again.");
-            return;
-        }
-
-        console.log("BMI record saved successfully!");
-    } catch (err) {
-        console.error("Unexpected error:", err);
-        alert("An unexpected error occurred. Please try again.");
-        return;
-    }
 }
 
