@@ -1,9 +1,8 @@
 <!DOCTYPE html>
-<!-- Designined by CodingLab | www.youtube.com/codinglabyt -->
 <html lang="en" dir="ltr">
   <head>
     <meta charset="UTF-8">
-    <title> Drop Down Sidebar Menu | CodingLab </title>
+    <title>Profile</title>
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
      <meta name="viewport" content="width=device-width, initial-scale=1.0">
    </head>
@@ -682,18 +681,14 @@ sidebarBtn.addEventListener("click", ()=>{
     const fullName = document.getElementById('name').value;
     const email = document.getElementById('email').value;
     const fileInput = document.getElementById('profilePic');
-    let avatarUrl = null;
+    let avatarUrl = document.getElementById('previewImage').src; // Default to current image
 
     // Upload image if selected
     if (fileInput.files.length > 0) {
       const file = fileInput.files[0];
-      const fileExt = file.name.split('.').pop(); // Get file extension
-      const fileName = `${currentUser.id}_${Date.now()}.${fileExt}`; // Unique file name
-      const filePath = `${currentUser.id}/${fileName}`; // File path
-
-      console.log('Uploading file to:', filePath);
-      console.log('File name:', fileName);
-      console.log('File extension:', fileExt);
+      const fileExt = file.name.split('.').pop();
+      const fileName = `${currentUser.id}_${Date.now()}.${fileExt}`;
+      const filePath = `${currentUser.id}/${fileName}`;
 
       const { error: uploadError } = await supabase.storage
         .from('avatars')
@@ -710,24 +705,23 @@ sidebarBtn.addEventListener("click", ()=>{
 
       const { data: publicUrlData } = supabase
         .storage
-        .from('avatars') // Ensure 'avatars' matches the bucket name in Supabase
+        .from('avatars')
         .getPublicUrl(filePath);
 
       avatarUrl = publicUrlData.publicUrl;
-
-      // Update the preview image
-      document.getElementById('previewImage').src = avatarUrl;
     }
 
     // Save to DB
+    const updateData = {
+      id: currentUser.id,
+      full_name: fullName,
+      email: email,
+      avatar_url: avatarUrl
+    };
+
     const { error: updateError } = await supabase
       .from('profiles')
-      .upsert({
-        id: currentUser.id,
-        full_name: fullName,
-        email: email,
-        avatar_url: avatarUrl
-      });
+      .upsert(updateData);
 
     if (updateError) {
       console.error('Profile update error:', updateError.message);
