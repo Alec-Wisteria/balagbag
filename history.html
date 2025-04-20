@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BMI History</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body { font-family: 'Poppins', sans-serif; background: #f4f4f4; margin: 0; padding: 0; }
+        .container { max-width: 600px; margin: 40px auto; background: #fff; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); padding: 32px; }
+        h2 { text-align: center; margin-bottom: 24px; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 12px; text-align: center; border-bottom: 1px solid #eee; }
+        th { background: #343447; color: #fff; }
+        tr:last-child td { border-bottom: none; }
+        .no-history { text-align: center; color: #888; margin-top: 24px; }
+        .back-btn { display: inline-block; margin-bottom: 20px; background: #343447; color: #fff; padding: 8px 16px; border: none; border-radius: 4px; text-decoration: none; }
+        .back-btn:hover { background: #22223b; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="calculator.html" class="back-btn">&larr; Back to Calculator</a>
+        <h2>Your BMI History</h2>
+        <table id="historyTable">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>BMI</th>
+                    <th>Category</th>
+                    <th>Age</th>
+                    <th>Gender</th>
+                </tr>
+            </thead>
+            <tbody id="historyBody">
+                <!-- BMI history will be inserted here -->
+            </tbody>
+        </table>
+        <div class="no-history" id="noHistory" style="display:none;">
+            No BMI records found.
+        </div>
+    </div>
+    <script type="module">
+        import { fetchBMIHistory } from './supabaseClient.js';
+
+        async function loadHistory() {
+            const history = await fetchBMIHistory();
+            const tbody = document.getElementById('historyBody');
+            const noHistory = document.getElementById('noHistory');
+            tbody.innerHTML = '';
+
+            if (!history || history.length === 0) {
+                noHistory.style.display = 'block';
+                return;
+            }
+
+            noHistory.style.display = 'none';
+            history.forEach(record => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${record.created_at ? new Date(record.created_at).toLocaleString() : ''}</td>
+                    <td>${record.bmi}</td>
+                    <td>${record.category}</td>
+                    <td>${record.age}</td>
+                    <td>${record.gender}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        loadHistory();
+    </script>
+</body>
+</html>
