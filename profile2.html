@@ -678,7 +678,7 @@ sidebarBtn.addEventListener("click", ()=>{
   document.getElementById('profileForm').addEventListener('submit', async (e) => {
     e.preventDefault();
 
-    const fullName = document.getElementById('name').value;
+    const name = document.getElementById('name').value;
     const email = document.getElementById('email').value;
     const fileInput = document.getElementById('profilePic');
     let avatarUrl = document.getElementById('previewImage').src; // Default to current image
@@ -714,7 +714,7 @@ sidebarBtn.addEventListener("click", ()=>{
     // Save to DB
     const updateData = {
       id: currentUser.id,
-      full_name: fullName,
+      name: name,
       email: email,
       avatar_url: avatarUrl
     };
