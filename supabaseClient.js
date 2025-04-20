@@ -378,8 +378,10 @@ export async function fetchChatParticipants() {
 export async function fetchBMIHistory() {
     try {
         const { data: session, error: sessionError } = await supabase.auth.getSession();
+
         if (sessionError || !session || !session.session || !session.session.user) {
             console.error("No user session found or error fetching session:", sessionError?.message);
+            alert("You must be logged in to save your BMI record.");
             return [];
         }
 
@@ -431,6 +433,51 @@ export async function clearBMIHistory() {
     } catch (err) {
         console.error("Unexpected error clearing BMI history:", err.message);
         return false;
+    }
+}
+
+/**
+ * Saves a BMI record for the current user.
+ * @param {number} bmi - The calculated BMI value.
+ * @param {string} category - The BMI category (e.g., "Underweight", "Normal weight").
+ * @param {number} age - The age of the user.
+ * @param {string} selectedGender - The gender of the user.
+ */
+export async function saveBMIRecord(bmi, category, age, selectedGender) {
+    console.log("BMI Data to Insert:", {
+        bmi: bmi,
+        category: category,
+        age: age,
+        gender: selectedGender,
+        created_at: new Date().toISOString()
+    });
+
+    try {
+        const { data, error } = await supabase
+            .from('bmi_history')
+            .insert([
+                {
+                    bmi: bmi,
+                    category: category,
+                    age: age,
+                    gender: selectedGender,
+                    created_at: new Date().toISOString()
+                }
+            ]);
+
+        console.log("Supabase Response:", { data, error });
+
+        if (error) {
+            console.error("Error saving BMI record:", error);
+            alert("Failed to save BMI record. Please try again.");
+            return;
+        }
+
+        console.log("BMI record saved successfully!");
+    } catch (err) {
+        console.error("Unexpected error:", err);
+        alert("An unexpected error occurred. Please try again.");
+        return;
     }
 }
 
