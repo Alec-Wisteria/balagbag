@@ -630,6 +630,13 @@ window.calculateBMI = async function() {
                     bmi < 40.9 ? "Class 2 Obesity" : "Class 3 Obesity";
 
     try {
+        // Get the current user
+        const { data: { user }, error: userError } = await supabase.auth.getUser();
+        if (userError || !user) {
+            alert("You must be logged in to save your BMI.");
+            return;
+        }
+
         const { error } = await supabase
             .from('bmi_history')
             .insert([
@@ -638,6 +645,7 @@ window.calculateBMI = async function() {
                     category: category,
                     age: age,
                     gender: selectedGender,
+                    user_id: user.id, // <-- Add this line
                     created_at: new Date().toISOString()
                 }
             ]);
