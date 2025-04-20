@@ -686,35 +686,38 @@ sidebarBtn.addEventListener("click", ()=>{
 
     // Upload image if selected
     if (fileInput.files.length > 0) {
-  const file = fileInput.files[0];
-  const fileExt = file.name.split('.').pop();
-  const fileName = `${currentUser.id}_${Date.now()}.${fileExt}`;
-  const filePath = `${currentUser.id}/${fileName}`;
+      const file = fileInput.files[0];
+      const fileExt = file.name.split('.').pop(); // Get file extension
+      const fileName = `${currentUser.id}_${Date.now()}.${fileExt}`; // Unique file name
+      const filePath = `${currentUser.id}/${fileName}`; // File path
 
-  const { error: uploadError } = await supabase.storage
-    .from('avatars')
-    .upload(filePath, file, {
-      cacheControl: '3600',
-      upsert: true,
-    });
+      console.log('Uploading file to:', filePath);
+      console.log('File name:', fileName);
+      console.log('File extension:', fileExt);
 
-  if (uploadError) {
-    console.error('Upload error:', uploadError.message);
-    alert(`Failed to upload image: ${uploadError.message}`);
-    return;
-  }
+      const { error: uploadError } = await supabase.storage
+        .from('avatars')
+        .upload(filePath, file, {
+          cacheControl: '3600',
+          upsert: true,
+        });
 
-  // ✅ Get public URL
-  const { data: publicUrlData } = supabase.storage
-    .from('avatars')
-    .getPublicUrl(filePath);
+      if (uploadError) {
+        console.error('Upload error:', uploadError.message);
+        alert(`Failed to upload image: ${uploadError.message}`);
+        return;
+      }
 
-  avatarUrl = publicUrlData?.publicUrl;
+      const { data: publicUrlData } = supabase
+        .storage
+        .from('avatars') // Ensure 'avatars' matches the bucket name in Supabase
+        .getPublicUrl(filePath);
 
-  console.log("Image uploaded. Public URL:", avatarUrl);
+      avatarUrl = publicUrlData.publicUrl;
 
-  document.getElementById('previewImage').src = avatarUrl;
-}
+      // Update the preview image
+      document.getElementById('previewImage').src = avatarUrl;
+    }
 
     // Save to DB
     const { error: updateError } = await supabase
