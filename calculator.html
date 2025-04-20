@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<!-- Designined by CodingLab | www.youtube.com/codinglabyt -->
 <html lang="en" dir="ltr">
   <head>
     <meta charset="UTF-8">
@@ -643,14 +642,14 @@ let selectedGender = "";
                     ]);
 
                 if (error) {
-                    console.error("Error saving BMI record:", error);
+                    console.error("Supabase Error:", error.message);
                     alert("Failed to save BMI record. Please try again.");
                     return;
                 }
 
                 console.log("BMI record saved successfully!");
             } catch (err) {
-                console.error("Unexpected error:", err);
+                console.error("Unexpected Error:", err.message);
                 alert("An unexpected error occurred. Please try again.");
                 return;
             }
