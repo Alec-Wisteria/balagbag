@@ -667,7 +667,7 @@ sidebarBtn.addEventListener("click", ()=>{
       document.getElementById('profile-details').style.display = 'flex';
       document.getElementById('username').textContent = profile?.username || 'Guest';
       document.getElementById('job').textContent = profile?.job || 'Fitness Enthusiast';
-      document.getElementById('name').value = profile?.full_name || '';
+      document.getElementById('name').value = profile?.username || '';
       document.getElementById('email').value = profile?.email || '';
       document.getElementById('previewImage').src = profile?.avatar_url || 'images/placeholder.png';
     } catch (err) {
@@ -714,7 +714,7 @@ sidebarBtn.addEventListener("click", ()=>{
     // Save to DB
     const updateData = {
       id: currentUser.id,
-      name: name,
+      username: name,
       email: email,
       avatar_url: avatarUrl
     };
