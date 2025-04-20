@@ -672,7 +672,7 @@ sidebarBtn.addEventListener("click", ()=>{
       document.getElementById('previewImage').src = profile?.avatar_url || 'images/placeholder.png';
 
       // Add this line to update the sidebar image
-      document.getElementById('sidebarProfileImg').src = profile?.avatar_url || 'images/placeholder.png';
+      document.getElementById('sidebarProfileImg').src = avatarUrl || 'images/placeholder.png';
     } catch (err) {
       console.error('Error initializing profile:', err.message);
     }
