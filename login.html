@@ -222,7 +222,7 @@ input {
 	transform: translateX(20%);
 }
 
-.social-container {
+social-container {
 	margin: 20px 0;
 }
 
@@ -337,6 +337,15 @@ document.getElementById('registerForm').addEventListener('submit', async (e) => 
                 alert('Registration failed. Please try again.');
             }
         });
+</script>
+<script type="module">
+import { supabase } from './supabaseClient.js';
+
+// Redirect to index.html if already logged in
+const { data: { user } } = await supabase.auth.getUser();
+if (user) {
+    window.location.href = 'index.html';
+}
 </script>
 
 </body>
