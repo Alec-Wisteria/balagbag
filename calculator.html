@@ -591,87 +591,82 @@ console.log(sidebarBtn);
 sidebarBtn.addEventListener("click", ()=>{
   sidebar.classList.toggle("close");
 });
-
-//gender section
-let selectedGender = "";
-        function toggleGender(gender) {
-            let maleBtn = document.getElementById("maleBtn");
-            let femaleBtn = document.getElementById("femaleBtn");
-
-            if (selectedGender === gender) {
-                selectedGender = "";
-                maleBtn.classList.remove("selected-male");
-                femaleBtn.classList.remove("selected-female");
-            } else {
-                selectedGender = gender;
-                maleBtn.classList.toggle("selected-male", gender === "Male");
-                femaleBtn.classList.toggle("selected-female", gender === "Female");
-            }
-        }
-
 </script>
 <script type="module">
-        import { supabase } from './supabaseClient.js';
+import { supabase } from './supabaseClient.js';
 
-        // Function to calculate BMI and save to Supabase
-       async function calculateBMI() {
-            const height = parseFloat(document.getElementById("height").value) / 100;
-            const weight = parseFloat(document.getElementById("weight").value);
-            const age = document.getElementById("age").value;
+let selectedGender = "";
+window.toggleGender = function(gender) {
+    let maleBtn = document.getElementById("maleBtn");
+    let femaleBtn = document.getElementById("femaleBtn");
 
-            if (!height || !weight || !age || !selectedGender) {
-                alert("Please enter all fields and select a gender.");
-                return;
-            }
+    if (selectedGender === gender) {
+        selectedGender = "";
+        maleBtn.classList.remove("selected-male");
+        femaleBtn.classList.remove("selected-female");
+    } else {
+        selectedGender = gender;
+        maleBtn.classList.toggle("selected-male", gender === "Male");
+        femaleBtn.classList.toggle("selected-female", gender === "Female");
+    }
+}
 
-            const bmi = (weight / (height * height)).toFixed(2);
-            const category = bmi < 18.5 ? "Underweight" :
-                            bmi < 24.9 ? "Normal Weight" :
-                            bmi < 29.9 ? "Overweight" :
-                            bmi < 34.9 ? "Class 1 Obesity" :
-                            bmi < 40.9 ? "Class 2 Obesity" : "Class 3 Obesity";
+// Attach calculateBMI to window so it works with onclick
+window.calculateBMI = async function() {
+    const height = parseFloat(document.getElementById("height").value) / 100;
+    const weight = parseFloat(document.getElementById("weight").value);
+    const age = document.getElementById("age").value;
 
-            // Save BMI record to Supabase
-            try {
-                const { error } = await supabase
-                    .from('bmi_history') // Replace with your Supabase table name
-                    .insert([
-                        {
-                            bmi: bmi,
-                            category: category,
-                            age: age,
-                            gender: selectedGender,
-                            created_at: new Date().toISOString() // Optional: Add a timestamp
-                        }
-                    ]);
+    if (!height || !weight || !age || !selectedGender) {
+        alert("Please enter all fields and select a gender.");
+        return;
+    }
 
-                if (error) {
-                    console.error("Supabase Error:", error.message);
-                    alert("Failed to save BMI record. Please try again.");
-                    return;
+    const bmi = (weight / (height * height)).toFixed(2);
+    const category = bmi < 18.5 ? "Underweight" :
+                    bmi < 24.9 ? "Normal Weight" :
+                    bmi < 29.9 ? "Overweight" :
+                    bmi < 34.9 ? "Class 1 Obesity" :
+                    bmi < 40.9 ? "Class 2 Obesity" : "Class 3 Obesity";
+
+    try {
+        const { error } = await supabase
+            .from('bmi_history')
+            .insert([
+                {
+                    bmi: bmi,
+                    category: category,
+                    age: age,
+                    gender: selectedGender,
+                    created_at: new Date().toISOString()
                 }
+            ]);
 
-                console.log("BMI record saved successfully!");
-            } catch (err) {
-                console.error("Unexpected Error:", err.message);
-                alert("An unexpected error occurred. Please try again.");
-                return;
-            }
-
-            // Redirect to BMI Results page
-            window.location.href = `BMIResults.html?bmi=${bmi}&category=${category}&age=${age}&gender=${selectedGender}`;
+        if (error) {
+            console.error("Supabase Error:", error.message);
+            alert("Failed to save BMI record. Please try again.");
+            return;
         }
 
-        //quotes display
-        const quotes = [
-            "Your health is your wealth.",
-            "Stay fit, stay happy!",
-            "A little progress each day adds up to big results."
-        ];
-        document.getElementById("quote").innerText =
-            quotes[Math.floor(Math.random() * quotes.length)];
-  </script>
+        console.log("BMI record saved successfully!");
+    } catch (err) {
+        console.error("Unexpected Error:", err.message);
+        alert("An unexpected error occurred. Please try again.");
+        return;
+    }
 
+    window.location.href = `BMIResults.html?bmi=${bmi}&category=${category}&age=${age}&gender=${selectedGender}`;
+}
+
+// Quotes display
+const quotes = [
+    "Your health is your wealth.",
+    "Stay fit, stay happy!",
+    "A little progress each day adds up to big results."
+];
+document.getElementById("quote").innerText =
+    quotes[Math.floor(Math.random() * quotes.length)];
+</script>
 <script type="module">
     import { supabase } from './supabaseClient.js';
 // Profile details elements
