@@ -593,12 +593,6 @@ sidebarBtn.addEventListener("click", ()=>{
   sidebar.classList.toggle("close");
 });
 
-</script>
-<script type="module">
-    import { supabase } from './supabaseClient.js';
-    // Initialize Supabase client
-    const { data: { user } } = await supabase.auth.getUser();
-
 //gender section
 let selectedGender = "";
         function toggleGender(gender) {
