@@ -519,7 +519,7 @@ body{
       <li>
         <div class="profile-details" id="profile-details" style="display: none;">
           <div class="profile-content">
-              <img src="images/placeholder.png" alt="profileImg">
+              <img src="images/placeholder.png" alt="profileImg" id="sidebarProfileImg">
           </div>
           <div class="name-job">
               <div class="profile_name" id="username"></div>
@@ -672,7 +672,7 @@ sidebarBtn.addEventListener("click", ()=>{
       document.getElementById('previewImage').src = profile?.avatar_url || 'images/placeholder.png';
 
       // Add this line to update the sidebar image
-      document.querySelector('.profile-details img').src = profile?.avatar_url || 'images/placeholder.png';
+      document.getElementById('sidebarProfileImg').src = profile?.avatar_url || 'images/placeholder.png';
     } catch (err) {
       console.error('Error initializing profile:', err.message);
     }
@@ -733,6 +733,7 @@ sidebarBtn.addEventListener("click", ()=>{
       alert('Profile updated successfully!');
       // Update the sidebar image immediately
       document.querySelector('.profile-details img').src = avatarUrl || 'images/placeholder.png';
+      document.getElementById('sidebarProfileImg').src = avatarUrl || 'images/placeholder.png';
     }
   });
 
