@@ -732,7 +732,7 @@ sidebarBtn.addEventListener("click", ()=>{
     } else {
       alert('Profile updated successfully!');
       // Update the sidebar image immediately
-      document.querySelector('.profile-details img').src = avatarUrl || 'images/placeholder.png';
+      document.querySelector('.sidebarProfileImg').src = avatarUrl || 'images/placeholder.png';
       document.getElementById('sidebarProfileImg').src = avatarUrl || 'images/placeholder.png';
     }
   });
