@@ -130,6 +130,24 @@ export async function getUserType() {
     return profileData.user_type;
 }
 
+export async function fetchBMIHistory() {
+    const { data: session, error: sessionError } = await supabase.auth.getSession();
+    if (sessionError || !session || !session.session || !session.session.user) {
+        console.log("No user session found or error fetching session:", sessionError?.message);
+        return [];
+    }
+    const userId = session.session.user.id;
+    const { data, error } = await supabase
+        .from('bmi_history')
+        .select('*')
+        .eq('user_id', userId)
+        .order('created_at', { ascending: false });
+    if (error) {
+        console.log("Error fetching BMI history:", error.message);
+        return [];
+    }
+    return data;
+
 export async function uploadProduct(product) {
     const { name, price, quantity, category } = product;
 

@@ -593,6 +593,12 @@ sidebarBtn.addEventListener("click", ()=>{
   sidebar.classList.toggle("close");
 });
 
+</script>
+<script type="module">
+    import { supabase } from './supabaseClient.js';
+    // Initialize Supabase client
+    const { data: { user } } = await supabase.auth.getUser();
+
 //gender section
 let selectedGender = "";
         function toggleGender(gender) {
@@ -611,7 +617,7 @@ let selectedGender = "";
         }
 
        
-        function calculateBMI() {
+       async function calculateBMI() {
             const height = parseFloat(document.getElementById("height").value) / 100;
             const weight = parseFloat(document.getElementById("weight").value);
             const age = document.getElementById("age").value;
@@ -625,11 +631,38 @@ let selectedGender = "";
             const category = bmi < 18.5 ? "Underweight" :
                             bmi < 24.9 ? "Normal Weight" :
                             bmi < 29.9 ? "Overweight" :
-                            bmi < 29.9 ? "Obese":
                             bmi < 34.9 ? "Class 1 Obesity" :
-                            bmi < 40.9 ? "Class 2 Obesity" : "Class 3 Obesity"; 
+                            bmi < 40.9 ? "Class 2 Obesity" : "Class 3 Obesity";
 
-                            window.location.href = `BMIResults.html?bmi=${bmi}&category=${category}&age=${age}&gender=${selectedGender}`;
+            // Save BMI record to Supabase
+            try {
+                const { error } = await supabase
+                    .from('bmi_history') // Replace with your Supabase table name
+                    .insert([
+                        {
+                            bmi: bmi,
+                            category: category,
+                            age: age,
+                            gender: selectedGender,
+                            created_at: new Date().toISOString() // Optional: Add a timestamp
+                        }
+                    ]);
+
+                if (error) {
+                    console.error("Error saving BMI record:", error);
+                    alert("Failed to save BMI record. Please try again.");
+                    return;
+                }
+
+                console.log("BMI record saved successfully!");
+            } catch (err) {
+                console.error("Unexpected error:", err);
+                alert("An unexpected error occurred. Please try again.");
+                return;
+            }
+
+            // Redirect to BMI Results page
+            window.location.href = `BMIResults.html?bmi=${bmi}&category=${category}&age=${age}&gender=${selectedGender}`;
         }
 
         //quotes display
