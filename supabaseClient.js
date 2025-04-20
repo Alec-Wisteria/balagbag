@@ -147,6 +147,7 @@ export async function fetchBMIHistory() {
         return [];
     }
     return data;
+} 
 
 export async function uploadProduct(product) {
     const { name, price, quantity, category } = product;
@@ -388,4 +389,3 @@ export async function fetchChatParticipants() {
 
     return Array.from(uniqueParticipants.values());
 }
-
