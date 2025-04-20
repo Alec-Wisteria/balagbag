@@ -731,6 +731,8 @@ sidebarBtn.addEventListener("click", ()=>{
       alert('Failed to update profile.');
     } else {
       alert('Profile updated successfully!');
+      // Update the sidebar image immediately
+      document.querySelector('.profile-details img').src = avatarUrl || 'images/placeholder.png';
     }
   });
 
