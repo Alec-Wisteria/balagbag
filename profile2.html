@@ -627,65 +627,6 @@ sidebarBtn.addEventListener("click", ()=>{
     }
   });
 
-  document.getElementById('profileForm').addEventListener('submit', async (e) => {
-    e.preventDefault();
-
-    const name = document.getElementById('name').value;
-    const email = document.getElementById('email').value;
-    const fileInput = document.getElementById('profilePic');
-    let avatarUrl = document.getElementById('previewImage').src; // Default to current image
-
-    // Upload image if selected
-    if (fileInput.files.length > 0) {
-      const file = fileInput.files[0];
-      const fileExt = file.name.split('.').pop();
-      const fileName = `${currentUser.id}_${Date.now()}.${fileExt}`;
-      const filePath = `${currentUser.id}/${fileName}`;
-
-      const { error: uploadError } = await supabase.storage
-        .from('avatars')
-        .upload(filePath, file, {
-          cacheControl: '3600',
-          upsert: true,
-        });
-
-      if (uploadError) {
-        console.error('Upload error:', uploadError.message);
-        alert(`Failed to upload image: ${uploadError.message}`);
-        return;
-      }
-
-      // FIX: Await and get the public URL
-      const { data: publicUrlData } = await supabase
-        .storage
-        .from('avatars')
-        .getPublicUrl(filePath);
-
-      avatarUrl = publicUrlData.publicUrl;
-    }
-
-    // Save to DB
-    const updateData = {
-      id: currentUser.id,
-      username: name,
-      email: email,
-      avatar_url: avatarUrl
-    };
-
-    const { error: updateError } = await supabase
-      .from('profiles')
-      .upsert(updateData);
-
-    if (updateError) {
-      console.error('Profile update error:', updateError.message);
-      alert('Failed to update profile.');
-    } else {
-      alert('Profile updated successfully!');
-      // Update the sidebar image immediately
-      document.getElementById('sidebarProfileImg').src = avatarUrl || 'images/placeholder.png';
-    }
-  });
-
   // Preview the selected image before upload
   document.getElementById('profilePic').addEventListener('change', (event) => {
     const file = event.target.files[0];
