@@ -517,7 +517,7 @@ body{
         </ul>
       </li>
       <li>
-        <div class="profile-details" id="profile-details" style="display: none;">
+        <div class="profile-details" id="profile-details">
           <div class="profile-content">
               <img src="images/placeholder.png" alt="profileImg" id="sidebarProfileImg">
           </div>
@@ -669,9 +669,10 @@ sidebarBtn.addEventListener("click", ()=>{
       document.getElementById('job').textContent = profile?.job || 'Fitness Enthusiast';
       document.getElementById('name').value = profile?.username || '';
       document.getElementById('email').value = profile?.email || '';
+      console.log("profile.avatar_url:", profile?.avatar_url);
       document.getElementById('previewImage').src = profile?.avatar_url || 'images/placeholder.png';
-      console.log("Sidebar image URL:", profile?.avatar_url || 'images/placeholder.png');
       document.getElementById('sidebarProfileImg').src = profile?.avatar_url || 'images/placeholder.png';
+      console.log("Sidebar image URL:", profile?.avatar_url || 'images/placeholder.png');
     } catch (err) {
       console.error('Error initializing profile:', err.message);
     }
