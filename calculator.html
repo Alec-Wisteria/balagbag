@@ -632,11 +632,14 @@ window.calculateBMI = async function() {
     try {
         // Get the current user
         const { data: { user }, error: userError } = await supabase.auth.getUser();
-        if (userError || !user) {
-            alert("You must be logged in to save your BMI.");
+
+        if (!user || userError) {
+            // Not logged in: just redirect, don't save
+            window.location.href = `BMIResults.html?bmi=${bmi}&category=${category}&age=${age}&gender=${selectedGender}`;
             return;
         }
 
+        // Logged in: save to Supabase
         const { error } = await supabase
             .from('bmi_history')
             .insert([
@@ -645,7 +648,7 @@ window.calculateBMI = async function() {
                     category: category,
                     age: age,
                     gender: selectedGender,
-                    user_id: user.id, // <-- Add this line
+                    user_id: user.id,
                     created_at: new Date().toISOString()
                 }
             ]);
