@@ -675,27 +675,15 @@ sidebarBtn.addEventListener("click", ()=>{
         avatarUrl = data.publicUrl;
       }
 
-      if (document.getElementById('profile-details')) {
-        document.getElementById('profile-details').style.display = 'flex';
-      }
-      if (document.getElementById('username')) {
-        document.getElementById('username').textContent = profile?.username || 'Guest';
-      }
-      if (document.getElementById('job')) {
-        document.getElementById('job').textContent = profile?.job || 'Fitness Enthusiast';
-      }
-      if (document.getElementById('name')) {
-        document.getElementById('name').value = profile?.username || '';
-      }
-      if (document.getElementById('email')) {
-        document.getElementById('email').value = profile?.email || '';
-      }
-      if (document.getElementById('previewImage')) {
-        document.getElementById('previewImage').src = avatarUrl || 'images/placeholder.png';
-      }
-      if (document.getElementById('sidebarProfileImg')) {
-        document.getElementById('sidebarProfileImg').src = avatarUrl || 'images/placeholder.png';
-      }
+      document.getElementById('profile-details').style.display = 'flex';
+      document.getElementById('username').textContent = profile?.username || 'Guest';
+      document.getElementById('job').textContent = profile?.job || 'Fitness Enthusiast';
+      document.getElementById('name').value = profile?.username || '';
+      document.getElementById('email').value = profile?.email || '';
+      console.log("profile.avatar_url:", profile?.avatar_url);
+      document.getElementById('previewImage').src = avatarUrl || 'images/placeholder.png';
+      document.getElementById('sidebarProfileImg').src = avatarUrl || 'images/placeholder.png';
+      console.log("Sidebar image URL:", avatarUrl || 'images/placeholder.png');
     } catch (err) {
       console.error('Error initializing profile:', err.message);
     }
