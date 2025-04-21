@@ -680,37 +680,56 @@ document.getElementById("quote").innerText =
 </script>
 <script type="module">
     import { supabase } from './supabaseClient.js';
-// Profile details elements
-document.addEventListener('DOMContentLoaded', async () => {
-  const { data: { user } } = await supabase.auth.getUser();
+    // Profile details elements
+    document.addEventListener('DOMContentLoaded', async () => {
+      const { data: { user } } = await supabase.auth.getUser();
 
-  if (user) {
-    // Fetch additional profile info if stored in a 'profiles' table
-    const { data: profile } = await supabase
-      .from('profiles')
-      .select('*')
-      .eq('id', user.id)
-      .single();
+      if (user) {
+        // Fetch additional profile info if stored in a 'profiles' table
+        const { data: profile } = await supabase
+          .from('profiles')
+          .select('*')
+          .eq('id', user.id)
+          .single();
 
-    // Show the profile section
-    document.getElementById('profile-details').style.display = 'flex';
-    document.getElementById('username').textContent = profile?.username || 'Guest';
-  }
-});
+        // Show the profile section
+        document.getElementById('profile-details').style.display = 'flex';
+        document.getElementById('username').textContent = profile?.username || 'Guest';
 
-window.showLogoutConfirmation = function () {
-  document.getElementById('logoutModal').style.display = 'block';
-}
+        // Set sidebar profile image
+        const sidebarProfileImg = document.querySelector('#profile-details img');
+        let avatarUrl = 'images/placeholder.png';
+        const avatarPath = profile?.avatar_url;
+        if (avatarPath) {
+          if (avatarPath.startsWith('http')) {
+            avatarUrl = avatarPath;
+          } else {
+            const { data } = supabase
+              .storage
+              .from('avatars')
+              .getPublicUrl(avatarPath);
+            if (data && data.publicUrl) {
+              avatarUrl = data.publicUrl;
+            }
+          }
+        }
+        if (sidebarProfileImg) sidebarProfileImg.src = avatarUrl;
+      }
+    });
 
-window.closeLogoutModal = function () {
-  document.getElementById('logoutModal').style.display = 'none';
-}
+    window.showLogoutConfirmation = function () {
+      document.getElementById('logoutModal').style.display = 'block';
+    }
 
-window.logout = async function () {
-  await supabase.auth.signOut();
-  window.location.href = 'login.html'; // or wherever your login page is
-}
-  </script>
+    window.closeLogoutModal = function () {
+      document.getElementById('logoutModal').style.display = 'none';
+    }
+            
+    window.logout = async function () {
+      await supabase.auth.signOut();
+      window.location.href = 'login.html'; // or wherever your login page is
+    }
+</script>
 <script>
 function toggleDarkMode() {
   const body = document.body;
