@@ -706,7 +706,8 @@ sidebarBtn.addEventListener("click", ()=>{
         return;
       }
 
-      const { data: publicUrlData } = supabase
+      // FIX: Await and get the public URL
+      const { data: publicUrlData } = await supabase
         .storage
         .from('avatars')
         .getPublicUrl(filePath);
