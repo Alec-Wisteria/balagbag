@@ -663,16 +663,27 @@ sidebarBtn.addEventListener("click", ()=>{
 
       if (profileError) throw profileError;
 
-      // Populate the profile UI
+      const avatarPath = profile?.avatar_url;
+      let avatarUrl = avatarPath;
+
+      // If avatar_url exists and is NOT a full URL, get the public URL from Supabase
+      if (avatarPath && !avatarPath.startsWith('http')) {
+        const { data } = supabase
+          .storage
+          .from('avatars')
+          .getPublicUrl(avatarPath);
+        avatarUrl = data.publicUrl;
+      }
+
       document.getElementById('profile-details').style.display = 'flex';
       document.getElementById('username').textContent = profile?.username || 'Guest';
       document.getElementById('job').textContent = profile?.job || 'Fitness Enthusiast';
       document.getElementById('name').value = profile?.username || '';
       document.getElementById('email').value = profile?.email || '';
       console.log("profile.avatar_url:", profile?.avatar_url);
-      document.getElementById('previewImage').src = profile?.avatar_url || 'images/placeholder.png';
-      document.getElementById('sidebarProfileImg').src = profile?.avatar_url || 'images/placeholder.png';
-      console.log("Sidebar image URL:", profile?.avatar_url || 'images/placeholder.png');
+      document.getElementById('previewImage').src = avatarUrl || 'images/placeholder.png';
+      document.getElementById('sidebarProfileImg').src = avatarUrl || 'images/placeholder.png';
+      console.log("Sidebar image URL:", avatarUrl || 'images/placeholder.png');
     } catch (err) {
       console.error('Error initializing profile:', err.message);
     }
