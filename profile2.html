@@ -554,6 +554,11 @@ body{
       <div><strong>Email:</strong> <span id="displayEmail"></span></div>
       <div><strong>Account Created:</strong> <span id="displayCreated"></span></div>
     </div>
+    <!-- Add file input for changing profile picture -->
+    <div style="margin: 20px 0;">
+      <input type="file" id="profilePicInput" accept="image/*" style="display:none;">
+      <button id="changePicBtn">Change Profile Picture</button>
+    </div>
   </div>
 </section>
   <script>
@@ -633,10 +638,63 @@ sidebarBtn.addEventListener("click", ()=>{
       if (previewImg) previewImg.src = 'images/placeholder.png';
       console.error('Error initializing profile:', err?.message || err);
     }
-  });
 
-  // Remove or comment out the image preview upload handler if not needed
-  // document.getElementById('profilePic').addEventListener('change', ...);
+    // Profile picture change logic
+    const changePicBtn = document.getElementById('changePicBtn');
+    const profilePicInput = document.getElementById('profilePicInput');
+    const previewImg = document.getElementById('previewImage');
+    const sidebarImg = document.getElementById('sidebarProfileImg');
+
+    changePicBtn.addEventListener('click', () => {
+      profilePicInput.click();
+    });
+
+    profilePicInput.addEventListener('change', async (event) => {
+      const file = event.target.files[0];
+      if (!file || !currentUser) return;
+
+      // Optional: Show preview before upload
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        previewImg.src = e.target.result;
+        if (sidebarImg) sidebarImg.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+
+      // Upload to Supabase Storage
+      const fileExt = file.name.split('.').pop();
+      const filePath = `${currentUser.id}_${Date.now()}.${fileExt}`;
+
+      let { error: uploadError } = await supabase
+        .storage
+        .from('avatars')
+        .upload(filePath, file, { upsert: true });
+
+      if (uploadError) {
+        alert('Failed to upload image.');
+        return;
+      }
+
+      // Get public URL
+      const { data } = supabase
+        .storage
+        .from('avatars')
+        .getPublicUrl(filePath);
+
+      // Update profile in DB
+      const { error: updateError } = await supabase
+        .from('profiles')
+        .update({ avatar_url: filePath })
+        .eq('id', currentUser.id);
+
+      if (updateError) {
+        alert('Failed to update profile.');
+        return;
+      }
+
+      alert('Profile picture updated successfully.');
+    });
+  });
 
   window.showLogoutConfirmation = function () {
     document.getElementById('logoutModal').style.display = 'block';
