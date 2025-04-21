@@ -670,6 +670,7 @@ sidebarBtn.addEventListener("click", ()=>{
       document.getElementById('name').value = profile?.username || '';
       document.getElementById('email').value = profile?.email || '';
       document.getElementById('previewImage').src = profile?.avatar_url || 'images/placeholder.png';
+      console.log("Sidebar image URL:", profile?.avatar_url || 'images/placeholder.png');
       document.getElementById('sidebarProfileImg').src = profile?.avatar_url || 'images/placeholder.png';
     } catch (err) {
       console.error('Error initializing profile:', err.message);
