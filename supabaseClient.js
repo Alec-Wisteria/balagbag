@@ -389,3 +389,21 @@ export async function fetchChatParticipants() {
 
     return Array.from(uniqueParticipants.values());
 }
+
+/**
+ * Updates the avatar URL in the profiles table after uploading the file to 'avatars' bucket.
+ * @param {string} userId - The ID of the user.
+ * @param {string} fileName - The name of the uploaded file.
+ */
+export async function updateAvatarUrl(userId, fileName) {
+    const filePath = `${userId}/${fileName}`;
+    await supabase.from('profiles').update({ avatar_url: filePath }).eq('id', userId);
+}
+
+// When loading the profile:
+const avatarPath = profile?.avatar_url;
+let avatarUrl = null;
+if (avatarPath) {
+  const { data } = supabase.storage.from('avatars').getPublicUrl(avatarPath);
+  avatarUrl = data.publicUrl;
+}
