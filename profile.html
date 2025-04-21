@@ -41,26 +41,58 @@
 </head>
 <body>
     <div class="profile-container">
-        <img id="avatar" src="" alt="Avatar" class="profile-avatar">
+        <img id="avatar" src="images/placeholder.png" alt="Avatar" class="profile-avatar">
         <div class="profile-info">
-            <h2 id="username"></h2>
+            <h2 id="username">Loading...</h2>
             <p id="email"></p>
             <p>Account Created: <span id="created-date"></span></p>
         </div>
     </div>
-    <script>
-        // Simulated database (replace with real DB in production)
-        const userDB = {
-            username: "JohnDoe",
-            email: "johndoe@example.com",
-            createdDate: "2024-04-21"
-        };
+    <script type="module">
+        import { supabase } from './supabaseClient.js';
 
-        // Display user data
-        document.getElementById('username').textContent = userDB.username;
-        document.getElementById('email').textContent = userDB.email;
-        document.getElementById('created-date').textContent = userDB.createdDate;
-        document.getElementById('avatar').src = `https://ui-avatars.com/api/?name=${encodeURIComponent(userDB.username)}&background=0078d7&color=fff`;
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                const { data: { user }, error } = await supabase.auth.getUser();
+                if (error || !user) throw error;
+
+                // Fetch profile from 'profiles' table
+                const { data: profile, error: profileError } = await supabase
+                    .from('profiles')
+                    .select('*')
+                    .eq('id', user.id)
+                    .single();
+
+                if (profileError) throw profileError;
+
+                // Set avatar if available
+                let avatarUrl = 'images/placeholder.png';
+                if (profile?.avatar_url) {
+                    if (profile.avatar_url.startsWith('http')) {
+                        avatarUrl = profile.avatar_url;
+                    } else {
+                        const { data } = supabase
+                            .storage
+                            .from('avatars')
+                            .getPublicUrl(profile.avatar_url);
+                        avatarUrl = data.publicUrl || avatarUrl;
+                    }
+                }
+                document.getElementById('avatar').src = avatarUrl;
+
+                // Display username, email, and created date
+                document.getElementById('username').textContent = profile?.username || user.email || 'Guest';
+                document.getElementById('email').textContent = profile?.email || user.email || '';
+                document.getElementById('created-date').textContent = user.created_at
+                    ? new Date(user.created_at).toLocaleString()
+                    : '';
+            } catch (err) {
+                document.getElementById('username').textContent = 'Not logged in';
+                document.getElementById('email').textContent = '';
+                document.getElementById('created-date').textContent = '';
+                console.error('Error loading profile:', err?.message || err);
+            }
+        });
     </script>
 </body>
 </html>

@@ -609,7 +609,6 @@ sidebarBtn.addEventListener("click", ()=>{
 
       document.getElementById('profile-details').style.display = 'flex';
       document.getElementById('username').textContent = profile?.username || 'Guest';
-      document.getElementById('job').textContent = profile?.job || 'Fitness Enthusiast';
       document.getElementById('name').value = profile?.username || '';
       document.getElementById('email').value = profile?.email || '';
       console.log("profile.avatar_url:", profile?.avatar_url);
