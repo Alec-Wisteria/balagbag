@@ -580,6 +580,7 @@ sidebarBtn.addEventListener("click", ()=>{
   document.addEventListener('DOMContentLoaded', async () => {
     try {
       const { data: { user }, error } = await supabase.auth.getUser();
+      console.log("User:", user, "Error:", error);
       if (error || !user) throw error;
 
       currentUser = user;
@@ -589,6 +590,8 @@ sidebarBtn.addEventListener("click", ()=>{
         .select('*')
         .eq('id', user.id)
         .single();
+
+      console.log("Profile:", profile, "ProfileError:", profileError);
 
       if (profileError) throw profileError;
 
