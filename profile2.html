@@ -580,7 +580,6 @@ sidebarBtn.addEventListener("click", ()=>{
   document.addEventListener('DOMContentLoaded', async () => {
     try {
       const { data: { user }, error } = await supabase.auth.getUser();
-      console.log("User:", user, "Error:", error);
       if (error || !user) throw error;
 
       currentUser = user;
@@ -591,53 +590,53 @@ sidebarBtn.addEventListener("click", ()=>{
         .eq('id', user.id)
         .single();
 
-      console.log("Profile:", profile, "ProfileError:", profileError);
-
       if (profileError) throw profileError;
 
+      // Handle avatar
+      let avatarUrl = 'images/placeholder.png';
       const avatarPath = profile?.avatar_url;
-      let avatarUrl = avatarPath;
-
-      // If avatar_url exists and is NOT a full URL, get the public URL from Supabase
-      if (avatarPath && !avatarPath.startsWith('http')) {
-        const { data } = supabase
-          .storage
-          .from('avatars')
-          .getPublicUrl(avatarPath);
-        avatarUrl = data.publicUrl;
+      if (avatarPath) {
+        if (avatarPath.startsWith('http')) {
+          avatarUrl = avatarPath;
+        } else {
+          const { data } = supabase
+            .storage
+            .from('avatars')
+            .getPublicUrl(avatarPath);
+          if (data && data.publicUrl) {
+            avatarUrl = data.publicUrl;
+          }
+        }
       }
 
-      document.getElementById('profile-details').style.display = 'flex';
-      document.getElementById('username').textContent = profile?.username || 'Guest';
-      document.getElementById('name').value = profile?.username || '';
-      document.getElementById('email').value = profile?.email || '';
-      console.log("profile.avatar_url:", profile?.avatar_url);
-      document.getElementById('previewImage').src = avatarUrl || 'images/placeholder.png';
-      document.getElementById('sidebarProfileImg').src = avatarUrl || 'images/placeholder.png';
-      console.log("Sidebar image URL:", avatarUrl || 'images/placeholder.png');
+      // Set sidebar and profile images
+      const sidebarImg = document.getElementById('sidebarProfileImg');
+      const previewImg = document.getElementById('previewImage');
+      if (sidebarImg) sidebarImg.src = avatarUrl;
+      if (previewImg) previewImg.src = avatarUrl;
 
+      // Set username, email, and created date
+      document.getElementById('username').textContent = profile?.username || 'Guest';
       document.getElementById('displayUsername').textContent = profile?.username || 'Guest';
       document.getElementById('displayEmail').textContent = profile?.email || user.email || '';
       document.getElementById('displayCreated').textContent = user.created_at
         ? new Date(user.created_at).toLocaleString()
         : '';
     } catch (err) {
-      console.error('Error initializing profile:', err.message);
+      document.getElementById('username').textContent = 'Not logged in';
+      document.getElementById('displayUsername').textContent = '';
+      document.getElementById('displayEmail').textContent = '';
+      document.getElementById('displayCreated').textContent = '';
+      const sidebarImg = document.getElementById('sidebarProfileImg');
+      const previewImg = document.getElementById('previewImage');
+      if (sidebarImg) sidebarImg.src = 'images/placeholder.png';
+      if (previewImg) previewImg.src = 'images/placeholder.png';
+      console.error('Error initializing profile:', err?.message || err);
     }
   });
 
-  // Preview the selected image before upload
-  document.getElementById('profilePic').addEventListener('change', (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        document.getElementById('previewImage').src = e.target.result;
-        document.getElementById('sidebarProfileImg').src = e.target.result; // Add this line
-      };
-      reader.readAsDataURL(file);
-    }
-  });
+  // Remove or comment out the image preview upload handler if not needed
+  // document.getElementById('profilePic').addEventListener('change', ...);
 
   window.showLogoutConfirmation = function () {
     document.getElementById('logoutModal').style.display = 'block';
