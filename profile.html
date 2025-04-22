@@ -300,7 +300,26 @@
         background-color: #1c1c1e;
         color: #f5f5f7;
       }
-      body.dark-mode .sidebar,
+      body.dark-mode .sidebar {
+        background: #23232b !important;
+      }
+      body.dark-mode .sidebar .logo_name,
+      body.dark-mode .sidebar .nav-links li a .link_name,
+      body.dark-mode .sidebar .nav-links li i {
+        color: #fff !important;
+      }
+      body.dark-mode .sidebar .nav-links li a {
+        color: #fff !important;
+      }
+      body.dark-mode .sidebar .profile-details,
+      body.dark-mode .sidebar .profile-details .profile_name,
+      body.dark-mode .sidebar .profile-details .job {
+        background: #23232b !important;
+        color: #fff !important;
+      }
+      body.dark-mode .sidebar .nav-links li:hover {
+        background: rgba(255,255,255,0.07) !important;
+      }
       body.dark-mode .container, body.dark-mode .home-section {
         background-color: #2c2c2e !important;
         color: #f5f5f7 !important;
@@ -354,36 +373,24 @@
             <i class='bx bx-grid-alt'></i>
             <span class="link_name">Home</span>
           </a>
-          <ul class="sub-menu blank">
-            <li><a class="link_name" href="index.html">Home</a></li>
-          </ul>
         </li>
         <li>
           <a href="calculator.html">
             <i class='bx bx-bar-chart-alt' ></i>
             <span class="link_name">Calculator</span>
           </a>
-          <ul class="sub-menu blank">
-            <li><a class="link_name" href="calculator.html">Calculator</a></li>
-          </ul>
         </li>
         <li>
           <a href="profile.html">
             <i class='bx bx-user' ></i>
             <span class="link_name">Profile</span>
           </a>
-          <ul class="sub-menu blank">
-            <li><a class="link_name" href="profile.html">Profile</a></li>
-          </ul>
         </li>
         <li>
           <a href="history.html">
             <i class='bx bx-history'></i>
             <span class="link_name">History</span>
           </a>
-          <ul class="sub-menu blank">
-            <li><a class="link_name" href="history.html">History</a></li>
-          </ul>
         </li>
 
           <div class="profile-details" id="profile-details" style="display: none;">
