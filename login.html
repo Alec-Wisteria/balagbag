@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
+
 <head>
   <meta charset="utf-8">
   <title>Login & Signup</title>
   <link rel="stylesheet" href="style.css">
   <link href="https://fonts.googleapis.com/css?family=Arvo" rel="stylesheet">
-  <link rel="shortcut icon" href="images/logo.jpg" type="image/x-icon">
 	<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css'>
 </head>
 <style>
@@ -222,7 +222,7 @@ input {
 	transform: translateX(20%);
 }
 
-social-container {
+.social-container {
 	margin: 20px 0;
 }
 
@@ -310,12 +310,12 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
     const password = document.getElementById('loginPassword').value;
 
     const success = await signInUser(email, password);
-	if (success) {
-    alert('Login successful!');
-    window.location.href = 'index.html';
-} else {
-    alert('Login failed. Please check your credentials or verify your email.');
-}
+    if (success) {
+        alert('Login successful!');
+        window.location.href = 'index.html';
+    } else {
+        alert('Login failed. Please check your credentials.');
+    }
 });
 </script>
 <script type="module">
@@ -337,15 +337,6 @@ document.getElementById('registerForm').addEventListener('submit', async (e) => 
                 alert('Registration failed. Please try again.');
             }
         });
-</script>
-<script type="module">
-import { supabase } from './supabaseClient.js';
-
-// Redirect to index.html if already logged in
-const { data: { user } } = await supabase.auth.getUser();
-if (user) {
-    window.location.href = 'index.html';
-}
 </script>
 
 </body>
