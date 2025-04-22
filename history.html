@@ -4,11 +4,183 @@
     <meta charset="UTF-8">
     <title>BMI History</title>
     <link rel="shortcut icon" href="images/logo.jpg" type="image/x-icon">
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-        body { font-family: 'Poppins', sans-serif; background: #f4f4f4; margin: 0; padding: 0; }
-        .container { max-width: 600px; margin: 40px auto; background: #fff; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); padding: 32px; }
-        h2 { text-align: center; margin-bottom: 24px; }
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        *{ margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            width: 260px;
+            background: linear-gradient(to bottom right, #c2c2c2, #343447);
+            transition: width 0.4s ease-in-out, background 0.3s ease-in-out;
+            z-index: 1000;
+            overflow: hidden;
+        }
+        .sidebar.close{ width: 78px; }
+        .sidebar .logo-details {
+            height: 60px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            transition: all 0.3s ease;
+        }
+        .sidebar .logo-details img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            transition: all 0.3s ease;
+        }
+        .sidebar.open .logo-details img {
+            width: 85px;
+            height: 85px;
+        }
+        .sidebar .logo-details .logo_name {
+            font-size: 22px;
+            color: #000000;
+            font-weight: 600;
+            transition: opacity 0.3s ease;
+            transition-delay: 0.1s;
+            padding-left: 18px;
+        }
+        .sidebar.close .logo-details .logo_name {
+            transition-delay: 0s;
+            opacity: 0;
+            pointer-events: none;
+        }
+        .sidebar .nav-links{
+            height: 100%;
+            padding: 30px 0 150px 0;
+            overflow: auto;
+        }
+        .sidebar .nav-links li{
+            position: relative;
+            list-style: none;
+            transition: all 0.4s ease;
+        }
+        .sidebar .nav-links li:hover {
+            background: rgba(255, 255, 255, 0.4);
+        }
+        .sidebar .nav-links li a{
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+        .sidebar .nav-links li a .link_name{
+            font-size: 18px;
+            font-weight: 400;
+            color: #000000;
+            transition: all 0.4s ease;
+        }
+        .sidebar .nav-links li i{
+            height: 50px;
+            min-width: 78px;
+            text-align: center;
+            line-height: 50px;
+            color: #000000;
+            font-size: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .sidebar .profile-details{
+            position: fixed;
+            bottom: 0;
+            width: 260px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #c2c1d4;
+            padding: 12px 0;
+            transition: all 0.5s ease;
+        }
+        .sidebar.close .profile-details{
+            background: none;
+            width: 78px;
+        }
+        .sidebar .profile-details .profile-content{
+            display: flex;
+            align-items: center;
+        }
+        .sidebar .profile-details img{
+            height: 52px;
+            width: 52px;
+            object-fit: cover;
+            border-radius: 16px;
+            margin: 0 14px 0 12px;
+            background: #1d1b31;
+            transition: all 0.5s ease;
+        }
+        .sidebar.close .profile-details img{
+            padding: 10px;
+        }
+        .sidebar .profile-details .profile_name,
+        .sidebar .profile-details .job{
+            color: #000000;
+            font-size: 18px;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+        .sidebar.close .profile-details i,
+        .sidebar.close .profile-details .profile_name,
+        .sidebar.close .profile-details .job{
+            display: none;
+        }
+        .sidebar .profile-details .job{
+            font-size: 12px;
+        }
+        .home-section {
+            position: relative;
+            background: #E4E9F7;
+            min-height: 100vh;
+            left: 260px;
+            width: calc(100% - 260px);
+            transition: all 0.5s ease;
+            padding: 12px;
+        }
+        .sidebar.close ~ .home-section {
+            left: 78px;
+            width: calc(100% - 78px);
+        }
+        .home-content{
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .home-section .home-content .bx-menu,
+        .home-section .home-content .text{
+            color: #11101d;
+            transition: color 0.3s ease;
+        }
+        .home-section .home-content .bx-menu{
+            cursor: pointer;
+            margin-right: 10px;
+            font-size: 35px;
+        }
+        .home-section .home-content .text{
+            font-size: 26px;
+            font-weight: 600;
+        }
+        /* BMI Table Styles */
+        .history-container {
+            background: #fff;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            width: 90%;
+            max-width: 700px;
+            margin: 50px auto;
+        }
+        .history-container h2 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            font-weight: 600;
+            text-align: center;
+        }
         table { width: 100%; border-collapse: collapse; }
         th, td { padding: 12px; text-align: center; border-bottom: 1px solid #eee; }
         th { background: #343447; color: #fff; }
@@ -16,44 +188,142 @@
         .no-history { text-align: center; color: #888; margin-top: 24px; }
         .back-btn { display: inline-block; margin-bottom: 20px; background: #343447; color: #fff; padding: 8px 16px; border: none; border-radius: 4px; text-decoration: none; }
         .back-btn:hover { background: #22223b; }
+        @media screen and (max-width: 400px){
+            .sidebar{ width: 240px; }
+            .sidebar.close{ width: 78px; }
+            .sidebar .profile-details{ width: 240px; }
+            .sidebar.close .profile-details{ background: none; width: 78px; }
+            .home-section { left: 240px; width: calc(100% - 240px); }
+            .sidebar.close ~ .home-section{ left: 78px; width: calc(100% - 78px); }
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <a href="calculator.html" class="back-btn">&larr; Back to Calculator</a>
-        <h2>Your BMI History</h2>
-        <table id="historyTable">
-            <thead>
-                <tr>
-                    <th>Date</th>
-                    <th>BMI</th>
-                    <th>Category</th>
-                    <th>Age</th>
-                    <th>Gender</th>
-                </tr>
-            </thead>
-            <tbody id="historyBody">
-                <!-- BMI history will be inserted here -->
-            </tbody>
-        </table>
-        <div class="no-history" id="noHistory" style="display:none;">
-            No BMI records found.
+    <div class="sidebar close">
+        <div class="logo-details">
+            <img src="images/logo.jpg" alt="logo" style="border-radius: 50%; box-shadow: 0 2px 8px rgba(0,0,0,0.15);">
+            <span class="logo_name">BodyCheck</span>
+        </div>
+        <ul class="nav-links">
+            <li>
+                <a href="#" onclick="toggleDarkMode()">
+                    <i class='bx bx-moon'></i>
+                    <span class="link_name">Dark Mode</span>
+                </a>
+            </li>
+            <li>
+                <a href="index.html">
+                    <i class='bx bx-grid-alt'></i>
+                    <span class="link_name">Home</span>
+                </a>
+            </li>
+            <li>
+                <a href="calculator.html">
+                    <i class='bx bx-bar-chart-alt' ></i>
+                    <span class="link_name">Calculator</span>
+                </a>
+            </li>
+            <li>
+                <a href="profile.html">
+                    <i class='bx bx-user' ></i>
+                    <span class="link_name">Profile</span>
+                </a>
+            </li>
+            <li>
+                <a href="history.html">
+                    <i class='bx bx-history'></i>
+                    <span class="link_name">History</span>
+                </a>
+            </li>
+        </ul>
+        <div class="profile-details" id="profile-details" style="display: none;">
+            <div class="profile-content">
+                <img src="images/placeholder.png" alt="profileImg" id="sidebarProfileImg">
+            </div>
+            <div class="name-job">
+                <div class="profile_name" id="username"></div>
+            </div>
+            <i class='bx bx-log-out' onclick="showLogoutConfirmation()"></i>
+        </div>
+        <!-- Logout Modal -->
+        <div id="logoutModal" class="modal" style="display:none;">
+            <div class="modal-content">
+                <h3>Are you sure you want to log out?</h3>
+                <button class="modal-button confirm" onclick="logout()">Confirm</button>
+                <button class="modal-button cancel" onclick="closeLogoutModal()">Cancel</button>
+            </div>
         </div>
     </div>
+    <section class="home-section">
+        <div class="home-content">
+            <i class='bx bx-menu'></i>
+            <span class="text">BMI History</span>
+        </div>
+        <div class="history-container">
+            <a href="calculator.html" class="back-btn">&larr; Back to Calculator</a>
+            <h2>Your BMI History</h2>
+            <table id="historyTable">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>BMI</th>
+                        <th>Category</th>
+                        <th>Age</th>
+                        <th>Gender</th>
+                    </tr>
+                </thead>
+                <tbody id="historyBody">
+                    <!-- BMI history will be inserted here -->
+                </tbody>
+            </table>
+            <div class="no-history" id="noHistory" style="display:none;">
+                No BMI records found.
+            </div>
+        </div>
+    </section>
+    <script>
+        let sidebar = document.querySelector(".sidebar");
+        let sidebarBtn = document.querySelector(".bx-menu");
+        sidebarBtn.addEventListener("click", ()=>{
+            sidebar.classList.toggle("close");
+        });
+        function toggleDarkMode() {
+            const body = document.body;
+            const html = document.documentElement;
+            body.classList.toggle("dark-mode");
+            html.classList.toggle("dark-mode");
+            localStorage.setItem("theme", body.classList.contains("dark-mode") ? "dark" : "light");
+        }
+        window.toggleDarkMode = toggleDarkMode;
+        window.addEventListener("DOMContentLoaded", () => {
+            const savedTheme = localStorage.getItem("theme");
+            if (savedTheme === "dark") {
+                document.body.classList.add("dark-mode");
+                document.documentElement.classList.add("dark-mode");
+            }
+        });
+        window.showLogoutConfirmation = function () {
+            document.getElementById('logoutModal').style.display = 'block';
+        };
+        window.closeLogoutModal = function () {
+            document.getElementById('logoutModal').style.display = 'none';
+        };
+        window.logout = async function () {
+            // Add your logout logic here
+            window.location.href = 'login.html';
+        };
+    </script>
     <script type="module">
         import { fetchBMIHistory } from './supabaseClient.js';
-
         async function loadHistory() {
             const history = await fetchBMIHistory();
             const tbody = document.getElementById('historyBody');
             const noHistory = document.getElementById('noHistory');
             tbody.innerHTML = '';
-
             if (!history || history.length === 0) {
                 noHistory.style.display = 'block';
                 return;
             }
-
             noHistory.style.display = 'none';
             history.forEach(record => {
                 const tr = document.createElement('tr');
@@ -67,7 +337,6 @@
                 tbody.appendChild(tr);
             });
         }
-
         loadHistory();
     </script>
 </body>
