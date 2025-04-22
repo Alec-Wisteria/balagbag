@@ -196,6 +196,60 @@
             .home-section { left: 240px; width: calc(100% - 240px); }
             .sidebar.close ~ .home-section{ left: 78px; width: calc(100% - 78px); }
         }
+
+        :root {
+  --menu-color: #11101d;
+}
+body.dark-mode {
+  --menu-color: #f5f5f7;
+  background-color: #1c1c1e;
+  color: #f5f5f7;
+}
+body.dark-mode .sidebar,
+body.dark-mode .home-section,
+body.dark-mode .history-container {
+  background-color: #2c2c2e !important;
+  color: #f5f5f7 !important;
+}
+body.dark-mode input,
+body.dark-mode button {
+  background-color: #3a3a3c;
+  color: #f5f5f7;
+  border: 1px solid #555;
+}
+body.dark-mode label,
+body.dark-mode h2,
+body.dark-mode th,
+body.dark-mode .logo_name {
+  color: #f5f5f7 !important;
+}
+body.dark-mode .sidebar .nav-links li a .link_name,
+body.dark-mode .sidebar .nav-links li i {
+  color: #f5f5f7 !important;
+}
+body.dark-mode .sidebar .nav-links li:hover {
+  background: rgba(255, 255, 255, 0.07);
+}
+body.dark-mode table {
+  background: #23232b;
+}
+body.dark-mode th {
+  background: #23232b;
+  color: #fff;
+}
+body.dark-mode td {
+  color: #f5f5f7;
+}
+body.dark-mode .back-btn {
+  background: #23232b;
+  color: #fff;
+}
+body.dark-mode .back-btn:hover {
+  background: #11101d;
+}
+html, body {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
     </style>
 </head>
 <body>
@@ -236,7 +290,7 @@
                 </a>
             </li>
         </ul>
-        <div class="profile-details" id="profile-details" style="display: none;">
+        <div class="profile-details" id="profile-details">
             <div class="profile-content">
                 <img src="images/placeholder.png" alt="profileImg" id="sidebarProfileImg">
             </div>
