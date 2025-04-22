@@ -34,43 +34,43 @@ supabase.channel('public:profiles')
 // Function to sign up a user and insert data into profiles table
 export async function signUpUser(username, email, password, confirmPassword) {
     if (password !== confirmPassword) {
-        console.log("Passwords do not match");
+        alert("Passwords do not match");
         return false;
     }
 
+    // Sign up the user
     const { data, error } = await supabase.auth.signUp({
         email: email,
         password: password
     });
 
     if (error) {
-        console.log("Error signing up:", error.message);
+        alert("Error signing up: " + error.message);
         return false;
     }
 
-    console.log("User signed up successfully:", data);
-
-    // If user is null, wait until they confirm their email before inserting profile
-    if (!data.user) {
+    // If user must confirm email, data.user will be null
+    const userId = data.user?.id || data.session?.user?.id || data.user?.user_metadata?.sub;
+    if (!userId) {
         alert("Confirmation email sent. Please verify your email before signing in.");
         return true;
     }
 
+    // Insert into profiles table
     const { error: insertError } = await supabase
         .from('profiles')
         .insert([
-            { id: data.user.id, username: username, email: email }
+            { id: userId, username: username, email: email }
         ]);
 
     if (insertError) {
-        console.log("Error inserting into profiles table:", insertError.message);
+        alert("Error inserting into profiles table: " + insertError.message);
         return false;
     }
 
-    console.log("Data inserted into profiles table successfully");
+    alert("Registration successful!");
     return true;
 }
-
 
 // Function to sign in a user and check if they exist in the profiles table
 export async function signInUser(email, password) {
