@@ -34,70 +34,71 @@ supabase.channel('public:profiles')
 // Function to sign up a user and insert data into profiles table
 export async function signUpUser(username, email, password, confirmPassword) {
     if (password !== confirmPassword) {
-        alert("Passwords do not match");
+        console.log("Passwords do not match");
         return false;
     }
 
-    // Sign up the user
     const { data, error } = await supabase.auth.signUp({
         email: email,
         password: password
     });
 
     if (error) {
-        alert("Error signing up: " + error.message);
+        console.log("Error signing up:", error.message);
         return false;
     }
 
-    // If user must confirm email, data.user will be null
-    const userId = data.user?.id || data.session?.user?.id || data.user?.user_metadata?.sub;
-    if (!userId) {
+    console.log("User signed up successfully:", data);
+
+    // If user is null, wait until they confirm their email before inserting profile
+    if (!data.user) {
         alert("Confirmation email sent. Please verify your email before signing in.");
         return true;
     }
 
-    // Insert into profiles table
     const { error: insertError } = await supabase
         .from('profiles')
         .insert([
-            { id: userId, username: username, email: email }
+            { id: data.user.id, username: username, email: email }
         ]);
 
     if (insertError) {
-        alert("Error inserting into profiles table: " + insertError.message);
+        console.log("Error inserting into profiles table:", insertError.message);
         return false;
     }
 
-    alert("Registration successful!");
+    console.log("Data inserted into profiles table successfully");
     return true;
 }
+
 
 // Function to sign in a user and check if they exist in the profiles table
 export async function signInUser(email, password) {
     const { data, error } = await supabase.auth.signInWithPassword({
-        email,
-        password
+        email: email,
+        password: password
     });
 
     if (error) {
+        console.log("Error signing in:", error.message);
         return false;
     }
 
-    // After successful login, check if profile exists
-    const userId = data.user.id;
-    const { data: profile } = await supabase
+    console.log("User signed in successfully:", data);
+
+    // Check if the user exists in the profiles table
+    const { data: profileData, error: profileError } = await supabase
         .from('profiles')
-        .select('id')
-        .eq('id', userId)
+        .select('*')
+        .eq('id', data.user.id)
         .single();
 
-    if (!profile) {
-        // Insert profile (now auth.uid() is available)
-        await supabase
-            .from('profiles')
-            .insert([{ id: userId, email: data.user.email }]);
+    if (profileError) {
+        console.log("Error checking profiles table:", profileError.message);
+        return false;
     }
 
+    console.log("User exists in profiles table:", profileData);
     return true;
 }
 
@@ -387,5 +388,4 @@ export async function fetchChatParticipants() {
     });
 
     return Array.from(uniqueParticipants.values());
-}
 }
