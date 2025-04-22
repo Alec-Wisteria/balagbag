@@ -632,6 +632,130 @@ body {
     transform: translateY(0);
   }
 }
+
+html, body {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.box2 h3 {
+  text-align: center;
+}
+
+.box2 p {
+  text-align: justify;
+  text-indent: 3em;
+  margin-left: 20px;  /* Adjust for the white mark alignment */
+  margin-right: 40px; /* Adjust for the white mark alignment */
+}
+
+.box1 h2 {
+  text-align: center;
+  font-size: 1.4rem;
+}
+
+.box1 p {
+  text-align: left;
+  margin-bottom: 4px; /* Reduce line spacing */
+  line-height: 1.4;   /* Slightly tighter line spacing */
+}
+
+@media (max-width: 768px) {
+  .box {
+    flex: 1 1 100%;
+  }
+}
+.modal .close {
+  position: absolute;
+  top: 20px;
+  right: 32px;
+  font-size: 32px;
+  font-weight: bold;
+  color: #fff;
+  cursor: pointer;
+  z-index: 1001;
+}
+.modal .close:hover {
+  color: #f00;
+}
+
+.fade-in {
+  opacity: 0;
+  transform: translateY(10px);
+  animation: fadeInText 0.6s ease forwards;
+}
+
+@keyframes fadeInText {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@media (min-width: 992px) {
+  .bmi-meter-section {
+    position: sticky;
+    top: 100px;
+    align-self: start;
+  }
+}
+
+.bmi-category {
+  font-weight: bold;
+  font-size: 1.1em;
+  transition: color 0.3s ease;
+}
+
+/* Category-specific colors */
+.bmi-category.underweight {
+  color: #6ec6ff; /* Light Blue */
+}
+
+.bmi-category.healthy {
+  color: #8bc34a; /* Light Green */
+}
+
+.bmi-category.overweight {
+  color: #f4a261; /* Peach */
+}
+
+.bmi-category.obese-1 {
+  color: #ff9800; /* Orange */
+}
+
+.bmi-category.obese-2 {
+  color: #f57c00; /* Darker Orange */
+}
+
+.bmi-category.obese-3 {
+  color: #e65100; /* Deep Orange */
+}
+
+
+.recommendation-line {
+  padding-left: 3em;
+  text-indent: -1em;
+  line-height: 1.6;
+}
+
+.bmi-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 24px;
+  row-gap: 10px;
+  font-size: 1.3rem;  /* increase this if you want even larger */
+  line-height: 1.6;
+}
+
+.centered-category {
+  text-align: center;
+  font-weight: bold;
+  font-style: italic;
+}
+
+.justified-category {
+  text-align: justify;
+  text-indent: 2em;
+  margin-top: 8px;
+}
    </style>
 <body>
   <div class="sidebar close">
