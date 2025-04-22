@@ -75,30 +75,29 @@ export async function signUpUser(username, email, password, confirmPassword) {
 // Function to sign in a user and check if they exist in the profiles table
 export async function signInUser(email, password) {
     const { data, error } = await supabase.auth.signInWithPassword({
-        email: email,
-        password: password
+        email,
+        password
     });
 
     if (error) {
-        console.log("Error signing in:", error.message);
         return false;
     }
 
-    console.log("User signed in successfully:", data);
-
-    // Check if the user exists in the profiles table
-    const { data: profileData, error: profileError } = await supabase
+    // After successful login, check if profile exists
+    const userId = data.user.id;
+    const { data: profile } = await supabase
         .from('profiles')
-        .select('*')
-        .eq('id', data.user.id)
+        .select('id')
+        .eq('id', userId)
         .single();
 
-    if (profileError) {
-        console.log("Error checking profiles table:", profileError.message);
-        return false;
+    if (!profile) {
+        // Insert profile (now auth.uid() is available)
+        await supabase
+            .from('profiles')
+            .insert([{ id: userId, email: data.user.email }]);
     }
 
-    console.log("User exists in profiles table:", profileData);
     return true;
 }
 
@@ -388,4 +387,5 @@ export async function fetchChatParticipants() {
     });
 
     return Array.from(uniqueParticipants.values());
+}
 }
