@@ -436,34 +436,39 @@ body.dark-mode .sidebar .nav-links li:hover {
     align-items: center;
 }
 body.dark-mode {
-  background-color: #1e1e1e;
+  --menu-color: #f5f5f7;
+  background-color: #1c1c1e;
   color: #f5f5f7;
 }
 
-body.dark-mode .sidebar .logo_name,
-body.dark-mode .sidebar .link_name,
-body.dark-mode .sidebar i,
-body.dark-mode .profile_name,
-body.dark-mode .sidebar .text,
-body.dark-mode .job {
+body.dark-mode .sidebar,
+body.dark-mode .container, body.dark-mode .home-section {
+  background-color: #2c2c2e !important;
   color: #f5f5f7 !important;
 }
 
-body.dark-mode .home-section,
-body.dark-mode .container,
-body.dark-mode .box,
-body.dark-mode .settings-container,
-body.dark-mode .suggestions-container {
-  background-color: #2a2a2c !important;
-  color: #f1f1f1 !important;
+body.dark-mode input,
+body.dark-mode button {
+  background-color: #3a3a3c;
+  color: #f5f5f7;
+  border: 1px solid #555;
+}
+body.dark-mode label,
+body.dark-mode .quote,
+body.dark-mode h2 {
+  color: #f5f5f7;
+}
+body.dark-mode .sidebar .nav-links li a .link_name,
+body.dark-mode .sidebar .nav-links li i {
+  color: #f5f5f7 !important;
 }
 
-body.dark-mode .nav-links li a:hover {
-  background: rgba(255, 255, 255, 0.1);
+body.dark-mode .sidebar .nav-links li:hover {
+  background: rgba(255, 255, 255, 0.07);
 }
 
-body {
-  animation: fadeIn 0.8s ease-out;
+html, body {
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 @keyframes fadeIn {
