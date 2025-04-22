@@ -51,20 +51,9 @@ export async function signUpUser(username, email, password, confirmPassword) {
     console.log("User signed up successfully:", data);
 
     // If user is null, wait until they confirm their email before inserting profile
-    const userId = data.user?.id || data.session?.user?.id;
-
-    if (!userId) {
-        console.log("Signup complete, but no user ID available yet (likely needs verification).");
-        return true; // allow redirect, but skip DB insert
-    }
-    
-    const { error: insertError } = await supabase
-        .from('profiles')
-        .insert([{ id: userId, username, email }]);
-    
-    if (insertError) {
-        console.log("Error inserting into profiles table:", insertError.message);
-        return false;
+    if (!data.user) {
+        alert("Confirmation email sent. Please verify your email before signing in.");
+        return true;
     }
 
     const { error: insertError } = await supabase

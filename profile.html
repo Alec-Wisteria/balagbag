@@ -25,7 +25,7 @@ body{
   left: 0;
   height: 100%;
   width: 260px;
-  background: linear-gradient(to bottom right, #c2c2c2, #343447);
+  background: #c8c8d3;
   z-index: 100;
   transition: all 0.5s ease;
 }
@@ -464,178 +464,7 @@ body{
         color: white;
       }
 
-
-      .sidebar.close {
-  width: 78px;
-}
-
-.sidebar .logo-details {
-  height: 60px;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  padding: 10px;
-  transition: all 0.3s ease;
-}
-
-.sidebar .logo-details img {
-  width: 50px;
-  height: 50px;
-}
-
-.sidebar.open .logo-details img {
-  width: 85px;
-  height: 85px;
-}
-
-.sidebar .logo-details .logo_name {
-  font-size: 22px;
-  color: #000000;
-  font-weight: 600;
-  padding-left: 18px;
-  transition: opacity 0.3s ease;
-  transition-delay: 0.1s;
-}
-
-.sidebar.close .logo-details .logo_name {
-  opacity: 0;
-  pointer-events: none;
-  transition-delay: 0s;
-}
-
-.sidebar .nav-links {
-  height: 100%;
-  padding: 30px 0 150px 0;
-  overflow: auto;
-}
-
-.sidebar .nav-links::-webkit-scrollbar {
-  display: none;
-}
-
-.sidebar .nav-links li {
-  list-style: none;
-  transition: all 0.4s ease;
-}
-
-.sidebar .nav-links li:hover {
-  background: rgba(255, 255, 255, 0.6);
-  backdrop-filter: blur(4px);
-  border-radius: 8px;
-}
-
-.sidebar .nav-links li i {
-  height: 50px;
-  min-width: 78px;
-  text-align: center;
-  line-height: 50px;
-  color: #000000;
-  font-size: 20px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.sidebar .nav-links li a {
-  display: flex;
-  align-items: center;
-  text-decoration: none;
-}
-
-.sidebar .nav-links li a .link_name {
-  font-size: 18px;
-  font-weight: 400;
-  color: #000000;
-  transition: all 0.4s ease;
-}
-
-.sidebar.close .nav-links li a .link_name {
-  opacity: 0;
-  pointer-events: none;
-}
-
-body.dark-mode {
-  background-color: #1e1e1e;
-  color: #f5f5f7;
-}
-
-body.dark-mode .sidebar .logo_name,
-body.dark-mode .sidebar .link_name,
-body.dark-mode .sidebar i,
-body.dark-mode .profile_name,
-body.dark-mode .sidebar .text,
-body.dark-mode .job {
-  color: #f5f5f7 !important;
-}
-
-body.dark-mode .home-section,
-body.dark-mode .container,
-body.dark-mode .box,
-body.dark-mode .settings-container,
-body.dark-mode .suggestions-container {
-  background-color: #2a2a2c !important;
-  color: #f1f1f1 !important;
-}
-
-body.dark-mode .nav-links li a:hover {
-  background: rgba(255, 255, 255, 0.1);
-}
-
-body {
-  animation: fadeIn 0.8s ease-out;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.box {
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.box:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 14px 38px rgba(0, 0, 0, 0.18);
-  border: 1px solid #dbeafe;
-}
-
-body.dark-mode input,
-body.dark-mode button {
-  background-color: #333;
-  color: #f1f1f1;
-  border: 1px solid #555;
-}
-
-body.dark-mode .home-section .text {
-  color: #f5f5f7 !important;
-}
-
-.sidebar.close .nav-links li:hover .sub-menu {
-  top: 0;
-  opacity: 1;
-  pointer-events: auto;
-  transition: all 0.4s ease;
-}
-
-.sidebar.close .nav-links li:hover .sub-menu:not(.blank) {
-  top: 0;
-  opacity: 1;
-  pointer-events: auto;
-  transition: all 0.4s ease;
-}
-
-.sidebar .profile-details i.bx-log-out {
-  margin-right: 20px;
-  font-size: 22px;
-  cursor: pointer;
-}
-</style>
+   </style>
 <body>
   <div class="sidebar close">
     <div class="logo-details">
@@ -643,12 +472,6 @@ body.dark-mode .home-section .text {
         <span class="logo_name">BodyCheck</span>
     </div>
     <ul class="nav-links">
-        <li>
-            <a href="#" onclick="toggleDarkMode()">
-              <i class='bx bx-moon'></i>
-              <span class="link_name">Dark Mode</span>
-            </a>
-          </li>
       <li>
         <a href="index.html">
           <i class='bx bx-grid-alt'></i>
@@ -685,7 +508,7 @@ body.dark-mode .home-section .text {
           <li><a class="link_name" href="history.html">History</a></li>
         </ul>
       </li>
-
+      <li>
         <div class="profile-details" id="profile-details">
           <div class="profile-content">
               <img src="images/placeholder.png" alt="profileImg" id="sidebarProfileImg">
@@ -705,6 +528,7 @@ body.dark-mode .home-section .text {
               <button class="modal-button cancel" onclick="closeLogoutModal()">Cancel</button>
           </div>
       </div>                
+  </li>
 </ul>
   </div>
   <section class="home-section">
@@ -882,21 +706,6 @@ sidebarBtn.addEventListener("click", ()=>{
   };
 </script>
 
-<script>
-    // Check saved preference on page load
-    window.onload = function () {
-      if (localStorage.getItem("darkMode") === "enabled") {
-        document.body.classList.add("dark-mode");
-        document.documentElement.classList.add("dark-mode");
-      }
-    };
-  
-    // Toggle and save preference
-    function toggleDarkMode() {
-      const isDark = document.body.classList.toggle("dark-mode");
-      document.documentElement.classList.toggle("dark-mode", isDark);
-      localStorage.setItem("darkMode", isDark ? "enabled" : "disabled");
-    }
-  </script>
+
 </body>
 </html>
