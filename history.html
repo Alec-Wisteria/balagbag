@@ -295,12 +295,13 @@ html, body {
                 <img src="images/placeholder.png" alt="profileImg" id="sidebarProfileImg">
             </div>
             <div class="name-job">
-                <div class="profile_name" id="username"></div>
+                <div class="profile_name" id="username">Guest</div>
+                <div class="job" id="userjob">User</div>
             </div>
             <i class='bx bx-log-out' onclick="showLogoutConfirmation()"></i>
         </div>
         <!-- Logout Modal -->
-        <div id="logoutModal" class="modal" style="display:none;">
+        <div id="logoutModal" class="modal">
             <div class="modal-content">
                 <h3>Are you sure you want to log out?</h3>
                 <button class="modal-button confirm" onclick="logout()">Confirm</button>
@@ -355,6 +356,13 @@ html, body {
                 document.body.classList.add("dark-mode");
                 document.documentElement.classList.add("dark-mode");
             }
+            // Load user info if available
+            const username = localStorage.getItem("username") || "Guest";
+            const userjob = localStorage.getItem("userjob") || "User";
+            const profileImg = localStorage.getItem("profileImg") || "images/placeholder.png";
+            document.getElementById("username").textContent = username;
+            document.getElementById("userjob").textContent = userjob;
+            document.getElementById("sidebarProfileImg").src = profileImg;
         });
         window.showLogoutConfirmation = function () {
             document.getElementById('logoutModal').style.display = 'block';
