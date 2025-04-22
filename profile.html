@@ -615,6 +615,26 @@ body.dark-mode button {
 body.dark-mode .home-section .text {
   color: #f5f5f7 !important;
 }
+
+.sidebar.close .nav-links li:hover .sub-menu {
+  top: 0;
+  opacity: 1;
+  pointer-events: auto;
+  transition: all 0.4s ease;
+}
+
+.sidebar.close .nav-links li:hover .sub-menu:not(.blank) {
+  top: 0;
+  opacity: 1;
+  pointer-events: auto;
+  transition: all 0.4s ease;
+}
+
+.sidebar .profile-details i.bx-log-out {
+  margin-right: 20px;
+  font-size: 22px;
+  cursor: pointer;
+}
 </style>
 <body>
   <div class="sidebar close">
@@ -665,7 +685,7 @@ body.dark-mode .home-section .text {
           <li><a class="link_name" href="history.html">History</a></li>
         </ul>
       </li>
-      <li>
+
         <div class="profile-details" id="profile-details">
           <div class="profile-content">
               <img src="images/placeholder.png" alt="profileImg" id="sidebarProfileImg">
@@ -685,7 +705,6 @@ body.dark-mode .home-section .text {
               <button class="modal-button cancel" onclick="closeLogoutModal()">Cancel</button>
           </div>
       </div>                
-  </li>
 </ul>
   </div>
   <section class="home-section">
