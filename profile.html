@@ -2,7 +2,7 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="UTF-8">
-    <title>Profile</title>
+    <title>BMI Calculator</title>
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
     <link rel="shortcut icon" href="images/logo.jpg" type="image/x-icon">
      <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -296,64 +296,6 @@ body.dark-mode .sidebar .nav-links li:hover {
     width: calc(100% - 78px);
   }
 }
-
-@media screen and (max-width: 768px) {
-    .container {
-      flex-direction: column;
-      text-align: center;
-    }
-
-    .text-content {
-      padding-right: 0;
-      margin-bottom: 20px;
-    }
-
-    .image-content img {
-      width: 80%;
-    }
-  }
-        .logo-details {
-    display: flex;
-    align-items: center;
-}
-
-.modal {
-        display: none;
-        position: fixed;
-        z-index: 1;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.5);
-      }
-      .modal-content {
-        background-color: white;
-        margin: 15% auto;
-        padding: 20px;
-        border-radius: 8px;
-        width: 300px;
-        text-align: center;
-      }
-      .modal-button {
-        padding: 10px 20px;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        margin: 10px;
-        font-size: 16px;
-      }
-      .modal-button.confirm {
-        background-color: #4CAF50;
-        color: white;
-      }
-      .modal-button.cancel {
-        background-color: #f44336;
-        color: white;
-      }
-      :root {
-  --menu-color: #11101d;
-}
 .settings-container {
         background: white;
         padding: 25px;
@@ -430,72 +372,46 @@ body.dark-mode .sidebar .nav-links li:hover {
         border-radius: 50%;
         border: 3px solid #ccc;
       }
-      
         .logo-details {
     display: flex;
     align-items: center;
 }
-body.dark-mode {
-  background-color: #1e1e1e;
-  color: #f5f5f7;
-}
-
-body.dark-mode .sidebar .logo_name,
-body.dark-mode .sidebar .link_name,
-body.dark-mode .sidebar i,
-body.dark-mode .profile_name,
-body.dark-mode .sidebar .text,
-body.dark-mode .job {
-  color: #f5f5f7 !important;
-}
-
-body.dark-mode .home-section,
-body.dark-mode .container,
-body.dark-mode .box,
-body.dark-mode .settings-container,
-body.dark-mode .suggestions-container {
-  background-color: #2a2a2c !important;
-  color: #f1f1f1 !important;
-}
-
-body.dark-mode .nav-links li a:hover {
-  background: rgba(255, 255, 255, 0.1);
-}
-
-body {
-  animation: fadeIn 0.8s ease-out;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.box {
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.box:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 14px 38px rgba(0, 0, 0, 0.18);
-  border: 1px solid #dbeafe;
-}
-
-body.dark-mode input,
-body.dark-mode button {
-  background-color: #333;
-  color: #f1f1f1;
-  border: 1px solid #555;
-}
-
-body.dark-mode .home-section .text {
-  color: #f5f5f7 !important;
+.modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+      }
+      .modal-content {
+        background-color: white;
+        margin: 15% auto;
+        padding: 20px;
+        border-radius: 8px;
+        width: 300px;
+        text-align: center;
+      }
+      .modal-button {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin: 10px;
+        font-size: 16px;
+      }
+      .modal-button.confirm {
+        background-color: #4CAF50;
+        color: white;
+      }
+      .modal-button.cancel {
+        background-color: #f44336;
+        color: white;
+      }
+      :root {
+  --menu-color: #11101d;
 }
 
 body.dark-mode {
@@ -505,7 +421,7 @@ body.dark-mode {
 }
 
 body.dark-mode .sidebar,
-body.dark-mode .container, body.dark-mode .home-section {
+body.dark-mode .container, .settings-container, body.dark-mode .home-section {
   background-color: #2c2c2e !important;
   color: #f5f5f7 !important;
 }
@@ -521,8 +437,7 @@ body.dark-mode .quote,
 body.dark-mode h2 {
   color: #f5f5f7;
 }
-body.dark-mode .sidebar .nav-links li a .link_name,
-body.dark-mode .sidebar .nav-links li i {
+body.dark-mode .sidebar .nav-links li a .link_name {
   color: #f5f5f7 !important;
 }
 
@@ -550,20 +465,20 @@ body {
     transform: translateY(0);
   }
 }
-</style>
+   </style>
 <body>
   <div class="sidebar close">
     <div class="logo-details">
-        <img src="images/logo.jpg" alt="logo">
+      <img src="images/logo.jpg" alt="logo" style="border-radius: 50%; box-shadow: 0 2px 8px rgba(0,0,0,0.15);">
         <span class="logo_name">BodyCheck</span>
     </div>
     <ul class="nav-links">
-        <li>
-            <a href="#" onclick="toggleDarkMode()">
-              <i class='bx bx-moon'></i>
-              <span class="link_name">Dark Mode</span>
-            </a>
-          </li>
+      <li>
+        <a href="#" onclick="toggleDarkMode()">
+          <i class='bx bx-moon'></i>
+          <span class="link_name">Dark Mode</span>
+        </a>
+      </li>
       <li>
         <a href="index.html">
           <i class='bx bx-grid-alt'></i>
@@ -600,10 +515,10 @@ body {
           <li><a class="link_name" href="history.html">History</a></li>
         </ul>
       </li>
-
-        <div class="profile-details" id="profile-details">
+      <li>
+        <div class="profile-details" id="profile-details" style="display: none;">
           <div class="profile-content">
-              <img src="images/placeholder.png" alt="profileImg" id="sidebarProfileImg">
+              <img src="images/placeholder.png" alt="profileImg">
           </div>
           <div class="name-job">
               <div class="profile_name" id="username"></div>
@@ -620,30 +535,31 @@ body {
               <button class="modal-button cancel" onclick="closeLogoutModal()">Cancel</button>
           </div>
       </div>                
+  </li>
 </ul>
   </div>
   <section class="home-section">
-  <div class="home-content">
-    <i class='bx bx-menu'></i>
-    <span class="text">Profile</span>
-  </div>
-  <div class="settings-container" style="text-align:center;">
-    <h2>Your Profile</h2>
-    <div class="profile-image" style="justify-content:center;">
-      <img src="images/placeholder.png" id="previewImage" alt="Profile Image">
+    <div class="home-content">
+      <i class='bx bx-menu'></i>
+      <span class="text">Profile</span>
     </div>
-    <div style="margin: 20px 0;">
-      <div><strong>Username:</strong> <span id="displayUsername"></span></div>
-      <div><strong>Email:</strong> <span id="displayEmail"></span></div>
-      <div><strong>Account Created:</strong> <span id="displayCreated"></span></div>
+    <div class="settings-container" style="text-align:center;">
+      <h2>Your Profile</h2>
+      <div class="profile-image" style="justify-content:center;">
+        <img src="images/placeholder.png" id="previewImage" alt="Profile Image">
+      </div>
+      <div style="margin: 20px 0;">
+        <div><strong>Username:</strong> <span id="displayUsername"></span></div>
+        <div><strong>Email:</strong> <span id="displayEmail"></span></div>
+        <div><strong>Account Created:</strong> <span id="displayCreated"></span></div>
+      </div>
+      <!-- Add file input for changing profile picture -->
+      <div style="margin: 20px 0;">
+        <input type="file" id="profilePicInput" accept="image/*" style="display:none;">
+        <button id="changePicBtn">Change Profile Picture</button>
+      </div>
     </div>
-    <!-- Add file input for changing profile picture -->
-    <div style="margin: 20px 0;">
-      <input type="file" id="profilePicInput" accept="image/*" style="display:none;">
-      <button id="changePicBtn">Change Profile Picture</button>
-    </div>
-  </div>
-</section>
+  </section>
   <script>
     let arrow = document.querySelectorAll(".arrow");
 for (var i = 0; i < arrow.length; i++) {
@@ -664,6 +580,42 @@ sidebarBtn.addEventListener("click", ()=>{
   import { supabase } from './supabaseClient.js';
 
   let currentUser = null;
+
+  document.addEventListener('DOMContentLoaded', async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+
+      if (user) {
+        // Fetch additional profile info if stored in a 'profiles' table
+        const { data: profile } = await supabase
+          .from('profiles')
+          .select('*')
+          .eq('id', user.id)
+          .single();
+
+        // Show the profile section
+        document.getElementById('profile-details').style.display = 'flex';
+        document.getElementById('username').textContent = profile?.username || 'Guest';
+
+        // Set sidebar profile image
+        const sidebarProfileImg = document.querySelector('#profile-details img');
+        let avatarUrl = 'images/placeholder.png';
+        const avatarPath = profile?.avatar_url;
+        if (avatarPath) {
+          if (avatarPath.startsWith('http')) {
+            avatarUrl = avatarPath;
+          } else {
+            const { data } = supabase
+              .storage
+              .from('avatars')
+              .getPublicUrl(avatarPath);
+            if (data && data.publicUrl) {
+              avatarUrl = data.publicUrl;
+            }
+          }
+        }
+        if (sidebarProfileImg) sidebarProfileImg.src = avatarUrl;
+      }
+    });
 
   document.addEventListener('DOMContentLoaded', async () => {
     try {
@@ -796,22 +748,27 @@ sidebarBtn.addEventListener("click", ()=>{
     }
   };
 </script>
-
 <script>
-    // Check saved preference on page load
-    window.onload = function () {
-      if (localStorage.getItem("darkMode") === "enabled") {
-        document.body.classList.add("dark-mode");
-        document.documentElement.classList.add("dark-mode");
-      }
-    };
-  
-    // Toggle and save preference
-    function toggleDarkMode() {
-      const isDark = document.body.classList.toggle("dark-mode");
-      document.documentElement.classList.toggle("dark-mode", isDark);
-      localStorage.setItem("darkMode", isDark ? "enabled" : "disabled");
-    }
-  </script>
+function toggleDarkMode() {
+  const body = document.body;
+  const html = document.documentElement;
+
+  body.classList.toggle("dark-mode");
+  html.classList.toggle("dark-mode");
+
+  localStorage.setItem("theme", body.classList.contains("dark-mode") ? "dark" : "light");
+}
+
+window.toggleDarkMode = toggleDarkMode;
+
+// Load saved theme
+window.addEventListener("DOMContentLoaded", () => {
+  const savedTheme = localStorage.getItem("theme");
+  if (savedTheme === "dark") {
+    document.body.classList.add("dark-mode");
+    document.documentElement.classList.add("dark-mode");
+  }
+});
+</script>
 </body>
 </html>
