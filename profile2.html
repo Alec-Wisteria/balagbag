@@ -296,83 +296,78 @@ body.dark-mode .sidebar .nav-links li:hover {
     width: calc(100% - 78px);
   }
 }
-.settings-container {
-        background: white;
-        padding: 25px;
-        border-radius: 15px;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-        width: 90%;
-        max-width: 500px;
-        margin: 50px auto;
-      }
+.container {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    width: 90%;
+    max-width: 500px;
+    margin: 60px auto 0 auto;
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;
+}
+        .form-group {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        input {
+            width: 60%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            text-align: center;
+        }
+        button {
+            background-color: blue;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: 0.3s;
+        }
+        button:hover {
+            background-color: #808080;
+        }
+        .gender-buttons {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+        .gender-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 3px solid #aaa;
+            background-color: #f0f0f0;
+            color: #333;
+            font-size: 18px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            margin: 0 15px;
+            transition: 0.3s;
+        }
+        .gender-btn.selected-male {
+            background-color: #4d79ff; 
+            border-color: #0033cc;
+            color: white;
+        }
+        .gender-btn.selected-female {
+            background-color: #ff66b2; 
+            border-color: #cc0052;
+            color: white;
+        }
 
-      .settings-container h2 {
-        margin-bottom: 20px;
-        font-size: 24px;
-        font-weight: 600;
-        text-align: center;
-      }
-
-      .form-group {
-        margin-bottom: 15px;
-      }
-
-      .form-group label {
-        display: block;
-        font-weight: 500;
-        margin-bottom: 5px;
-      }
-
-      .form-group input {
-        width: 100%;
-        padding: 10px;
-        border-radius: 8px;
-        border: 1px solid #ccc;
-      }
-
-      .form-buttons {
-        display: flex;
-        justify-content: space-between;
-        margin-top: 20px;
-      }
-
-      .form-buttons button {
-        padding: 10px 20px;
-        border: none;
-        border-radius: 8px;
-        cursor: pointer;
-        font-size: 16px;
-        transition: background 0.3s ease;
-      }
-
-      .form-buttons .save {
-        background-color: #4CAF50;
-        color: white;
-      }
-
-      .form-buttons .cancel {
-        background-color: #f44336;
-        color: white;
-      }
-
-      .form-group input[type="file"] {
-        border: none;
-      }
-
-      .profile-image {
-        display: flex;
-        justify-content: center;
-        margin-bottom: 15px;
-      }
-
-      .profile-image img {
-        width: 100px;
-        height: 100px;
-        object-fit: cover;
-        border-radius: 50%;
-        border: 3px solid #ccc;
-      }
-      
         .logo-details {
     display: flex;
     align-items: center;
@@ -520,7 +515,7 @@ body {
       <li>
         <div class="profile-details" id="profile-details" style="display: none;">
           <div class="profile-content">
-              <img src="images/placeholder.png" alt="profileImg" id="sidebarProfileImg">
+              <img src="images/placeholder.png" alt="profileImg">
           </div>
           <div class="name-job">
               <div class="profile_name" id="username"></div>
@@ -562,157 +557,157 @@ body {
       </div>
     </div>
   </section>
-<script>
-  let arrow = document.querySelectorAll(".arrow");
+  <script>
+    let arrow = document.querySelectorAll(".arrow");
 for (var i = 0; i < arrow.length; i++) {
-arrow[i].addEventListener("click", (e)=>{
-let arrowParent = e.target.parentElement.parentElement;
-arrowParent.classList.toggle("showMenu");
-});
+  arrow[i].addEventListener("click", (e)=>{
+ let arrowParent = e.target.parentElement.parentElement;
+ arrowParent.classList.toggle("showMenu");
+  });
 }
 
 let sidebar = document.querySelector(".sidebar");
 let sidebarBtn = document.querySelector(".bx-menu");
 console.log(sidebarBtn);
 sidebarBtn.addEventListener("click", ()=>{
-sidebar.classList.toggle("close");
+  sidebar.classList.toggle("close");
 });
 </script>
 <script type="module">
-import { supabase } from './supabaseClient.js';
+  import { supabase } from './supabaseClient.js';
 
-let currentUser = null;
+  let currentUser = null;
 
-document.addEventListener('DOMContentLoaded', async () => {
-  try {
-    const { data: { user }, error } = await supabase.auth.getUser();
-    if (error || !user) throw error;
+  document.addEventListener('DOMContentLoaded', async () => {
+    try {
+      const { data: { user }, error } = await supabase.auth.getUser();
+      if (error || !user) throw error;
 
-    currentUser = user;
+      currentUser = user;
 
-    const { data: profile, error: profileError } = await supabase
-      .from('profiles')
-      .select('*')
-      .eq('id', user.id)
-      .single();
+      const { data: profile, error: profileError } = await supabase
+        .from('profiles')
+        .select('*')
+        .eq('id', user.id)
+        .single();
 
-    if (profileError) throw profileError;
+      if (profileError) throw profileError;
 
-    // Handle avatar
-    let avatarUrl = 'images/placeholder.png';
-    const avatarPath = profile?.avatar_url;
-    if (avatarPath) {
-      if (avatarPath.startsWith('http')) {
-        avatarUrl = avatarPath;
-      } else {
-        const { data } = supabase
-          .storage
-          .from('avatars')
-          .getPublicUrl(avatarPath);
-        if (data && data.publicUrl) {
-          avatarUrl = data.publicUrl;
+      // Handle avatar
+      let avatarUrl = 'images/placeholder.png';
+      const avatarPath = profile?.avatar_url;
+      if (avatarPath) {
+        if (avatarPath.startsWith('http')) {
+          avatarUrl = avatarPath;
+        } else {
+          const { data } = supabase
+            .storage
+            .from('avatars')
+            .getPublicUrl(avatarPath);
+          if (data && data.publicUrl) {
+            avatarUrl = data.publicUrl;
+          }
         }
       }
+
+      // Set sidebar and profile images
+      const sidebarImg = document.getElementById('sidebarProfileImg');
+      const previewImg = document.getElementById('previewImage');
+      if (sidebarImg) sidebarImg.src = avatarUrl;
+      if (previewImg) previewImg.src = avatarUrl;
+
+      // Set username, email, and created date
+      document.getElementById('username').textContent = profile?.username || 'Guest';
+      document.getElementById('displayUsername').textContent = profile?.username || 'Guest';
+      document.getElementById('displayEmail').textContent = profile?.email || user.email || '';
+      document.getElementById('displayCreated').textContent = user.created_at
+        ? new Date(user.created_at).toLocaleString()
+        : '';
+    } catch (err) {
+      document.getElementById('username').textContent = 'Not logged in';
+      document.getElementById('displayUsername').textContent = '';
+      document.getElementById('displayEmail').textContent = '';
+      document.getElementById('displayCreated').textContent = '';
+      const sidebarImg = document.getElementById('sidebarProfileImg');
+      const previewImg = document.getElementById('previewImage');
+      if (sidebarImg) sidebarImg.src = 'images/placeholder.png';
+      if (previewImg) previewImg.src = 'images/placeholder.png';
+      console.error('Error initializing profile:', err?.message || err);
     }
 
-    // Set sidebar and profile images
-    const sidebarImg = document.getElementById('sidebarProfileImg');
+    // Profile picture change logic
+    const changePicBtn = document.getElementById('changePicBtn');
+    const profilePicInput = document.getElementById('profilePicInput');
     const previewImg = document.getElementById('previewImage');
-    if (sidebarImg) sidebarImg.src = avatarUrl;
-    if (previewImg) previewImg.src = avatarUrl;
-
-    // Set username, email, and created date
-    document.getElementById('username').textContent = profile?.username || 'Guest';
-    document.getElementById('displayUsername').textContent = profile?.username || 'Guest';
-    document.getElementById('displayEmail').textContent = profile?.email || user.email || '';
-    document.getElementById('displayCreated').textContent = user.created_at
-      ? new Date(user.created_at).toLocaleString()
-      : '';
-  } catch (err) {
-    document.getElementById('username').textContent = 'Not logged in';
-    document.getElementById('displayUsername').textContent = '';
-    document.getElementById('displayEmail').textContent = '';
-    document.getElementById('displayCreated').textContent = '';
     const sidebarImg = document.getElementById('sidebarProfileImg');
-    const previewImg = document.getElementById('previewImage');
-    if (sidebarImg) sidebarImg.src = 'images/placeholder.png';
-    if (previewImg) previewImg.src = 'images/placeholder.png';
-    console.error('Error initializing profile:', err?.message || err);
-  }
 
-  // Profile picture change logic
-  const changePicBtn = document.getElementById('changePicBtn');
-  const profilePicInput = document.getElementById('profilePicInput');
-  const previewImg = document.getElementById('previewImage');
-  const sidebarImg = document.getElementById('sidebarProfileImg');
+    changePicBtn.addEventListener('click', () => {
+      profilePicInput.click();
+    });
 
-  changePicBtn.addEventListener('click', () => {
-    profilePicInput.click();
+    profilePicInput.addEventListener('change', async (event) => {
+      const file = event.target.files[0];
+      if (!file || !currentUser) return;
+
+      // Optional: Show preview before upload
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        previewImg.src = e.target.result;
+        if (sidebarImg) sidebarImg.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+
+      // Upload to Supabase Storage
+      const fileExt = file.name.split('.').pop();
+      const filePath = `${currentUser.id}_${Date.now()}.${fileExt}`;
+
+      let { error: uploadError } = await supabase
+        .storage
+        .from('avatars')
+        .upload(filePath, file, { upsert: true });
+
+      if (uploadError) {
+        alert('Failed to upload image.');
+        return;
+      }
+
+      // Get public URL
+      const { data } = supabase
+        .storage
+        .from('avatars')
+        .getPublicUrl(filePath);
+
+      // Update profile in DB
+      const { error: updateError } = await supabase
+        .from('profiles')
+        .update({ avatar_url: filePath })
+        .eq('id', currentUser.id);
+
+      if (updateError) {
+        alert('Failed to update profile.');
+        return;
+      }
+
+      alert('Profile picture updated successfully.');
+    });
   });
 
-  profilePicInput.addEventListener('change', async (event) => {
-    const file = event.target.files[0];
-    if (!file || !currentUser) return;
+  window.showLogoutConfirmation = function () {
+    document.getElementById('logoutModal').style.display = 'block';
+  };
 
-    // Optional: Show preview before upload
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      previewImg.src = e.target.result;
-      if (sidebarImg) sidebarImg.src = e.target.result;
-    };
-    reader.readAsDataURL(file);
+  window.closeLogoutModal = function () {
+    document.getElementById('logoutModal').style.display = 'none';
+  };
 
-    // Upload to Supabase Storage
-    const fileExt = file.name.split('.').pop();
-    const filePath = `${currentUser.id}_${Date.now()}.${fileExt}`;
-
-    let { error: uploadError } = await supabase
-      .storage
-      .from('avatars')
-      .upload(filePath, file, { upsert: true });
-
-    if (uploadError) {
-      alert('Failed to upload image.');
-      return;
+  window.logout = async function () {
+    try {
+      await supabase.auth.signOut();
+      window.location.href = 'login.html';
+    } catch (error) {
+      console.error('Logout error:', error.message);
     }
-
-    // Get public URL
-    const { data } = supabase
-      .storage
-      .from('avatars')
-      .getPublicUrl(filePath);
-
-    // Update profile in DB
-    const { error: updateError } = await supabase
-      .from('profiles')
-      .update({ avatar_url: filePath })
-      .eq('id', currentUser.id);
-
-    if (updateError) {
-      alert('Failed to update profile.');
-      return;
-    }
-
-    alert('Profile picture updated successfully.');
-  });
-});
-
-window.showLogoutConfirmation = function () {
-  document.getElementById('logoutModal').style.display = 'block';
-};
-
-window.closeLogoutModal = function () {
-  document.getElementById('logoutModal').style.display = 'none';
-};
-
-window.logout = async function () {
-  try {
-    await supabase.auth.signOut();
-    window.location.href = 'login.html';
-  } catch (error) {
-    console.error('Logout error:', error.message);
-  }
-};
+  };
 </script>
 <script>
 function toggleDarkMode() {
