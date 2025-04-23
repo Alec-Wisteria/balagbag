@@ -2,12 +2,13 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="UTF-8">
-    <title>BodyCheck Fitness</title>
+    <title>BMI Calculator</title>
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
     <link rel="shortcut icon" href="images/logo.jpg" type="image/x-icon">
      <meta name="viewport" content="width=device-width, initial-scale=1.0">
    </head>
    <style>
+    /* Google Fonts Import Link */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 * {
       margin: 0;
@@ -275,6 +276,14 @@ html, body {
   color: var(--menu-color);
   transition: color 0.3s ease;
 }
+
+:root {
+  --menu-color: #11101d;
+}
+body.dark-mode {
+  --menu-color: #f5f5f7;
+}
+
 .home-section .home-content .bx-menu{
   cursor: pointer;
   margin-right: 10px;
@@ -284,14 +293,6 @@ html, body {
   font-size: 26px;
   font-weight: 600;
 }
-
-:root {
-  --menu-color: #11101d;
-}
-body.dark-mode {
-  --menu-color: #f5f5f7;
-}
-
 
 @media screen and (max-width: 400px){
   .sidebar{
@@ -370,6 +371,337 @@ body.dark-mode {
 .category-box p {
     font-size: 14px;
     color: #333;
+}
+.logo-details {
+    display: flex;
+    align-items: center;
+}
+.modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+      }
+      .modal-content {
+        background-color: white;
+        margin: 15% auto;
+        padding: 20px;
+        border-radius: 8px;
+        width: 300px;
+        text-align: center;
+      }
+      .modal-button {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin: 10px;
+        font-size: 16px;
+      }
+      .modal-button.confirm {
+        background-color: #4CAF50;
+        color: white;
+      }
+      .modal-button.cancel {
+        background-color: #f44336;
+        color: white;
+      }
+      :root {
+  --menu-color: #11101d;
+}
+
+h2, h3, h4 {
+  color: #1a1a1a;
+  font-weight: 600;
+  margin-bottom: 12px;
+  letter-spacing: 0.5px;
+  text-shadow: 0 1px 1px rgba(0,0,0,0.05);
+}
+
+p {
+  margin-bottom: 10px;
+  color: #444;
+}
+
+body {
+  animation: fadeIn 0.8s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+html {
+  font-size: 16px;
+}
+
+@media (max-width: 768px) {
+  html {
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  html {
+    font-size: 14px;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+body.dark-mode {
+  background-color: #1c1c1e;
+  color: #f5f5f7;
+  --bmi-bg: #2c2c2e;
+}
+
+body.dark-mode .meter {
+  border: 2px solid #444;
+}
+
+body.dark-mode .box,
+body.dark-mode .bmi-meter-section,
+body.dark-mode .modal-content,
+body.dark-mode .sidebar {
+  background-color: #2c2c2e !important;
+  color: #f5f5f7;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.05);
+}
+
+body.dark-mode .box:hover {
+  box-shadow: 0 14px 38px rgba(255, 255, 255, 0.08);
+}
+
+body.dark-mode .sidebar .nav-links li:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+body.dark-mode .modal-button.confirm {
+  background-color: #0a84ff;
+}
+
+/* Extend dark mode to html and home-section */
+html.dark-mode,
+body.dark-mode {
+  background-color: #1c1c1e;
+  color: #f5f5f7;
+}
+
+body.dark-mode .home-section {
+  background-color: #1c1c1e;
+}
+
+/* Make all paragraph, heading, and span colors readable */
+body.dark-mode h1,
+body.dark-mode h2,
+body.dark-mode h3,
+body.dark-mode h4,
+body.dark-mode p,
+body.dark-mode span,
+body.dark-mode a,
+body.dark-mode .text {
+  color: #f1f1f1 !important;
+}
+
+/* Improve contrast in boxes */
+body.dark-mode .box,
+body.dark-mode .box1,
+body.dark-mode .box2,
+body.dark-mode .box3,
+body.dark-mode .box4,
+body.dark-mode .box5,
+body.dark-mode .category-box,
+body.dark-mode .info-box,
+body.dark-mode .bmi-meter-section,
+body.dark-mode .container,
+body.dark-mode .suggestions-container {
+  background-color: #2a2a2c !important;
+  color: #f1f1f1 !important;
+}
+
+/* Sidebar nav text and icons */
+body.dark-mode .sidebar .nav-links li a .link_name,
+body.dark-mode .sidebar .profile-details .profile_name,
+body.dark-mode .sidebar .profile-details .job {
+  color: #f5f5f7 !important;
+}
+
+/* Hover highlight */
+body.dark-mode .sidebar .nav-links li:hover {
+  background-color: rgba(255, 255, 255, 0.07);
+}
+
+/* Modal readability */
+body.dark-mode .modal-content {
+  background-color: #2c2c2e;
+  color: #f1f1f1;
+}
+
+/* BMI Category badge */
+body.dark-mode #bmiCategory {
+  color: #1a1a1a;
+}
+
+html, body {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.box2 h3 {
+  text-align: center;
+}
+
+.box2 p {
+  text-align: justify;
+  text-indent: 3em;
+  margin-left: 20px;  /* Adjust for the white mark alignment */
+  margin-right: 40px; /* Adjust for the white mark alignment */
+}
+
+.box1 h2 {
+  text-align: center;
+  font-size: 1.4rem;
+}
+
+.box1 p {
+  text-align: left;
+  margin-bottom: 4px; /* Reduce line spacing */
+  line-height: 1.4;   /* Slightly tighter line spacing */
+}
+
+@media (max-width: 768px) {
+  .box {
+    flex: 1 1 100%;
+  }
+}
+.modal .close {
+  position: absolute;
+  top: 20px;
+  right: 32px;
+  font-size: 32px;
+  font-weight: bold;
+  color: #fff;
+  cursor: pointer;
+  z-index: 1001;
+}
+.modal .close:hover {
+  color: #f00;
+}
+
+.fade-in {
+  opacity: 0;
+  transform: translateY(10px);
+  animation: fadeInText 0.6s ease forwards;
+}
+
+@keyframes fadeInText {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@media (min-width: 992px) {
+  .bmi-meter-section {
+    position: sticky;
+    top: 100px;
+    align-self: start;
+  }
+}
+
+.bmi-category {
+  font-weight: bold;
+  font-size: 1.1em;
+  transition: color 0.3s ease;
+}
+
+/* Category-specific colors */
+.bmi-category.underweight {
+  color: #6ec6ff; /* Light Blue */
+}
+
+.bmi-category.healthy {
+  color: #8bc34a; /* Light Green */
+}
+
+.bmi-category.overweight {
+  color: #f4a261; /* Peach */
+}
+
+.bmi-category.obese-1 {
+  color: #ff9800; /* Orange */
+}
+
+.bmi-category.obese-2 {
+  color: #f57c00; /* Darker Orange */
+}
+
+.bmi-category.obese-3 {
+  color: #e65100; /* Deep Orange */
+}
+
+
+.recommendation-line {
+  padding-left: 3em;
+  text-indent: -1em;
+  line-height: 1.6;
+}
+
+.bmi-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 24px;
+  row-gap: 10px;
+  font-size: 1.3rem;  /* increase this if you want even larger */
+  line-height: 1.6;
+}
+
+.centered-category {
+  text-align: center;
+  font-weight: bold;
+  font-style: italic;
+}
+
+.justified-category {
+  text-align: justify;
+  text-indent: 2em;
+  margin-top: 8px;
 }
 
 .info-box {
@@ -547,358 +879,6 @@ body.dark-mode .suggestion-box:hover {
   margin-bottom: 24px;
 }
 
-h2, h3, h4 {
-  color: #1a1a1a;
-  font-weight: 600;
-  margin-bottom: 12px;
-  letter-spacing: 0.5px;
-  text-shadow: 0 1px 1px rgba(0,0,0,0.05);
-}
-
-p {
-  margin-bottom: 10px;
-  color: #444;
-}
-
-body {
-  animation: fadeIn 0.8s ease-out;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-html {
-  font-size: 16px;
-}
-
-@media (max-width: 768px) {
-  html {
-    font-size: 15px;
-  }
-}
-
-@media (max-width: 480px) {
-  html {
-    font-size: 14px;
-  }
-}
-
-::-webkit-scrollbar {
-  width: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-::-webkit-scrollbar-thumb {
-  background-color: rgba(0, 0, 0, 0.2);
-  border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background-color: rgba(0, 0, 0, 0.3);
-}
-
-
-@keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.modal {
-        display: none;
-        position: fixed;
-        z-index: 1;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.5);
-      }
-      .modal-content {
-        background-color: white;
-        margin: 15% auto;
-        padding: 20px;
-        border-radius: 8px;
-        width: 300px;
-        text-align: center;
-      }
-      .modal-button {
-        padding: 10px 20px;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        margin: 10px;
-        font-size: 16px;
-      }
-      .modal-button.confirm {
-        background-color: #4CAF50;
-        color: white;
-      }
-      .modal-button.cancel {
-        background-color: #f44336;
-        color: white;
-      }
-      :root {
-  --menu-color: #11101d;
-}
-
-body.dark-mode {
-  --menu-color: #f5f5f7;
-  background-color: #1c1c1e;
-  color: #f5f5f7;
-}
-
-body.dark-mode .meter {
-  border: 2px solid #444;
-}
-
-body.dark-mode .box,
-body.dark-mode .bmi-meter-section,
-body.dark-mode .modal-content,
-body.dark-mode .sidebar {
-  background-color: #2c2c2e !important;
-  color: #f5f5f7;
-  box-shadow: 0 0 15px rgba(255, 255, 255, 0.05);
-}
-
-body.dark-mode .box:hover {
-  box-shadow: 0 14px 38px rgba(255, 255, 255, 0.08);
-}
-
-body.dark-mode .sidebar .nav-links li:hover {
-  background: rgba(255, 255, 255, 0.05);
-}
-
-body.dark-mode .modal-button.confirm {
-  background-color: #0a84ff;
-}
-
-/* Extend dark mode to html and home-section */
-html.dark-mode,
-body.dark-mode {
-  background-color: #1c1c1e;
-  color: #f5f5f7;
-}
-
-body.dark-mode .home-section {
-  background-color: #1c1c1e;
-}
-
-/* Make all paragraph, heading, and span colors readable */
-body.dark-mode h1,
-body.dark-mode h2,
-body.dark-mode h3,
-body.dark-mode h4,
-body.dark-mode p,
-body.dark-mode span,
-body.dark-mode a,
-body.dark-mode .text {
-  color: #f1f1f1 !important;
-}
-
-/* Improve contrast in boxes */
-body.dark-mode .box,
-body.dark-mode .box1,
-body.dark-mode .box2,
-body.dark-mode .box3,
-body.dark-mode .box4,
-body.dark-mode .box5,
-body.dark-mode .category-box,
-body.dark-mode .info-box,
-body.dark-mode .bmi-meter-section,
-body.dark-mode .container,
-body.dark-mode .suggestions-container {
-  background-color: #2a2a2c !important;
-  color: #f1f1f1 !important;
-}
-
-body.dark-mode .sidebar,
-body.dark-mode .container, .history-container, .dark-mode .home-section {
-  background-color: #2c2c2e !important;
-  color: #f5f5f7 !important;
-}
-
-body.dark-mode input,
-body.dark-mode button {
-  background-color: #3a3a3c;
-  color: #f5f5f7;
-  border: 1px solid #555;
-}
-body.dark-mode label,
-body.dark-mode .quote,
-body.dark-mode h2 {
-  color: #f5f5f7;
-}
-body.dark-mode .sidebar .nav-links li a .link_name {
-  color: #f5f5f7 !important;
-}
-
-body.dark-mode .sidebar .nav-links li:hover {
-  background: rgba(255, 255, 255, 0.07);
-}
-
-html, body {
-  transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-
-
-body {
-  animation: fadeIn 0.8s ease-out;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-html, body {
-  transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-.box2 h3 {
-  text-align: center;
-}
-
-.box2 p {
-  text-align: justify;
-  text-indent: 3em;
-  margin-left: 20px;  /* Adjust for the white mark alignment */
-  margin-right: 40px; /* Adjust for the white mark alignment */
-}
-
-.box1 h2 {
-  text-align: center;
-  font-size: 1.4rem;
-}
-
-.box1 p {
-  text-align: left;
-  margin-bottom: 4px; /* Reduce line spacing */
-  line-height: 1.4;   /* Slightly tighter line spacing */
-}
-
-@media (max-width: 768px) {
-  .box {
-    flex: 1 1 100%;
-  }
-}
-.modal .close {
-  position: absolute;
-  top: 20px;
-  right: 32px;
-  font-size: 32px;
-  font-weight: bold;
-  color: #fff;
-  cursor: pointer;
-  z-index: 1001;
-}
-.modal .close:hover {
-  color: #f00;
-}
-
-.fade-in {
-  opacity: 0;
-  transform: translateY(10px);
-  animation: fadeInText 0.6s ease forwards;
-}
-
-@keyframes fadeInText {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-@media (min-width: 992px) {
-  .bmi-meter-section {
-    position: sticky;
-    top: 100px;
-    align-self: start;
-  }
-}
-
-.bmi-category {
-  font-weight: bold;
-  font-size: 1.1em;
-  transition: color 0.3s ease;
-}
-
-/* Category-specific colors */
-.bmi-category.underweight {
-  color: #6ec6ff; /* Light Blue */
-}
-
-.bmi-category.healthy {
-  color: #8bc34a; /* Light Green */
-}
-
-.bmi-category.overweight {
-  color: #f4a261; /* Peach */
-}
-
-.bmi-category.obese-1 {
-  color: #ff9800; /* Orange */
-}
-
-.bmi-category.obese-2 {
-  color: #f57c00; /* Darker Orange */
-}
-
-.bmi-category.obese-3 {
-  color: #e65100; /* Deep Orange */
-}
-
-
-.recommendation-line {
-  padding-left: 3em;
-  text-indent: -1em;
-  line-height: 1.6;
-}
-
-.bmi-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  column-gap: 24px;
-  row-gap: 10px;
-  font-size: 1.3rem;  /* increase this if you want even larger */
-  line-height: 1.6;
-}
-
-.centered-category {
-  text-align: center;
-  font-weight: bold;
-  font-style: italic;
-}
-
-.justified-category {
-  text-align: justify;
-  text-indent: 2em;
-  margin-top: 8px;
-}
-
-/* Dark mode for the BMI meter and section */
 body.dark-mode .bmi-meter-section {
   background: #23232b !important;
   color: #f5f5f7 !important;
@@ -910,7 +890,6 @@ body.dark-mode .meter {
   border: 2px solid #444 !important;
   box-shadow: 0 6px 18px rgba(255,255,255,0.07);
 }
-
    </style>
 <body>
   <div class="sidebar close">
@@ -925,7 +904,6 @@ body.dark-mode .meter {
           <span class="link_name">Dark Mode</span>
         </a>
       </li>
-      <li>
       <li>
         <a href="index.html">
           <i class='bx bx-grid-alt'></i>
@@ -1564,30 +1542,30 @@ const suggestionsFromPDF = {
         ],
         health: [
            `Adopt a balanced diet: Focus on whole, unprocessed foods.`,
-           `●	Increase physical activity: Aim for at least 150 minutes of moderate exercise per week.`,
-           `Stay hydrated: Drink plenty of water: Staying hydrated supports metabolism.`,
-           `Eat more fruits and vegetables: They are high in fiber and low in calories.`,
-           `Limit added sugars: Reduce intake of sweets, sodas, and sugary snacks.`,
-           `Choose whole grains: Replace refined grains with whole grain options.`,
-           `Control portion sizes: Use smaller plates and be mindful of serving sizes.`,
+           `Increase physical activity: Aim for at least 150 minutes of moderate exercise per week.`,
+           `Stay hydrated: Drink plenty of water throughout the day.`,
+           `Eat more fruits and vegetables: They are high in fiber and essential nutrients.`,
+           `Limit added sugars: Cut back on sweets, sodas, and sugary snacks.`,
+           `Choose whole grains: Replace refined grains with whole grain alternatives.`,
+           `Control portion sizes: Use smaller plates and measure servings when possible.`,
            `Avoid processed foods: They often contain unhealthy fats, sugars, and additives.`,
-           `Keep a food diary: Tracking meals can help you stay accountable.`,
-           `Plan your meals ahead: Preparing meals in advance can prevent unhealthy choices.`,
-           `Eat slowly: Taking time to chew and savor your food can aid digestion and satiety.`,
-           `Reduce saturated and trans fats: Opt for lean protein and healthy fats instead.`,
-           `Incorporate lean protein: Include sources like chicken, fish, legumes, and tofu.`,
-           `Include healthy fats: Use olive oil, nuts, and avocados in moderation.`,
-           `Skip high-calorie beverages: Replace them with water, herbal tea, or other low-calorie drinks.`,
-           `Get adequate sleep: Aim for 7–9 hours per night to help regulate appetite hormones.`,
-           `Manage stress: Practice stress-relief techniques like deep breathing or meditation.`,
-           `Set realistic goals: Small, achievable steps can lead to lasting changes.`,
-           `Schedule regular health checkups: Monitor your progress with your healthcare provider.`,
-           `Consult a dietitian: A professional can provide personalized advice.`,
-           `Incorporate strength training: Building muscle boosts metabolism and overall health.`,
-           `Practice mindful eating: Pay attention to hunger cues and avoid distractions while eating.`,
-           `Increase dietary fiber: Fiber helps you feel full longer and supports digestive health.`,
-           `Monitor your progress: Keep track of changes in your weight and health markers.`,
-           `Build a support network: Connect with friends, family, or support groups for encouragement.`
+           `Keep a food diary: Track meals to stay accountable and monitor intake.`,
+           `Plan meals ahead: Prepare healthy meals in advance to avoid impulsive choices.`,
+           `Eat slowly: Chew thoroughly to aid digestion and recognize fullness.`,
+           `Reduce saturated and trans fats: Opt for lean protein and healthier fat sources.`,
+           `Include lean protein: Add chicken, fish, legumes, or tofu to your meals.`,
+           `Incorporate healthy fats: Use olive oil, nuts, and avocados in moderation.`,
+           `Skip high-calorie beverages: Choose water, herbal tea, or other low-calorie drinks.`,
+           `Ensure adequate sleep: Aim for 7–9 hours per night to help regulate appetite hormones.`,
+           `Manage stress effectively: Practice relaxation techniques like deep breathing or meditation.`,
+           `Set realistic goals: Establish small, achievable targets for gradual improvement.`,
+           `Schedule regular checkups: Monitor health markers with your healthcare provider.`,
+           `Consult a dietitian: Get personalized advice tailored to your needs.`,
+           `Include strength training: Build muscle to boost metabolism and overall health.`,
+           `Practice mindful eating: Focus on hunger cues and avoid distractions while eating.`,
+           `Increase dietary fiber: Fiber helps you feel full longer and supports digestion.`,
+           `Monitor your progress: Track changes in weight and other health markers.`,
+           `Build a support network: Engage with friends, family, or support groups for encouragement.`
         ]
     },
     "Class 1 Obesity": {
@@ -1719,12 +1697,12 @@ const suggestionsFromPDF = {
 
         ],
         health: [
-           `Adopt a balanced diet: Focus on whole, unprocessed foods.`,
+            `Adopt a balanced diet: Focus on whole, unprocessed foods.`,
            `Increase physical activity: Aim for at least 150 minutes of moderate exercise per week.`,
            `Stay hydrated: Drink plenty of water throughout the day.`,
            `Eat more fruits and vegetables: They are high in fiber and essential nutrients.`,
            `Limit added sugars: Cut back on sweets, sodas, and sugary snacks.`,
-           `Monitor progress: Track changes in weight and other health markers.`,           `●	Choose whole grains: Replace refined grains with whole grain alternatives.`,
+           `Choose whole grains: Replace refined grains with whole grain alternatives.`,
            `Control portion sizes: Use smaller plates and measure servings when possible.`,
            `Avoid processed foods: They often contain unhealthy fats, sugars, and additives.`,
            `Keep a food diary: Track meals to stay accountable and monitor intake.`,
@@ -1739,9 +1717,10 @@ const suggestionsFromPDF = {
            `Set realistic goals: Establish small, achievable targets for gradual improvement.`,
            `Schedule regular checkups: Monitor health markers with your healthcare provider.`,
            `Consult a dietitian: Get personalized advice tailored to your needs.`,
-           `Include strength training: Build muscle to boost metabolism and overall health.`,
            `Practice mindful eating: Focus on hunger cues and avoid distractions while eating.`,
+           `Include strength training: Build muscle to boost metabolism and overall health.`,
            `Increase dietary fiber: Fiber helps you feel full longer and supports digestion.`,
+           `Monitor progress: Track changes in weight and other health markers.`,
            `Build a support network: Engage with friends, family, or support groups for encouragement.`
         ]
     },
@@ -2162,63 +2141,35 @@ function closeModal() {
     window.closeLogoutModal = function () {
       document.getElementById('logoutModal').style.display = 'none';
     }
-
+            
     window.logout = async function () {
       await supabase.auth.signOut();
       window.location.href = 'login.html'; // or wherever your login page is
     }
 </script>
-
-<script type="module">
-    import { fetchBMIHistory } from './supabaseClient.js';
-    async function loadHistory() {
-        const history = await fetchBMIHistory();
-        const tbody = document.getElementById('historyBody');
-        const noHistory = document.getElementById('noHistory');
-        tbody.innerHTML = '';
-        if (!history || history.length === 0) {
-            noHistory.style.display = 'block';
-            return;
-        }
-        noHistory.style.display = 'none';
-        history.forEach(record => {
-            const tr = document.createElement('tr');
-            tr.innerHTML = `
-                <td>${record.created_at ? new Date(record.created_at).toLocaleString() : ''}</td>
-                <td>${record.bmi}</td>
-                <td>${record.category}</td>
-                <td>${record.age}</td>
-                <td>${record.gender}</td>
-            `;
-            tbody.appendChild(tr);
-        });
-    }
-    loadHistory();
-</script>
-
 <script>
-  function toggleDarkMode() {
-    const body = document.body;
-    const html = document.documentElement;
-  
-    body.classList.toggle("dark-mode");
-    html.classList.toggle("dark-mode");
-  
-    localStorage.setItem("theme", body.classList.contains("dark-mode") ? "dark" : "light");
-  }
-  
-  window.toggleDarkMode = toggleDarkMode;
-  
-  // Load saved theme
-  window.addEventListener("DOMContentLoaded", () => {
-    const savedTheme = localStorage.getItem("theme");
-    if (savedTheme === "dark") {
-      document.body.classList.add("dark-mode");
-      document.documentElement.classList.add("dark-mode");
-    }
-  });
+function toggleDarkMode() {
+  const body = document.body;
+  const html = document.documentElement;
 
-  const resultBox = document.querySelector(".box1");
+  body.classList.toggle("dark-mode");
+  html.classList.toggle("dark-mode");
+
+  localStorage.setItem("theme", body.classList.contains("dark-mode") ? "dark" : "light");
+}
+
+window.toggleDarkMode = toggleDarkMode;
+
+// Load saved theme
+window.addEventListener("DOMContentLoaded", () => {
+  const savedTheme = localStorage.getItem("theme");
+  if (savedTheme === "dark") {
+    document.body.classList.add("dark-mode");
+    document.documentElement.classList.add("dark-mode");
+  }
+});
+
+const resultBox = document.querySelector(".box1");
 
 const categoryColors = {
   "Underweight": "#ff6b6b",
@@ -2235,6 +2186,6 @@ if (categoryColors[category]) {
   resultBox.style.border = `2px solid ${categoryColors[category]}`;
 }
 document.getElementById("bmiCategory").title = `Category: ${category}`;
-  </script>
+</script>
 </body>
 </html>
