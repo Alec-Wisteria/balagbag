@@ -323,7 +323,7 @@ body.dark-mode .sidebar .nav-links li:hover {
             border-radius: 8px;
             text-align: center;
         }
-        .compute-button {
+        button {
             background-color: blue;
             color: white;
             padding: 10px;
@@ -336,6 +336,22 @@ body.dark-mode .sidebar .nav-links li:hover {
         button:hover {
             background-color: #808080;
         }
+
+        .compute-button {
+          background-color: blue;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: 0.3s;
+        }
+
+        .compute-button:hover {
+            background-color: #808080;
+        }
+        
         .gender-buttons {
             display: flex;
             justify-content: center;
@@ -504,11 +520,11 @@ body.dark-mode .modal-content {
   color: #f1f1f1;
 }
 
-body.dark-mode .container button {
+body.dark-mode .container .compute-button {
   background-color: #0a84ff;
 }
 
-body.dark-mode .container button:hover {
+body.dark-mode .container .compute-button:hover {
   background-color: #808080;
 }
    </style>
