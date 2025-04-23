@@ -9,12 +9,13 @@
    </head>
    <style>
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
-* {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Poppins', sans-serif;
-    }
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
 html, body {
   height: 100%; /* Ensure the body and html cover the full height of the viewport */
   margin: 0;
@@ -25,28 +26,25 @@ html, body {
   overflow-x: hidden; /* Prevent horizontal scrolling */
   background: #E4E9F7; /* Set the background color */
 }
+
 :root {
   --bmi-bg: linear-gradient(135deg, #ffffff 0%, #f0f4ff 100%);
 }
-.sidebar{
+
+.sidebar {
   position: fixed;
   top: 0;
   left: 0;
-  height: 100%;
+  height: 100vh;
   width: 260px;
   background: linear-gradient(to bottom right, #c2c2c2, #343447);
-  z-index: 100;
   transition: width 0.4s ease-in-out, background 0.3s ease-in-out;
-}
+  z-index: 1000;
+  overflow: hidden;
+}   
 .sidebar.close{
   width: 78px;
 }
-.sidebar .logo-details img,
-.sidebar .logo-details .logo_name,
-.sidebar .nav-links li a {
-  transition: all 0.3s ease;
-}
-
 .sidebar .logo-details {
     height: 60px;
     width: 100%;
@@ -57,12 +55,13 @@ html, body {
 }
 
 .sidebar .logo-details img {
-    width: 50px;
+    width: 50px; /* Default small size */
     height: 50px;
+    transition: all 0.3s ease; /* Smooth transition */
 }
 
 .sidebar.open .logo-details img {
-    width: 85px;
+    width: 85px; /* Expand when open */
     height: 85px;
 }
 
@@ -80,6 +79,7 @@ html, body {
     opacity: 0;
     pointer-events: none;
 }
+
 .sidebar .nav-links{
   height: 100%;
   padding: 30px 0 150px 0;
@@ -96,10 +96,11 @@ html, body {
   list-style: none;
   transition: all 0.4s ease;
 }
-.sidebar .nav-links li:hover{
-    background: rgba(255, 255, 255, 0.6);
-  backdrop-filter: blur(4px);
-  border-radius: 8px;
+.sidebar .nav-links li:hover {
+  background: rgba(255, 255, 255, 0.4);
+}
+body.dark-mode .sidebar .nav-links li:hover {
+  background: rgba(255, 255, 255, 0.1);
 }
 .sidebar .nav-links li .iocn-link{
   display: flex;
@@ -150,7 +151,7 @@ html, body {
   display: block;
 }
 .sidebar .nav-links li .sub-menu a{
-  color: #fff;
+  color: #f1f1f1;
   font-size: 15px;
   padding: 5px 0;
   white-space: nowrap;
@@ -203,18 +204,11 @@ html, body {
   width: 260px;
   display: flex;
   align-items: center;
-  justify-content: flex-start;
-  gap: 12px; /* or more/less depending on your visual preference */
+  justify-content: space-between;
   background: #c2c1d4;
   padding: 12px 0;
   transition: all 0.5s ease;
 }
-
-.sidebar .profile-details i {
-  font-size: 22px;  /* or 24px if you want it even bigger */
-  cursor: pointer;
-}
-
 .sidebar.close .profile-details{
   background: none;
 }
@@ -284,14 +278,6 @@ html, body {
   font-size: 26px;
   font-weight: 600;
 }
-
-:root {
-  --menu-color: #11101d;
-}
-body.dark-mode {
-  --menu-color: #f5f5f7;
-}
-
 
 @media screen and (max-width: 400px){
   .sidebar{
@@ -689,7 +675,6 @@ body.dark-mode .modal-button.confirm {
   background-color: #0a84ff;
 }
 
-/* Extend dark mode to html and home-section */
 html.dark-mode,
 body.dark-mode {
   background-color: #1c1c1e;
@@ -897,20 +882,6 @@ html, body {
   text-indent: 2em;
   margin-top: 8px;
 }
-
-/* Dark mode for the BMI meter and section */
-body.dark-mode .bmi-meter-section {
-  background: #23232b !important;
-  color: #f5f5f7 !important;
-  box-shadow: 0 10px 30px rgba(255,255,255,0.05);
-}
-
-body.dark-mode .meter {
-  background: #23232b !important;
-  border: 2px solid #444 !important;
-  box-shadow: 0 6px 18px rgba(255,255,255,0.07);
-}
-
    </style>
 <body>
   <div class="sidebar close">
@@ -1564,30 +1535,30 @@ const suggestionsFromPDF = {
         ],
         health: [
            `Adopt a balanced diet: Focus on whole, unprocessed foods.`,
-           `●	Increase physical activity: Aim for at least 150 minutes of moderate exercise per week.`,
-           `Stay hydrated: Drink plenty of water: Staying hydrated supports metabolism.`,
-           `Eat more fruits and vegetables: They are high in fiber and low in calories.`,
-           `Limit added sugars: Reduce intake of sweets, sodas, and sugary snacks.`,
-           `Choose whole grains: Replace refined grains with whole grain options.`,
-           `Control portion sizes: Use smaller plates and be mindful of serving sizes.`,
+           `Increase physical activity: Aim for at least 150 minutes of moderate exercise per week.`,
+           `Stay hydrated: Drink plenty of water throughout the day.`,
+           `Eat more fruits and vegetables: They are high in fiber and essential nutrients.`,
+           `Limit added sugars: Cut back on sweets, sodas, and sugary snacks.`,
+           `Choose whole grains: Replace refined grains with whole grain alternatives.`,
+           `Control portion sizes: Use smaller plates and measure servings when possible.`,
            `Avoid processed foods: They often contain unhealthy fats, sugars, and additives.`,
-           `Keep a food diary: Tracking meals can help you stay accountable.`,
-           `Plan your meals ahead: Preparing meals in advance can prevent unhealthy choices.`,
-           `Eat slowly: Taking time to chew and savor your food can aid digestion and satiety.`,
-           `Reduce saturated and trans fats: Opt for lean protein and healthy fats instead.`,
-           `Incorporate lean protein: Include sources like chicken, fish, legumes, and tofu.`,
-           `Include healthy fats: Use olive oil, nuts, and avocados in moderation.`,
-           `Skip high-calorie beverages: Replace them with water, herbal tea, or other low-calorie drinks.`,
-           `Get adequate sleep: Aim for 7–9 hours per night to help regulate appetite hormones.`,
-           `Manage stress: Practice stress-relief techniques like deep breathing or meditation.`,
-           `Set realistic goals: Small, achievable steps can lead to lasting changes.`,
-           `Schedule regular health checkups: Monitor your progress with your healthcare provider.`,
-           `Consult a dietitian: A professional can provide personalized advice.`,
-           `Incorporate strength training: Building muscle boosts metabolism and overall health.`,
-           `Practice mindful eating: Pay attention to hunger cues and avoid distractions while eating.`,
-           `Increase dietary fiber: Fiber helps you feel full longer and supports digestive health.`,
-           `Monitor your progress: Keep track of changes in your weight and health markers.`,
-           `Build a support network: Connect with friends, family, or support groups for encouragement.`
+           `Keep a food diary: Track meals to stay accountable and monitor intake.`,
+           `Plan meals ahead: Prepare healthy meals in advance to avoid impulsive choices.`,
+           `Eat slowly: Chew thoroughly to aid digestion and recognize fullness.`,
+           `Reduce saturated and trans fats: Opt for lean protein and healthier fat sources.`,
+           `Include lean protein: Add chicken, fish, legumes, or tofu to your meals.`,
+           `Incorporate healthy fats: Use olive oil, nuts, and avocados in moderation.`,
+           `Skip high-calorie beverages: Choose water, herbal tea, or other low-calorie drinks.`,
+           `Ensure adequate sleep: Aim for 7–9 hours per night to help regulate appetite hormones.`,
+           `Manage stress effectively: Practice relaxation techniques like deep breathing or meditation.`,
+           `Set realistic goals: Establish small, achievable targets for gradual improvement.`,
+           `Schedule regular checkups: Monitor health markers with your healthcare provider.`,
+           `Consult a dietitian: Get personalized advice tailored to your needs.`,
+           `Include strength training: Build muscle to boost metabolism and overall health.`,
+           `Practice mindful eating: Focus on hunger cues and avoid distractions while eating.`,
+           `Increase dietary fiber: Fiber helps you feel full longer and supports digestion.`,
+           `Monitor your progress: Track changes in weight and other health markers.`,
+           `Build a support network: Engage with friends, family, or support groups for encouragement.`
         ]
     },
     "Class 1 Obesity": {
@@ -1719,12 +1690,12 @@ const suggestionsFromPDF = {
 
         ],
         health: [
-           `Adopt a balanced diet: Focus on whole, unprocessed foods.`,
+            `Adopt a balanced diet: Focus on whole, unprocessed foods.`,
            `Increase physical activity: Aim for at least 150 minutes of moderate exercise per week.`,
            `Stay hydrated: Drink plenty of water throughout the day.`,
            `Eat more fruits and vegetables: They are high in fiber and essential nutrients.`,
            `Limit added sugars: Cut back on sweets, sodas, and sugary snacks.`,
-           `Monitor progress: Track changes in weight and other health markers.`,           `●	Choose whole grains: Replace refined grains with whole grain alternatives.`,
+           `Choose whole grains: Replace refined grains with whole grain alternatives.`,
            `Control portion sizes: Use smaller plates and measure servings when possible.`,
            `Avoid processed foods: They often contain unhealthy fats, sugars, and additives.`,
            `Keep a food diary: Track meals to stay accountable and monitor intake.`,
@@ -1739,9 +1710,10 @@ const suggestionsFromPDF = {
            `Set realistic goals: Establish small, achievable targets for gradual improvement.`,
            `Schedule regular checkups: Monitor health markers with your healthcare provider.`,
            `Consult a dietitian: Get personalized advice tailored to your needs.`,
-           `Include strength training: Build muscle to boost metabolism and overall health.`,
            `Practice mindful eating: Focus on hunger cues and avoid distractions while eating.`,
+           `Include strength training: Build muscle to boost metabolism and overall health.`,
            `Increase dietary fiber: Fiber helps you feel full longer and supports digestion.`,
+           `Monitor progress: Track changes in weight and other health markers.`,
            `Build a support network: Engage with friends, family, or support groups for encouragement.`
         ]
     },
