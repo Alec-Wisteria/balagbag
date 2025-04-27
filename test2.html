@@ -80,7 +80,6 @@
   list-style: none;
   transition: all 0.4s ease;
 }
-
 .sidebar .nav-links li:hover {
   background: rgba(255, 255, 255, 0.4);
 }
@@ -295,78 +294,36 @@ body.dark-mode .sidebar .nav-links li:hover {
     width: calc(100% - 78px);
   }
 }
-.container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 90%;
-    max-width: 1200px;
-    margin: 0 auto;
-    margin-top: 100px;
-  }
-  .text-content {
-    flex: 1;
-    padding-right: 20px;
-  }
-
-  .text-content h1 {
-    font-size: 50px;
-    margin-bottom: 20px;
-  }
-
-  .text-content p {
-    font-size: 18px;
-    line-height: 1.6;
-    margin-bottom: 20px;
-  }
-
-  .text-content button {
-    background-color: blue;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: 0.3s;
-  }
-
-  .text-content button:hover {
-    background-color: #808080;
-  }
-
-  .image-content {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-  }
-
-  .image-content img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 15px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-  }
-
-  @media screen and (max-width: 768px) {
-    .container {
-      flex-direction: column;
-      text-align: center;
-    }
-
-    .text-content {
-      padding-right: 0;
-      margin-bottom: 20px;
-    }
-
-    .image-content img {
-      width: 80%;
-    }
-  }
-        .logo-details {
-    display: flex;
-    align-items: center;
-}
+.history-container {
+            background: #fff;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            width: 90%;
+            max-width: 700px;
+            margin: 50px auto;
+        }
+        .history-container h2 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            font-weight: 600;
+            text-align: center;
+        }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 12px; text-align: center; border-bottom: 1px solid #eee; }
+        th { background: #343447; color: #fff; }
+        tr:last-child td { border-bottom: none; }
+        .no-history { text-align: center; color: #888; margin-top: 24px; }
+        .back-btn { display: inline-block; margin-bottom: 20px; background: #343447; color: #fff; padding: 8px 16px; border: none; border-radius: 4px; text-decoration: none; }
+        .back-btn:hover { background: #22223b; }
+        @media screen and (max-width: 400px){
+            .sidebar{ width: 240px; }
+            .sidebar.close{ width: 78px; }
+            .sidebar .profile-details{ width: 240px; }
+            .sidebar.close .profile-details{ background: none; width: 78px; }
+            .home-section { left: 240px; width: calc(100% - 240px); }
+            .sidebar.close ~ .home-section{ left: 78px; width: calc(100% - 78px); }
+        }
 .modal {
         display: none;
         position: fixed;
@@ -404,13 +361,6 @@ body.dark-mode .sidebar .nav-links li:hover {
       :root {
   --menu-color: #11101d;
 }
-body.dark-mode .text-content button {
-  background-color: #0a84ff;
-}
-
-body.dark-mode .text-content button:hover {
-  background-color: #808080;
-}
 
 body.dark-mode {
   --menu-color: #f5f5f7;
@@ -419,7 +369,7 @@ body.dark-mode {
 }
 
 body.dark-mode .sidebar,
-body.dark-mode .container, body.dark-mode .home-section {
+body.dark-mode .history-container, .dark-mode .home-section, .modal-content {
   background-color: #2c2c2e !important;
   color: #f5f5f7 !important;
 }
@@ -506,73 +456,6 @@ body.dark-mode .modal-content {
   color: #f1f1f1;
 }
 
-/* Mobile Responsive Styles */
-@media (max-width: 768px) {
-  .sidebar {
-    left: -260px;
-    width: 260px;
-    z-index: 2000;
-    transition: left 0.4s, width 0.4s;
-  }
-  .sidebar.open, .sidebar:not(.close) {
-    left: 0;
-  }
-  .sidebar.close {
-    left: -260px;
-  }
-  .sidebar .profile-details {
-    width: 100%;
-  }
-  .home-section {
-    left: 0;
-    width: 100%;
-    padding: 8px;
-    min-height: 100vh;
-  }
-  .container {
-    flex-direction: column;
-    align-items: stretch;
-    margin-top: 60px;
-    width: 98%;
-    padding: 0 2vw;
-  }
-  .image-content img {
-    width: 100%;
-    max-width: 300px;
-    margin: 0 auto;
-  }
-  .text-content h1 {
-    font-size: 32px;
-  }
-  .text-content p {
-    font-size: 16px;
-  }
-  .home-content .bx-menu {
-    font-size: 30px;
-  }
-}
-
-/* Hamburger always on top for mobile */
-@media (max-width: 768px) {
-  .home-content {
-    position: sticky;
-    top: 0;
-    background: inherit;
-    z-index: 2100;
-    padding: 8px 0;
-  }
-}
-
-/* Optional: Overlay effect when sidebar is open on mobile */
-@media (max-width: 768px) {
-  body.sidebar-open::before {
-    content: "";
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(0,0,0,0.3);
-    z-index: 1500;
-  }
-}
    </style>
 <body>
   <div class="sidebar close">
@@ -587,6 +470,7 @@ body.dark-mode .modal-content {
           <span class="link_name">Dark Mode</span>
         </a>
       </li>
+      <li>
       <li>
         <a href="index.html">
           <i class='bx bx-grid-alt'></i>
@@ -648,22 +532,31 @@ body.dark-mode .modal-content {
   </div>
   <section class="home-section">
     <div class="home-content">
-      <i class='bx bx-menu'></i>
-      <span class="text">BodyCheck Fitness</span>
+        <i class='bx bx-menu'></i>
+        <span class="text">BMI History</span>
     </div>
-    <div class="container">
-      <div class="text-content">
-        <h1>Welcome to BodyCheck</h1>
-        <p>
-          BodyCheck is your personal health companion. Use our BMI calculator to understand your body mass index and get personalized recommendations to improve your health and fitness.
-        </p>
-        <button onclick="window.location.href='calculator.html'">Let's Get Started</button>
-      </div>
-      <div class="image-content">
-        <img src="images/logo.jpg" alt="logo" style="border-radius: 50%; box-shadow: 0 2px 8px rgba(0,0,0,0.15);">
-      </div>
+    <div class="history-container">
+        <a href="calculator.html" class="back-btn">&larr; Back to Calculator</a>
+        <h2>Your BMI History</h2>
+        <table id="historyTable">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>BMI</th>
+                    <th>Category</th>
+                    <th>Age</th>
+                    <th>Gender</th>
+                </tr>
+            </thead>
+            <tbody id="historyBody">
+                <!-- BMI history will be inserted here -->
+            </tbody>
+        </table>
+        <div class="no-history" id="noHistory" style="display:none;">
+            No BMI records found.
+        </div>
     </div>
-  </section>
+</section>
   <script>
     let arrow = document.querySelectorAll(".arrow");
 for (var i = 0; i < arrow.length; i++) {
@@ -675,19 +568,9 @@ for (var i = 0; i < arrow.length; i++) {
 
 let sidebar = document.querySelector(".sidebar");
 let sidebarBtn = document.querySelector(".bx-menu");
+console.log(sidebarBtn);
 sidebarBtn.addEventListener("click", ()=>{
   sidebar.classList.toggle("close");
-  sidebar.classList.toggle("open");
-  // For overlay effect on mobile
-  if (window.innerWidth <= 768) {
-    document.body.classList.toggle("sidebar-open", sidebar.classList.contains("open") && !sidebar.classList.contains("close"));
-  }
-});
-window.addEventListener("resize", () => {
-  if (window.innerWidth > 768) {
-    sidebar.classList.remove("open");
-    document.body.classList.remove("sidebar-open");
-  }
 });
 </script>
 <script type="module">
@@ -695,6 +578,11 @@ window.addEventListener("resize", () => {
     // Profile details elements
     document.addEventListener('DOMContentLoaded', async () => {
       const { data: { user } } = await supabase.auth.getUser();
+
+      if (!user) {
+    window.location.href = 'login.html';
+    return;
+  }
 
       if (user) {
         // Fetch additional profile info if stored in a 'profiles' table
@@ -742,6 +630,34 @@ window.addEventListener("resize", () => {
       window.location.href = 'login.html'; // or wherever your login page is
     }
 </script>
+
+<script type="module">
+    import { fetchBMIHistory } from './supabaseClient.js';
+    async function loadHistory() {
+        const history = await fetchBMIHistory();
+        const tbody = document.getElementById('historyBody');
+        const noHistory = document.getElementById('noHistory');
+        tbody.innerHTML = '';
+        if (!history || history.length === 0) {
+            noHistory.style.display = 'block';
+            return;
+        }
+        noHistory.style.display = 'none';
+        history.forEach(record => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td>${record.created_at ? new Date(record.created_at).toLocaleString() : ''}</td>
+                <td>${record.bmi}</td>
+                <td>${record.category}</td>
+                <td>${record.age}</td>
+                <td>${record.gender}</td>
+            `;
+            tbody.appendChild(tr);
+        });
+    }
+    loadHistory();
+</script>
+
 <script>
   function toggleDarkMode() {
     const body = document.body;
