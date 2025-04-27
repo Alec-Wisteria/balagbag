@@ -505,6 +505,74 @@ body.dark-mode .modal-content {
   background-color: #2c2c2e;
   color: #f1f1f1;
 }
+
+/* Mobile Responsive Styles */
+@media (max-width: 768px) {
+  .sidebar {
+    left: -260px;
+    width: 260px;
+    z-index: 2000;
+    transition: left 0.4s, width 0.4s;
+  }
+  .sidebar.open, .sidebar:not(.close) {
+    left: 0;
+  }
+  .sidebar.close {
+    left: -260px;
+  }
+  .sidebar .profile-details {
+    width: 100%;
+  }
+  .home-section {
+    left: 0;
+    width: 100%;
+    padding: 8px;
+    min-height: 100vh;
+  }
+  .container {
+    flex-direction: column;
+    align-items: stretch;
+    margin-top: 60px;
+    width: 98%;
+    padding: 0 2vw;
+  }
+  .image-content img {
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
+  }
+  .text-content h1 {
+    font-size: 32px;
+  }
+  .text-content p {
+    font-size: 16px;
+  }
+  .home-content .bx-menu {
+    font-size: 30px;
+  }
+}
+
+/* Hamburger always on top for mobile */
+@media (max-width: 768px) {
+  .home-content {
+    position: sticky;
+    top: 0;
+    background: inherit;
+    z-index: 2100;
+    padding: 8px 0;
+  }
+}
+
+/* Optional: Overlay effect when sidebar is open on mobile */
+@media (max-width: 768px) {
+  body.sidebar-open::before {
+    content: "";
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.3);
+    z-index: 1500;
+  }
+}
    </style>
 <body>
   <div class="sidebar close">
@@ -607,9 +675,19 @@ for (var i = 0; i < arrow.length; i++) {
 
 let sidebar = document.querySelector(".sidebar");
 let sidebarBtn = document.querySelector(".bx-menu");
-console.log(sidebarBtn);
 sidebarBtn.addEventListener("click", ()=>{
   sidebar.classList.toggle("close");
+  sidebar.classList.toggle("open");
+  // For overlay effect on mobile
+  if (window.innerWidth <= 768) {
+    document.body.classList.toggle("sidebar-open", sidebar.classList.contains("open") && !sidebar.classList.contains("close"));
+  }
+});
+window.addEventListener("resize", () => {
+  if (window.innerWidth > 768) {
+    sidebar.classList.remove("open");
+    document.body.classList.remove("sidebar-open");
+  }
 });
 </script>
 <script type="module">
