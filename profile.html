@@ -684,7 +684,6 @@ body.dark-mode .tab-btn.active, body.dark-mode .tab-btn:focus {
   background: linear-gradient(90deg, #4d79ff 0%, #a084ee 100%);
   color: #fff;
 }
-
 .delete-modal-custom {
   background: linear-gradient(135deg, #fff7f7 60%, #ffeaea 100%);
   border-radius: 18px;
@@ -968,14 +967,6 @@ document.getElementById('showPasswordToggle').addEventListener('change', functio
   cpw.type = type;
   curpw.type = type;
 });
-
-document.getElementById('showDeleteAccountPasswordToggle').addEventListener('change', function() {
-  const pw = document.getElementById('deleteAccountPassword');
-  const cpw = document.getElementById('deleteAccountConfirmPassword');
-  const type = this.checked ? 'text' : 'password';
-  pw.type = type;
-  cpw.type = type;
-});
 </script>
 <script type="module">
   import { supabase } from './supabaseClient.js';
@@ -1163,25 +1154,42 @@ document.getElementById('showDeleteAccountPasswordToggle').addEventListener('cha
       deleteAccountError.textContent = '';
     };
 
-    window.confirmDeleteAccount = async function () {
-  const password = document.getElementById('deleteAccountPassword').value;
-  const confirmPassword = document.getElementById('deleteAccountConfirmPassword').value;
-  const errorDiv = document.getElementById('deleteAccountError');
-  errorDiv.textContent = '';
+    window.closeDeleteAccountModal = function () {
+  deleteAccountModal.style.display = 'none';
+  deleteAccountPassword.value = '';
+  deleteAccountConfirmPassword.value = '';
+  deleteAccountError.textContent = '';
+  showDeleteAccountPasswordToggle.checked = false;
+  deleteAccountPassword.type = 'password';
+  deleteAccountConfirmPassword.type = 'password';
+};
+
+// Show/hide password
+showDeleteAccountPasswordToggle.addEventListener('change', function() {
+  const type = this.checked ? 'text' : 'password';
+  deleteAccountPassword.type = type;
+  deleteAccountConfirmPassword.type = type;
+});
+
+// Confirm delete account
+window.confirmDeleteAccount = async function () {
+  const password = deleteAccountPassword.value;
+  const confirmPassword = deleteAccountConfirmPassword.value;
+  deleteAccountError.textContent = '';
 
   if (!password || !confirmPassword) {
-    errorDiv.textContent = 'Both password fields are required.';
+    deleteAccountError.textContent = 'Both password fields are required.';
     return;
   }
   if (password !== confirmPassword) {
-    errorDiv.textContent = 'Passwords do not match.';
+    deleteAccountError.textContent = 'Passwords do not match.';
     return;
   }
 
   // Get current user
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) {
-    errorDiv.textContent = "You must be logged in.";
+    deleteAccountError.textContent = "You must be logged in.";
     return;
   }
 
@@ -1192,20 +1200,21 @@ document.getElementById('showDeleteAccountPasswordToggle').addEventListener('cha
   });
 
   if (signInError) {
-    errorDiv.textContent = "Incorrect password. Please try again.";
+    deleteAccountError.textContent = "Incorrect password. Please try again.";
     return;
   }
 
   // Delete user account (requires service role/admin privileges)
   const { error: deleteError } = await supabase.auth.admin.deleteUser(user.id);
   if (deleteError) {
-    errorDiv.textContent = "Failed to delete account. Please try again.";
+    deleteAccountError.textContent = "Failed to delete account. Please try again.";
     return;
   }
 
   alert("Your account has been deleted.");
   window.location.href = "login.html";
 };
+  });
 
   window.showLogoutConfirmation = function () {
     document.getElementById('logoutModal').style.display = 'block';
