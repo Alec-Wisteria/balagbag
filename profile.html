@@ -789,7 +789,7 @@ body.dark-mode .modal-close-btn:hover, body.dark-mode .modal-close-btn:focus {
       <li>
         <div class="profile-details" id="profile-details" style="display: none;">
           <div class="profile-content">
-              <img src="images/placeholder.png" alt="profileImg" id="sidebarProfileImg">
+              <img src="images/placeholder.png" alt="profileImg">
           </div>
           <div class="name-job">
               <div class="profile_name" id="username"></div>
@@ -978,107 +978,337 @@ document.getElementById('showDeleteAccountPasswordToggle').addEventListener('cha
 });
 </script>
 <script type="module">
-import { supabase } from './supabaseClient.js';
+  import { supabase } from './supabaseClient.js';
 
-let currentUser = null;
+  let currentUser = null;
 
-document.addEventListener('DOMContentLoaded', async () => {
-  // Sidebar profile image fix
-  const sidebarImg = document.querySelector('#profile-details img');
-  sidebarImg.id = 'sidebarProfileImg';
+  document.addEventListener('DOMContentLoaded', async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) {
+    window.location.href = 'login.html';
+    return;
+  }
+
+      if (user) {
+        // Fetch additional profile info if stored in a 'profiles' table
+        const { data: profile } = await supabase
+          .from('profiles')
+          .select('*')
+          .eq('id', user.id)
+          .single();
+
+        // Show the profile section
+        document.getElementById('profile-details').style.display = 'flex';
+        document.getElementById('username').textContent = profile?.username || 'Guest';
+
+        // Set sidebar profile image
+        const sidebarProfileImg = document.querySelector('#profile-details img');
+        let avatarUrl = 'images/placeholder.png';
+        const avatarPath = profile?.avatar_url;
+        if (avatarPath) {
+          if (avatarPath.startsWith('http')) {
+            avatarUrl = avatarPath;
+          } else {
+            const { data } = supabase
+              .storage
+              .from('avatars')
+              .getPublicUrl(avatarPath);
+            if (data && data.publicUrl) {
+              avatarUrl = data.publicUrl;
+            }
+          }
+        }
+        if (sidebarProfileImg) sidebarProfileImg.src = avatarUrl;
+      }
+    });
+
+  document.addEventListener('DOMContentLoaded', async () => {
+    try {
+      const { data: { user }, error } = await supabase.auth.getUser();
+      if (error || !user) throw error;
+
+      currentUser = user;
+
+      const { data: profile, error: profileError } = await supabase
+        .from('profiles')
+        .select('*')
+        .eq('id', user.id)
+        .single();
+
+      if (profileError) throw profileError;
+
+      // Handle avatar
+      let avatarUrl = 'images/placeholder.png';
+      const avatarPath = profile?.avatar_url;
+      if (avatarPath) {
+        if (avatarPath.startsWith('http')) {
+          avatarUrl = avatarPath;
+        } else {
+          const { data } = supabase
+            .storage
+            .from('avatars')
+            .getPublicUrl(avatarPath);
+          if (data && data.publicUrl) {
+            avatarUrl = data.publicUrl;
+          }
+        }
+      }
+
+      // Set sidebar and profile images
+      const sidebarImg = document.getElementById('sidebarProfileImg');
+      const previewImg = document.getElementById('previewImage');
+      if (sidebarImg) sidebarImg.src = avatarUrl;
+      if (previewImg) previewImg.src = avatarUrl;
+
+      // Set username, email, and created date
+      document.getElementById('username').textContent = profile?.username || 'Guest';
+      document.getElementById('displayUsername').textContent = profile?.username || 'Guest';
+      document.getElementById('displayEmail').textContent = profile?.email || user.email || '';
+      document.getElementById('displayCreated').textContent = user.created_at
+        ? new Date(user.created_at).toLocaleString()
+        : '';
+    } catch (err) {
+      document.getElementById('username').textContent = 'Not logged in';
+      document.getElementById('displayUsername').textContent = '';
+      document.getElementById('displayEmail').textContent = '';
+      document.getElementById('displayCreated').textContent = '';
+      const sidebarImg = document.getElementById('sidebarProfileImg');
+      const previewImg = document.getElementById('previewImage');
+      if (sidebarImg) sidebarImg.src = 'images/placeholder.png';
+      if (previewImg) previewImg.src = 'images/placeholder.png';
+      console.error('Error initializing profile:', err?.message || err);
+    }
+
+    // Profile picture change logic
+    const changePicBtn = document.getElementById('changePicBtn');
+    const confirmPicBtn = document.getElementById('confirmPicBtn');
+    const profilePicInput = document.getElementById('profilePicInput');
+    const previewImg = document.getElementById('previewImage');
+    const sidebarImg = document.getElementById('sidebarProfileImg');
+    let selectedFile = null;
+
+    changePicBtn.addEventListener('click', () => {
+      profilePicInput.click();
+    });
+
+    profilePicInput.addEventListener('change', (event) => {
+      const file = event.target.files[0];
+      if (!file || !currentUser) return;
+
+      selectedFile = file;
+      // Show preview
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        previewImg.src = e.target.result;
+        if (sidebarImg) sidebarImg.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+
+      // Show confirm button
+      confirmPicBtn.style.display = 'inline-block';
+    });
+
+    confirmPicBtn.addEventListener('click', async () => {
+      if (!selectedFile || !currentUser) return;
+
+      // Upload to Supabase Storage
+      const fileExt = selectedFile.name.split('.').pop();
+      const filePath = `${currentUser.id}_${Date.now()}.${fileExt}`;
+
+      let { error: uploadError } = await supabase
+        .storage
+        .from('avatars')
+        .upload(filePath, selectedFile, { upsert: true });
+
+      if (uploadError) {
+        alert('Failed to upload image.');
+        return;
+      }
+
+      // Get public URL
+      const { data } = supabase
+        .storage
+        .from('avatars')
+        .getPublicUrl(filePath);
+
+      // Update profile in DB
+      const { error: updateError } = await supabase
+        .from('profiles')
+        .update({ avatar_url: filePath })
+        .eq('id', currentUser.id);
+
+      if (updateError) {
+        alert('Failed to update profile.');
+        return;
+      }
+
+      alert('Profile picture updated successfully.');
+      confirmPicBtn.style.display = 'none';
+      selectedFile = null;
+    });
+
+    // Delete account logic
+    const deleteAccountBtn = document.getElementById('deleteAccountBtn');
+    const deleteAccountModal = document.getElementById('deleteAccountModal');
+    const deleteAccountPassword = document.getElementById('deleteAccountPassword');
+    const deleteAccountError = document.getElementById('deleteAccountError');
+
+    deleteAccountBtn.addEventListener('click', () => {
+      deleteAccountModal.style.display = 'block';
+    });
+
+    window.closeDeleteAccountModal = function () {
+      deleteAccountModal.style.display = 'none';
+      deleteAccountPassword.value = '';
+      deleteAccountError.textContent = '';
+    };
+
+    window.confirmDeleteAccount = async function () {
+  const password = document.getElementById('deleteAccountPassword').value;
+  const confirmPassword = document.getElementById('deleteAccountConfirmPassword').value;
+  const errorDiv = document.getElementById('deleteAccountError');
+  errorDiv.textContent = '';
+
+  if (!password || !confirmPassword) {
+    errorDiv.textContent = 'Both password fields are required.';
+    return;
+  }
+  if (password !== confirmPassword) {
+    errorDiv.textContent = 'Passwords do not match.';
+    return;
+  }
 
   // Get current user
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) {
-    window.location.href = 'login.html';
+    errorDiv.textContent = "You must be logged in.";
     return;
   }
-  currentUser = user;
 
-  // Fetch profile
-  const { data: profile } = await supabase
-    .from('profiles')
-    .select('*')
-    .eq('id', user.id)
-    .single();
+  // Re-authenticate user
+  const { error: signInError } = await supabase.auth.signInWithPassword({
+    email: user.email,
+    password: password
+  });
 
-  // Set profile info
-  document.getElementById('username').textContent = profile?.username || 'Guest';
-  document.getElementById('displayUsername').textContent = profile?.username || 'Guest';
-  document.getElementById('displayEmail').textContent = profile?.email || user.email || '';
-  document.getElementById('displayCreated').textContent = user.created_at
-    ? new Date(user.created_at).toLocaleString()
-    : '';
-
-  // Set profile images
-  let avatarUrl = 'images/placeholder.png';
-  const avatarPath = profile?.avatar_url;
-  if (avatarPath) {
-    if (avatarPath.startsWith('http')) {
-      avatarUrl = avatarPath;
-    } else {
-      const { data } = supabase
-        .storage
-        .from('avatars')
-        .getPublicUrl(avatarPath);
-      if (data && data.publicUrl) {
-        avatarUrl = data.publicUrl;
-      }
-    }
+  if (signInError) {
+    errorDiv.textContent = "Incorrect password. Please try again.";
+    return;
   }
-  document.getElementById('sidebarProfileImg').src = avatarUrl;
-  document.getElementById('previewImage').src = avatarUrl;
 
-  // Pre-fill edit forms
-  document.getElementById('editUsername').value = profile?.username || '';
-  document.getElementById('editEmail').value = user.email || '';
-});
+  // Delete user account (requires service role/admin privileges)
+  const { error: deleteError } = await supabase.auth.admin.deleteUser(user.id);
+  if (deleteError) {
+    errorDiv.textContent = "Failed to delete account. Please try again.";
+    return;
+  }
 
-// Username update
-document.getElementById('editUsernameForm').addEventListener('submit', async function(e) {
-  e.preventDefault();
-  const username = document.getElementById('editUsername').value;
-  const msg = document.getElementById('editUsernameMsg');
-  const { error } = await supabase.auth.updateUser({ data: { username } });
-  if (error) {
-    msg.style.color = "#f44336";
-    msg.textContent = error.message;
-  } else {
+  alert("Your account has been deleted.");
+  window.location.href = "login.html";
+};
+
+  window.showLogoutConfirmation = function () {
+    document.getElementById('logoutModal').style.display = 'block';
+  };
+
+  window.closeLogoutModal = function () {
+    document.getElementById('logoutModal').style.display = 'none';
+  };
+
+  window.logout = async function () {
+    try {
+      await supabase.auth.signOut();
+      window.location.href = 'login.html';
+    } catch (error) {
+      console.error('Logout error:', error.message);
+    }
+  };
+</script>
+<script type="module">
+  import { supabase } from './supabaseClient.js';
+
+  document.addEventListener('DOMContentLoaded', async () => {
+    // Pre-fill form with current user info
     const { data: { user } } = await supabase.auth.getUser();
-    const { error: profileError } = await supabase
-      .from('profiles')
-      .update({ username })
-      .eq('id', user.id);
-    if (profileError) {
-      msg.style.color = "#f44336";
-      msg.textContent = "Auth updated, but failed to update profile table: " + profileError.message;
-      return;
+    if (user) {
+      document.getElementById('editUsername').value = user.user_metadata?.username || '';
+      document.getElementById('editEmail').value = user.email || '';
     }
-    msg.style.color = "#4CAF50";
-    msg.textContent = "Username updated!";
-    document.getElementById('displayUsername').textContent = username;
-    document.getElementById('username').textContent = username;
-  }
-});
+  });
 
-// Email update
-document.getElementById('editEmailForm').addEventListener('submit', async function(e) {
-  e.preventDefault();
-  const email = document.getElementById('editEmail').value;
-  const msg = document.getElementById('editEmailMsg');
-  const { error } = await supabase.auth.updateUser({ email });
-  if (error) {
-    msg.style.color = "#f44336";
-    msg.textContent = error.message;
-  } else {
-    msg.style.color = "#4CAF50";
-    msg.textContent = "Email updated!";
-    document.getElementById('displayEmail').textContent = email;
-  }
-});
+  document.getElementById('editProfileForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const username = document.getElementById('editUsername').value;
+    const email = document.getElementById('editEmail').value;
+    const msg = document.getElementById('editProfileMsg');
 
-// Password update
-document.getElementById('editPasswordForm').addEventListener('submit', async function(e) {
+    // Update Supabase user
+    const { error } = await supabase.auth.updateUser({
+      email,
+      data: { username }
+    });
+
+    if (error) {
+      msg.style.color = "#f44336";
+      msg.textContent = error.message;
+    } else {
+      msg.style.color = "#4CAF50";
+      msg.textContent = "Profile updated successfully!";
+    }
+  });
+</script>
+<script type="module">
+  import { supabase } from './supabaseClient.js';
+  
+  // Username update
+  document.getElementById('editUsernameForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const username = document.getElementById('editUsername').value;
+    const msg = document.getElementById('editUsernameMsg');
+    // Update Auth metadata
+    const { error } = await supabase.auth.updateUser({ data: { username } });
+    if (error) {
+      msg.style.color = "#f44336";
+      msg.textContent = error.message;
+    } else {
+      // Also update in profiles table
+      const { data: { user } } = await supabase.auth.getUser();
+      const { error: profileError } = await supabase
+        .from('profiles')
+        .update({ username })
+        .eq('id', user.id);
+
+      if (profileError) {
+        msg.style.color = "#f44336";
+        msg.textContent = "Auth updated, but failed to update profile table: " + profileError.message;
+        return;
+      }
+
+      msg.style.color = "#4CAF50";
+      msg.textContent = "Username updated!";
+      document.getElementById('displayUsername').textContent = username;
+      document.getElementById('username').textContent = username;
+    }
+  });
+  
+  // Email update
+  document.getElementById('editEmailForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const email = document.getElementById('editEmail').value;
+    const msg = document.getElementById('editEmailMsg');
+    const { error } = await supabase.auth.updateUser({ email });
+    if (error) {
+      msg.style.color = "#f44336";
+      msg.textContent = error.message;
+    } else {
+      msg.style.color = "#4CAF50";
+      msg.textContent = "Email updated!";
+      document.getElementById('displayEmail').textContent = email;
+    }
+  });
+  
+  // Password update with confirm password check
+  document.getElementById('editPasswordForm').addEventListener('submit', async function(e) {
   e.preventDefault();
   const currentPassword = document.getElementById('currentPassword').value;
   const newPassword = document.getElementById('editPassword').value;
@@ -1097,6 +1327,7 @@ document.getElementById('editPasswordForm').addEventListener('submit', async fun
     return;
   }
 
+  // Get current user
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) {
     msg.style.color = "#f44336";
@@ -1104,6 +1335,7 @@ document.getElementById('editPasswordForm').addEventListener('submit', async fun
     return;
   }
 
+  // Re-authenticate user with current password
   const { error: signInError } = await supabase.auth.signInWithPassword({
     email: user.email,
     password: currentPassword
@@ -1115,6 +1347,7 @@ document.getElementById('editPasswordForm').addEventListener('submit', async fun
     return;
   }
 
+  // Update password
   const { error } = await supabase.auth.updateUser({ password: newPassword });
   if (error) {
     msg.style.color = "#f44336";
@@ -1127,7 +1360,7 @@ document.getElementById('editPasswordForm').addEventListener('submit', async fun
     document.getElementById('confirmPassword').value = '';
   }
 });
-</script>
+  </script>
 <script>
 function toggleDarkMode() {
   const body = document.body;
