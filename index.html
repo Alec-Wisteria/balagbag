@@ -665,7 +665,7 @@ sidebarBtn.addEventListener("click", ()=>{
     }
 
     // Check for a hash message in the URL
-window.addEventListener("DOMContentLoaded", () => {
+    window.addEventListener("DOMContentLoaded", () => {
   // Existing theme logic...
   const savedTheme = localStorage.getItem("theme");
   if (savedTheme === "dark") {
@@ -679,7 +679,16 @@ window.addEventListener("DOMContentLoaded", () => {
     // Replace + with space and decode URI components
     const message = decodeURIComponent(hash.replace("#message=", "").replace(/\+/g, " "));
     alert(message);
-    // Optionally remove the hash from the URL
+    history.replaceState(null, "", window.location.pathname + window.location.search);
+  }
+
+  // Show alert if #error= is present in the URL
+  if (hash.startsWith("#error=")) {
+    // Extract error message from hash (handles both error and error_description)
+    const params = new URLSearchParams(hash.substring(1));
+    let errorMsg = params.get("error_description") || params.get("error") || "An error occurred.";
+    errorMsg = decodeURIComponent(errorMsg.replace(/\+/g, " "));
+    alert(errorMsg);
     history.replaceState(null, "", window.location.pathname + window.location.search);
   }
 });
