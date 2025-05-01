@@ -544,6 +544,11 @@ body.dark-mode .modal-content {
         <button id="downloadPdfBtn" style="margin: 10px 0; padding: 8px 20px; border-radius: 8px; background: #e74c3c; color: #fff; border: none; font-weight: 600; cursor: pointer;">
           Download PDF
         </button>
+        <!-- Add Delete Button -->
+        <button id="deleteRecordsBtn" style="margin: 10px 0 10px 8px; padding: 8px 20px; border-radius: 8px; background: #f44336; color: #fff; border: none; font-weight: 600; cursor: pointer;">
+          Delete All Records
+        </button>
+
         <table id="historyTable">
             <thead>
                 <tr>
@@ -561,6 +566,20 @@ body.dark-mode .modal-content {
         <div class="no-history" id="noHistory" style="display:none;">
             No BMI records found.
         </div>
+    </div>
+    <!-- Password Confirmation Modal -->
+    <div id="deleteModal" class="modal" style="display:none;">
+      <div class="modal-content" style="max-width:350px;">
+        <span class="close" onclick="closeDeleteModal()" style="float:right;cursor:pointer;font-size:24px;">&times;</span>
+        <h3>Confirm Deletion</h3>
+        <p>Enter your password to delete all BMI records:</p>
+        <input type="password" id="deletePassword" placeholder="Password" style="width:90%;padding:8px;margin:10px 0;border-radius:6px;border:1px solid #ccc;">
+        <div>
+          <button class="modal-button confirm" onclick="confirmDeleteRecords()">Delete</button>
+          <button class="modal-button cancel" onclick="closeDeleteModal()">Cancel</button>
+        </div>
+        <div id="deleteError" style="color:#f44336;margin-top:8px;font-size:14px;"></div>
+      </div>
     </div>
 </section>
   <script>
@@ -733,6 +752,101 @@ document.getElementById('downloadPdfBtn').addEventListener('click', function () 
     });
     doc.save('bmi_history.pdf');
 });
+
+document.getElementById('deleteRecordsBtn').addEventListener('click', function () {
+    document.getElementById('deleteModal').style.display = 'block';
+});
+
+function closeDeleteModal() {
+    document.getElementById('deleteModal').style.display = 'none';
+}
+
+async function confirmDeleteRecords() {
+    const password = document.getElementById('deletePassword').value;
+    const errorDiv = document.getElementById('deleteError');
+    errorDiv.textContent = ''; // Clear previous error message
+
+    if (!password) {
+        errorDiv.textContent = 'Password is required.';
+        return;
+    }
+
+    try {
+        const { data: { user }, error } = await supabase.auth.signInWithPassword({ email: user.email, password });
+        if (error) {
+            errorDiv.textContent = 'Incorrect password.';
+            return;
+        }
+
+        const { error: deleteError } = await supabase.from('bmi_history').delete().eq('user_id', user.id);
+        if (deleteError) {
+            errorDiv.textContent = 'Failed to delete records. Please try again later.';
+            return;
+        }
+
+        alert('All BMI records have been deleted.');
+        closeDeleteModal();
+        loadHistory(); // Refresh the history table
+    } catch (err) {
+        errorDiv.textContent = 'An unexpected error occurred. Please try again.';
+    }
+}
+</script>
+
+<script type="module">
+import { supabase } from './supabaseClient.js';
+
+window.closeDeleteModal = function() {
+  document.getElementById('deleteModal').style.display = 'none';
+  document.getElementById('deletePassword').value = '';
+  document.getElementById('deleteError').textContent = '';
+};
+
+document.getElementById('deleteRecordsBtn').addEventListener('click', function () {
+  document.getElementById('deleteModal').style.display = 'block';
+});
+
+// Confirm Deletion Handler
+window.confirmDeleteRecords = async function() {
+  const password = document.getElementById('deletePassword').value;
+  const errorDiv = document.getElementById('deleteError');
+  errorDiv.textContent = '';
+
+  // Get current user
+  const { data: { user }, error: userError } = await supabase.auth.getUser();
+  if (!user) {
+    errorDiv.textContent = "You must be logged in.";
+    return;
+  }
+
+  // Re-authenticate user
+  const { error: signInError } = await supabase.auth.signInWithPassword({
+    email: user.email,
+    password: password
+  });
+
+  if (signInError) {
+    errorDiv.textContent = "Incorrect password. Please try again.";
+    return;
+  }
+
+  // Delete all BMI records for this user
+  const { error: deleteError } = await supabase
+    .from('bmi_history') // <-- Change to your actual table name
+    .delete()
+    .eq('user_id', user.id);
+
+  if (deleteError) {
+    errorDiv.textContent = "Failed to delete records. Please try again.";
+    return;
+  }
+
+  // Success
+  closeDeleteModal();
+  alert("All your BMI records have been deleted.");
+  // Optionally reload the table
+  location.reload();
+};
 </script>
 </body>
 </html>
