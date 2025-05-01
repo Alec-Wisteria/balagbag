@@ -690,9 +690,13 @@ sidebarBtn.addEventListener("click", ()=>{
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
 <script>
 document.getElementById('downloadCsvBtn').addEventListener('click', function () {
+    const rows = Array.from(document.querySelectorAll('#historyBody tr'));
+    if (rows.length === 0) {
+        alert("You don't have any calculated BMI yet. Please calculate your BMI first to record and download your history.");
+        return;
+    }
     const headers = ['Date', 'BMI', 'Category', 'Age', 'Gender'];
     let csvContent = headers.join(',') + '\n';
-    const rows = Array.from(document.querySelectorAll('#historyBody tr'));
     rows.forEach(row => {
         const cols = Array.from(row.querySelectorAll('td')).map(td => `"${td.textContent.trim()}"`);
         csvContent += cols.join(',') + '\n';
@@ -709,16 +713,21 @@ document.getElementById('downloadCsvBtn').addEventListener('click', function () 
 });
 
 document.getElementById('downloadPdfBtn').addEventListener('click', function () {
+    const rows = Array.from(document.querySelectorAll('#historyBody tr'));
+    if (rows.length === 0) {
+        alert("You don't have any calculated BMI yet. Please calculate your BMI first to record and download your history.");
+        return;
+    }
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
     doc.text("BMI History", 14, 16);
     const headers = [["Date", "BMI", "Category", "Age", "Gender"]];
-    const rows = Array.from(document.querySelectorAll('#historyBody tr')).map(row =>
+    const dataRows = rows.map(row =>
         Array.from(row.querySelectorAll('td')).map(td => td.textContent.trim())
     );
     doc.autoTable({
         head: headers,
-        body: rows,
+        body: dataRows,
         startY: 22,
         styles: { fontSize: 10 }
     });
@@ -727,4 +736,3 @@ document.getElementById('downloadPdfBtn').addEventListener('click', function () 
 </script>
 </body>
 </html>
-``` 
