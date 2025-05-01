@@ -624,6 +624,39 @@ body.dark-mode .modal-content {
         <button id="changePicBtn">Change Profile Picture</button>
         <button id="confirmPicBtn" style="display:none; margin-left:10px; background: #4CAF50; color: #fff; border-radius: 25px; padding: 12px 28px; font-size: 16px; font-weight: 600; border: none; cursor: pointer; box-shadow: 0 4px 16px rgba(77,121,255,0.10); transition: background 0.3s, transform 0.2s, box-shadow 0.2s;">Confirm</button>
       </div>
+      <!-- Delete Account Button -->
+      <button id="deleteAccountBtn" style="background:#f44336;color:#fff;padding:10px 24px;border:none;border-radius:6px;cursor:pointer;margin-top:24px;">
+        Delete Account
+      </button>
+    </div>
+    <div class="edit-profile-container" style="max-width:400px;margin:30px auto;">
+      <h3>Edit Profile</h3>
+      <form id="editProfileForm">
+        <div style="margin-bottom:12px;">
+          <label for="editUsername">Username:</label>
+          <input type="text" id="editUsername" name="username" style="width:100%;padding:8px;" required>
+        </div>
+        <div style="margin-bottom:12px;">
+          <label for="editEmail">Email:</label>
+          <input type="email" id="editEmail" name="email" style="width:100%;padding:8px;" required>
+        </div>
+        <button type="submit" style="background:#4d79ff;color:#fff;padding:10px 24px;border:none;border-radius:6px;cursor:pointer;">Save Changes</button>
+        <div id="editProfileMsg" style="margin-top:10px;font-size:14px;"></div>
+      </form>
+    </div>
+    <!-- Delete Account Modal -->
+    <div id="deleteAccountModal" class="modal" style="display:none;">
+      <div class="modal-content" style="max-width:350px;">
+        <span class="close" onclick="closeDeleteAccountModal()" style="float:right;cursor:pointer;font-size:24px;">&times;</span>
+        <h3>Delete Account</h3>
+        <p>Enter your password to confirm account deletion:</p>
+        <input type="password" id="deleteAccountPassword" placeholder="Password" style="width:90%;padding:8px;margin:10px 0;border-radius:6px;border:1px solid #ccc;">
+        <div>
+          <button onclick="confirmDeleteAccount()" style="background:#f44336;color:#fff;padding:8px 18px;border:none;border-radius:5px;cursor:pointer;">Delete</button>
+          <button onclick="closeDeleteAccountModal()" style="background:#888;color:#fff;padding:8px 18px;border:none;border-radius:5px;cursor:pointer;">Cancel</button>
+        </div>
+        <div id="deleteAccountError" style="color:#f44336;margin-top:8px;font-size:14px;"></div>
+      </div>
     </div>
   </section>
   <script>
@@ -811,6 +844,56 @@ sidebarBtn.addEventListener("click", ()=>{
       confirmPicBtn.style.display = 'none';
       selectedFile = null;
     });
+
+    // Delete account logic
+    const deleteAccountBtn = document.getElementById('deleteAccountBtn');
+    const deleteAccountModal = document.getElementById('deleteAccountModal');
+    const deleteAccountPassword = document.getElementById('deleteAccountPassword');
+    const deleteAccountError = document.getElementById('deleteAccountError');
+
+    deleteAccountBtn.addEventListener('click', () => {
+      deleteAccountModal.style.display = 'block';
+    });
+
+    window.closeDeleteAccountModal = function () {
+      deleteAccountModal.style.display = 'none';
+      deleteAccountPassword.value = '';
+      deleteAccountError.textContent = '';
+    };
+
+    window.confirmDeleteAccount = async function () {
+      const password = document.getElementById('deleteAccountPassword').value;
+      const errorDiv = document.getElementById('deleteAccountError');
+      errorDiv.textContent = '';
+
+      // Get current user
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) {
+        errorDiv.textContent = "You must be logged in.";
+        return;
+      }
+
+      // Re-authenticate user
+      const { error: signInError } = await supabase.auth.signInWithPassword({
+        email: user.email,
+        password: password
+      });
+
+      if (signInError) {
+        errorDiv.textContent = "Incorrect password. Please try again.";
+        return;
+      }
+
+      // Delete user account
+      const { error: deleteError } = await supabase.auth.admin.deleteUser(user.id);
+      if (deleteError) {
+        errorDiv.textContent = "Failed to delete account. Please try again.";
+        return;
+      }
+
+      alert("Your account has been deleted.");
+      window.location.href = "login.html";
+    };
   });
 
   window.showLogoutConfirmation = function () {
@@ -829,6 +912,39 @@ sidebarBtn.addEventListener("click", ()=>{
       console.error('Logout error:', error.message);
     }
   };
+</script>
+<script type="module">
+  import { supabase } from './supabaseClient.js';
+
+  document.addEventListener('DOMContentLoaded', async () => {
+    // Pre-fill form with current user info
+    const { data: { user } } = await supabase.auth.getUser();
+    if (user) {
+      document.getElementById('editUsername').value = user.user_metadata?.username || '';
+      document.getElementById('editEmail').value = user.email || '';
+    }
+  });
+
+  document.getElementById('editProfileForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const username = document.getElementById('editUsername').value;
+    const email = document.getElementById('editEmail').value;
+    const msg = document.getElementById('editProfileMsg');
+
+    // Update Supabase user
+    const { error } = await supabase.auth.updateUser({
+      email,
+      data: { username }
+    });
+
+    if (error) {
+      msg.style.color = "#f44336";
+      msg.textContent = error.message;
+    } else {
+      msg.style.color = "#4CAF50";
+      msg.textContent = "Profile updated successfully!";
+    }
+  });
 </script>
 <script>
 function toggleDarkMode() {
