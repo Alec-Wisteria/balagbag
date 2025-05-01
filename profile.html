@@ -530,6 +530,125 @@ body.dark-mode .modal-content {
   box-shadow: 0 8px 24px rgba(77,121,255,0.18);
   color: #fff;
 }
+
+.edit-profile-modal {
+  background: linear-gradient(135deg, #f8faff 60%, #e6e6fa 100%);
+  border-radius: 18px;
+  box-shadow: 0 8px 40px rgba(77,121,255,0.18), 0 1.5px 8px rgba(160,132,238,0.10);
+  padding: 36px 32px 28px 32px;
+  position: relative;
+  animation: popIn 0.35s cubic-bezier(.68,-0.55,.27,1.55);
+}
+@keyframes popIn {
+  0% { transform: scale(0.92) translateY(30px); opacity: 0; }
+  100% { transform: scale(1) translateY(0); opacity: 1; }
+}
+.edit-profile-header {
+  text-align: center;
+  margin-bottom: 18px;
+}
+.edit-profile-header h3 {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #4d79ff;
+  margin-bottom: 0;
+  letter-spacing: 1px;
+}
+.edit-profile-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 22px;
+}
+.tab-btn {
+  background: #e6e6fa;
+  color: #4d79ff;
+  border: none;
+  border-radius: 8px 8px 0 0;
+  padding: 10px 0;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  flex: 1;
+  transition: background 0.2s, color 0.2s;
+  outline: none;
+}
+.tab-btn.active, .tab-btn:focus {
+  background: linear-gradient(90deg, #4d79ff 0%, #a084ee 100%);
+  color: #fff;
+}
+.edit-profile-group {
+  margin-bottom: 16px;
+  text-align: left;
+}
+.edit-profile-group label {
+  font-weight: 500;
+  color: #4d79ff;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 4px;
+}
+.edit-profile-group input[type="text"],
+.edit-profile-group input[type="email"],
+.edit-profile-group input[type="password"] {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1.5px solid #bdbdfc;
+  background: #f8faff;
+  font-size: 16px;
+  transition: border 0.2s;
+}
+.edit-profile-group input:focus {
+  border: 1.5px solid #4d79ff;
+  outline: none;
+}
+.edit-profile-save {
+  width: 100%;
+  background: linear-gradient(90deg, #4d79ff 0%, #a084ee 100%);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 0;
+  font-size: 17px;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 6px;
+  margin-bottom: 8px;
+  box-shadow: 0 2px 8px rgba(77,121,255,0.10);
+  transition: background 0.2s, box-shadow 0.2s;
+}
+.edit-profile-save:hover {
+  background: linear-gradient(90deg, #a084ee 0%, #4d79ff 100%);
+  box-shadow: 0 4px 16px rgba(77,121,255,0.18);
+}
+.edit-profile-msg {
+  min-height: 18px;
+  font-size: 15px;
+  text-align: center;
+  margin-top: 2px;
+}
+body.dark-mode .edit-profile-modal {
+  background: linear-gradient(135deg, #23233a 60%, #2c2c2e 100%);
+  color: #f5f5f7;
+}
+body.dark-mode .edit-profile-group input,
+body.dark-mode .edit-profile-group input[type="text"],
+body.dark-mode .edit-profile-group input[type="email"],
+body.dark-mode .edit-profile-group input[type="password"] {
+  background: #23233a;
+  color: #f5f5f7;
+  border: 1.5px solid #4d79ff;
+}
+body.dark-mode .tab-btn {
+  background: #23233a;
+  color: #a084ee;
+}
+body.dark-mode .tab-btn.active, body.dark-mode .tab-btn:focus {
+  background: linear-gradient(90deg, #4d79ff 0%, #a084ee 100%);
+  color: #fff;
+}
    </style>
 <body>
   <div class="sidebar close">
@@ -649,48 +768,51 @@ body.dark-mode .modal-content {
     </div>
     <!-- Edit Profile Modal -->
     <div id="editProfileModal" class="modal" style="display:none;">
-      <div class="modal-content" style="max-width:400px;position:relative;">
+      <div class="modal-content edit-profile-modal" style="max-width:420px;position:relative;">
         <span class="close" onclick="closeEditProfileModal()" style="float:right;cursor:pointer;font-size:24px;">&times;</span>
-        <h3>Edit Profile</h3>
-        <div style="display:flex;justify-content:center;margin-bottom:18px;">
-          <button type="button" class="tab-btn" id="tabUsername" onclick="showEditTab('username')" style="flex:1;">Username</button>
-          <button type="button" class="tab-btn" id="tabEmail" onclick="showEditTab('email')" style="flex:1;">Email</button>
-          <button type="button" class="tab-btn" id="tabPassword" onclick="showEditTab('password')" style="flex:1;">Password</button>
+        <div class="edit-profile-header">
+          <i class='bx bx-edit-alt' style="font-size:32px;color:#4d79ff;margin-bottom:8px;"></i>
+          <h3>Edit Profile</h3>
+        </div>
+        <div class="edit-profile-tabs">
+          <button type="button" class="tab-btn" id="tabUsername" onclick="showEditTab('username')">Username</button>
+          <button type="button" class="tab-btn" id="tabEmail" onclick="showEditTab('email')">Email</button>
+          <button type="button" class="tab-btn" id="tabPassword" onclick="showEditTab('password')">Password</button>
         </div>
         <!-- Username Tab -->
         <form id="editUsernameForm" class="edit-tab-form">
-          <div style="margin-bottom:12px;">
-            <label for="editUsername">New Username:</label>
-            <input type="text" id="editUsername" name="username" style="width:100%;padding:8px;" required>
+          <div class="edit-profile-group">
+            <label for="editUsername"><i class='bx bx-user'></i> New Username</label>
+            <input type="text" id="editUsername" name="username" required>
           </div>
-          <button type="submit" style="background:#4d79ff;color:#fff;padding:10px 24px;border:none;border-radius:6px;cursor:pointer;">Save Username</button>
-          <div id="editUsernameMsg" style="margin-top:10px;font-size:14px;"></div>
+          <button type="submit" class="edit-profile-save">Save Username</button>
+          <div id="editUsernameMsg" class="edit-profile-msg"></div>
         </form>
         <!-- Email Tab -->
         <form id="editEmailForm" class="edit-tab-form" style="display:none;">
-          <div style="margin-bottom:12px;">
-            <label for="editEmail">New Email:</label>
-            <input type="email" id="editEmail" name="email" style="width:100%;padding:8px;" required>
+          <div class="edit-profile-group">
+            <label for="editEmail"><i class='bx bx-envelope'></i> New Email</label>
+            <input type="email" id="editEmail" name="email" required>
           </div>
-          <button type="submit" style="background:#4d79ff;color:#fff;padding:10px 24px;border:none;border-radius:6px;cursor:pointer;">Save Email</button>
-          <div id="editEmailMsg" style="margin-top:10px;font-size:14px;"></div>
+          <button type="submit" class="edit-profile-save">Save Email</button>
+          <div id="editEmailMsg" class="edit-profile-msg"></div>
         </form>
         <!-- Password Tab -->
         <form id="editPasswordForm" class="edit-tab-form" style="display:none;">
-          <div style="margin-bottom:12px;">
-            <label for="editPassword">New Password:</label>
-            <input type="password" id="editPassword" name="password" style="width:100%;padding:8px;" required>
+          <div class="edit-profile-group">
+            <label for="editPassword"><i class='bx bx-lock'></i> New Password</label>
+            <input type="password" id="editPassword" name="password" required>
           </div>
-          <div style="margin-bottom:12px;">
-            <label for="confirmPassword">Confirm Password:</label>
-            <input type="password" id="confirmPassword" name="confirmPassword" style="width:100%;padding:8px;" required>
+          <div class="edit-profile-group">
+            <label for="confirmPassword"><i class='bx bx-lock-alt'></i> Confirm Password</label>
+            <input type="password" id="confirmPassword" name="confirmPassword" required>
           </div>
-          <div style="margin-bottom:12px;text-align:left;">
+          <div class="edit-profile-group" style="text-align:left;">
             <input type="checkbox" id="showPasswordToggle" style="margin-right:6px;">
             <label for="showPasswordToggle" style="font-size:15px;cursor:pointer;">Show Password</label>
           </div>
-          <button type="submit" style="background:#4d79ff;color:#fff;padding:10px 24px;border:none;border-radius:6px;cursor:pointer;">Save Password</button>
-          <div id="editPasswordMsg" style="margin-top:10px;font-size:14px;"></div>
+          <button type="submit" class="edit-profile-save">Save Password</button>
+          <div id="editPasswordMsg" class="edit-profile-msg"></div>
         </form>
       </div>
     </div>
