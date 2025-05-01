@@ -684,57 +684,6 @@ body.dark-mode .tab-btn.active, body.dark-mode .tab-btn:focus {
   background: linear-gradient(90deg, #4d79ff 0%, #a084ee 100%);
   color: #fff;
 }
-.delete-modal-custom {
-  background: linear-gradient(135deg, #fff7f7 60%, #ffeaea 100%);
-  border-radius: 18px;
-  box-shadow: 0 8px 40px rgba(244,67,54,0.13), 0 1.5px 8px rgba(244,67,54,0.10);
-  padding: 36px 32px 28px 32px;
-  position: relative;
-  animation: popIn 0.35s cubic-bezier(.68,-0.55,.27,1.55);
-}
-@keyframes popIn {
-  0% { transform: scale(0.92) translateY(30px); opacity: 0; }
-  100% { transform: scale(1) translateY(0); opacity: 1; }
-}
-.modal-close-btn {
-  position: absolute;
-  top: 18px;
-  right: 22px;
-  background: #fff;
-  color: #f44336;
-  border: none;
-  border-radius: 50%;
-  width: 36px;
-  height: 36px;
-  font-size: 1.7rem;
-  font-weight: bold;
-  box-shadow: 0 2px 8px rgba(244,67,54,0.10);
-  cursor: pointer;
-  z-index: 1001;
-  transition: background 0.2s, color 0.2s, transform 0.15s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  outline: none;
-}
-.modal-close-btn:hover, .modal-close-btn:focus {
-  background: #f44336;
-  color: #fff;
-  transform: scale(1.08);
-}
-body.dark-mode .delete-modal-custom {
-  background: linear-gradient(135deg, #2c2c2e 60%, #3a2323 100%);
-  color: #f5f5f7;
-}
-body.dark-mode .modal-close-btn {
-  background: #23233a;
-  color: #f44336;
-  box-shadow: 0 2px 8px rgba(244,67,54,0.10);
-}
-body.dark-mode .modal-close-btn:hover, body.dark-mode .modal-close-btn:focus {
-  background: #f44336;
-  color: #23233a;
-}
    </style>
 <body>
   <div class="sidebar close">
@@ -829,42 +778,10 @@ body.dark-mode .modal-close-btn:hover, body.dark-mode .modal-close-btn:focus {
         <button id="changePicBtn">Change Profile Picture</button>
         <button id="confirmPicBtn" style="display:none; margin-left:10px; background: #4CAF50; color: #fff; border-radius: 25px; padding: 12px 28px; font-size: 16px; font-weight: 600; border: none; cursor: pointer; box-shadow: 0 4px 16px rgba(77,121,255,0.10); transition: background 0.3s, transform 0.2s, box-shadow 0.2s;">Confirm</button>
       </div>
-      <!-- Delete Account Button -->
-      <button id="deleteAccountBtn" style="background:#f44336;color:#fff;padding:10px 24px;border:none;border-radius:6px;cursor:pointer;margin-top:24px;">
-        Delete Account
-      </button>
       <!-- Edit Profile Button -->
       <button id="editProfileBtn" style="background:#4d79ff;color:#fff;padding:10px 24px;border:none;border-radius:6px;cursor:pointer;margin-top:18px;">
         Edit Profile
       </button>
-    </div>
-    <!-- Delete Account Modal -->
-    <div id="deleteAccountModal" class="modal" style="display:none;">
-      <div class="modal-content delete-modal-custom" style="max-width:370px;position:relative;">
-        <button class="modal-close-btn" onclick="closeDeleteAccountModal()" aria-label="Close">&times;</button>
-        <div class="edit-profile-header">
-          <i class='bx bx-user-x' style="font-size:32px;color:#f44336;margin-bottom:8px;"></i>
-          <h3 style="color:#f44336;">Delete Account</h3>
-        </div>
-        <p>Enter your password to confirm account deletion:</p>
-        <div class="edit-profile-group">
-          <label for="deleteAccountPassword"><i class='bx bx-lock'></i> Password</label>
-          <input type="password" id="deleteAccountPassword" placeholder="Password" style="width:100%;padding:8px;margin-bottom:8px;border-radius:6px;border:1px solid #ccc;">
-        </div>
-        <div class="edit-profile-group">
-          <label for="deleteAccountConfirmPassword"><i class='bx bx-lock-alt'></i> Confirm Password</label>
-          <input type="password" id="deleteAccountConfirmPassword" placeholder="Confirm Password" style="width:100%;padding:8px;border-radius:6px;border:1px solid #ccc;">
-        </div>
-        <div class="edit-profile-group" style="text-align:left;">
-          <input type="checkbox" id="showDeleteAccountPasswordToggle" style="margin-right:6px;">
-          <label for="showDeleteAccountPasswordToggle" style="font-size:15px;cursor:pointer;">Show Password</label>
-        </div>
-        <div>
-          <button class="modal-button confirm" onclick="confirmDeleteAccount()">Delete</button>
-          <button class="modal-button cancel" onclick="closeDeleteAccountModal()">Cancel</button>
-        </div>
-        <div id="deleteAccountError" style="color:#f44336;margin-top:8px;font-size:14px;"></div>
-      </div>
     </div>
     <!-- Edit Profile Modal -->
     <div id="editProfileModal" class="modal" style="display:none;">
@@ -1137,83 +1054,6 @@ document.getElementById('showPasswordToggle').addEventListener('change', functio
       confirmPicBtn.style.display = 'none';
       selectedFile = null;
     });
-
-    // Delete account logic
-    const deleteAccountBtn = document.getElementById('deleteAccountBtn');
-    const deleteAccountModal = document.getElementById('deleteAccountModal');
-    const deleteAccountPassword = document.getElementById('deleteAccountPassword');
-    const deleteAccountError = document.getElementById('deleteAccountError');
-
-    deleteAccountBtn.addEventListener('click', () => {
-      deleteAccountModal.style.display = 'block';
-    });
-
-    window.closeDeleteAccountModal = function () {
-      deleteAccountModal.style.display = 'none';
-      deleteAccountPassword.value = '';
-      deleteAccountError.textContent = '';
-    };
-
-    window.closeDeleteAccountModal = function () {
-  deleteAccountModal.style.display = 'none';
-  deleteAccountPassword.value = '';
-  deleteAccountConfirmPassword.value = '';
-  deleteAccountError.textContent = '';
-  showDeleteAccountPasswordToggle.checked = false;
-  deleteAccountPassword.type = 'password';
-  deleteAccountConfirmPassword.type = 'password';
-};
-
-// Show/hide password
-showDeleteAccountPasswordToggle.addEventListener('change', function() {
-  const type = this.checked ? 'text' : 'password';
-  deleteAccountPassword.type = type;
-  deleteAccountConfirmPassword.type = type;
-});
-
-// Confirm delete account
-window.confirmDeleteAccount = async function () {
-  const password = deleteAccountPassword.value;
-  const confirmPassword = deleteAccountConfirmPassword.value;
-  deleteAccountError.textContent = '';
-
-  if (!password || !confirmPassword) {
-    deleteAccountError.textContent = 'Both password fields are required.';
-    return;
-  }
-  if (password !== confirmPassword) {
-    deleteAccountError.textContent = 'Passwords do not match.';
-    return;
-  }
-
-  // Get current user
-  const { data: { user } } = await supabase.auth.getUser();
-  if (!user) {
-    deleteAccountError.textContent = "You must be logged in.";
-    return;
-  }
-
-  // Re-authenticate user
-  const { error: signInError } = await supabase.auth.signInWithPassword({
-    email: user.email,
-    password: password
-  });
-
-  if (signInError) {
-    deleteAccountError.textContent = "Incorrect password. Please try again.";
-    return;
-  }
-
-  // Delete user account (requires service role/admin privileges)
-  const { error: deleteError } = await supabase.auth.admin.deleteUser(user.id);
-  if (deleteError) {
-    deleteAccountError.textContent = "Failed to delete account. Please try again.";
-    return;
-  }
-
-  alert("Your account has been deleted.");
-  window.location.href = "login.html";
-};
   });
 
   window.showLogoutConfirmation = function () {
