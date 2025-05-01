@@ -1148,11 +1148,27 @@ document.getElementById('showPasswordToggle').addEventListener('change', functio
     }
   });
   
-  // Email update
+  // Email update with check for existing email
   document.getElementById('editEmailForm').addEventListener('submit', async function(e) {
     e.preventDefault();
     const email = document.getElementById('editEmail').value;
     const msg = document.getElementById('editEmailMsg');
+    msg.textContent = "";
+
+    // Check if email already exists in auth.users
+    let { data: existing, error: checkError } = await supabase
+      .from('profiles')
+      .select('email')
+      .eq('email', email)
+      .single();
+
+    if (existing) {
+      msg.style.color = "#f44336";
+      msg.textContent = "This email is already registered. Please use a different email.";
+      return;
+    }
+
+    // Proceed with email update
     const { error } = await supabase.auth.updateUser({ email });
     if (error) {
       msg.style.color = "#f44336";
