@@ -26,7 +26,6 @@
   background: linear-gradient(to bottom right, #c2c2c2, #343447);
   transition: width 0.4s ease-in-out, background 0.3s ease-in-out;
   z-index: 1000;
-  overflow: hidden;
 }   
 .sidebar.close{
   width: 78px;
@@ -421,7 +420,7 @@ body.dark-mode {
 }
 
 body.dark-mode .sidebar,
-body.dark-mode .container, .settings-container, body.dark-mode .home-section {
+body.dark-mode .settings-container, body.dark-mode .home-section {
   background-color: #2c2c2e !important;
   color: #f5f5f7 !important;
 }
@@ -506,6 +505,28 @@ body {
 body.dark-mode .modal-content {
   background-color: #2c2c2e;
   color: #f1f1f1;
+}
+/* Unique style for the Change Profile Picture button */
+#changePicBtn {
+  background: linear-gradient(90deg, #4d79ff 0%, #a084ee 100%);
+  color: #fff;
+  border: none;
+  border-radius: 25px;
+  padding: 12px 28px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(77,121,255,0.10);
+  transition: background 0.3s, transform 0.2s, box-shadow 0.2s;
+  margin-top: 10px;
+  letter-spacing: 1px;
+}
+
+#changePicBtn:hover {
+  background: linear-gradient(90deg, #a084ee 0%, #4d79ff 100%);
+  transform: translateY(-2px) scale(1.04);
+  box-shadow: 0 8px 24px rgba(77,121,255,0.18);
+  color: #fff;
 }
    </style>
 <body>
@@ -599,6 +620,7 @@ body.dark-mode .modal-content {
       <div style="margin: 20px 0;">
         <input type="file" id="profilePicInput" accept="image/*" style="display:none;">
         <button id="changePicBtn">Change Profile Picture</button>
+        <button id="confirmPicBtn" style="display:none; margin-left:10px; background: #4CAF50; color: #fff; border-radius: 25px; padding: 12px 28px; font-size: 16px; font-weight: 600; border: none; cursor: pointer; box-shadow: 0 4px 16px rgba(77,121,255,0.10); transition: background 0.3s, transform 0.2s, box-shadow 0.2s;">Confirm</button>
       </div>
     </div>
   </section>
@@ -625,6 +647,10 @@ sidebarBtn.addEventListener("click", ()=>{
 
   document.addEventListener('DOMContentLoaded', async () => {
       const { data: { user } } = await supabase.auth.getUser();
+      if (!user) {
+    window.location.href = 'login.html';
+    return;
+  }
 
       if (user) {
         // Fetch additional profile info if stored in a 'profiles' table
@@ -718,19 +744,22 @@ sidebarBtn.addEventListener("click", ()=>{
 
     // Profile picture change logic
     const changePicBtn = document.getElementById('changePicBtn');
+    const confirmPicBtn = document.getElementById('confirmPicBtn');
     const profilePicInput = document.getElementById('profilePicInput');
     const previewImg = document.getElementById('previewImage');
     const sidebarImg = document.getElementById('sidebarProfileImg');
+    let selectedFile = null;
 
     changePicBtn.addEventListener('click', () => {
       profilePicInput.click();
     });
 
-    profilePicInput.addEventListener('change', async (event) => {
+    profilePicInput.addEventListener('change', (event) => {
       const file = event.target.files[0];
       if (!file || !currentUser) return;
 
-      // Optional: Show preview before upload
+      selectedFile = file;
+      // Show preview
       const reader = new FileReader();
       reader.onload = (e) => {
         previewImg.src = e.target.result;
@@ -738,14 +767,21 @@ sidebarBtn.addEventListener("click", ()=>{
       };
       reader.readAsDataURL(file);
 
+      // Show confirm button
+      confirmPicBtn.style.display = 'inline-block';
+    });
+
+    confirmPicBtn.addEventListener('click', async () => {
+      if (!selectedFile || !currentUser) return;
+
       // Upload to Supabase Storage
-      const fileExt = file.name.split('.').pop();
+      const fileExt = selectedFile.name.split('.').pop();
       const filePath = `${currentUser.id}_${Date.now()}.${fileExt}`;
 
       let { error: uploadError } = await supabase
         .storage
         .from('avatars')
-        .upload(filePath, file, { upsert: true });
+        .upload(filePath, selectedFile, { upsert: true });
 
       if (uploadError) {
         alert('Failed to upload image.');
@@ -770,6 +806,8 @@ sidebarBtn.addEventListener("click", ()=>{
       }
 
       alert('Profile picture updated successfully.');
+      confirmPicBtn.style.display = 'none';
+      selectedFile = null;
     });
   });
 
