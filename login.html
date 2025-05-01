@@ -237,6 +237,38 @@ social-container {
 	width: 40px;
 	background: #f2eee3;
 }
+
+.toggle-password {
+  position: absolute;
+  right: 30px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #888;
+  z-index: 10;
+}
+.input-wrapper {
+  position: relative;
+  width: 100%;
+}.toggle-password {
+  position: absolute;
+  right: 30px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #888;
+  z-index: 10;
+}
+.input-wrapper {
+  position: relative;
+  width: 100%;
+}
+.toggle-password i {
+  font-size: 18px;
+}
+input[type="password"] {
+  padding-right: 30px;
+}
 </style>
 
 <body>
@@ -246,8 +278,14 @@ social-container {
 			<h1>Create Account</h1>
 			<input type="text" id="registerUsername" placeholder="Name" required/>
 			<input type="email" id="registerEmail" placeholder="Email" required/>
-			<input type="password" id="registerPassword" placeholder="Password" required/>
-			<input type="password" id="confirmPassword" placeholder="Confirm Password" required>
+			<div class="input-wrapper">
+				<input type="password" id="registerPassword" placeholder="Password" required/>
+				<span class="toggle-password" toggle="#registerPassword"><i class="fas fa-eye"></i></span>
+			</div>
+			<div class="input-wrapper">
+				<input type="password" id="confirmPassword" placeholder="Confirm Password" required/>
+				<span class="toggle-password" toggle="#confirmPassword"><i class="fas fa-eye"></i></span>
+			</div>
 			<button type="submit">Sign Up</button>
 		</form>
 	</div>
@@ -255,7 +293,10 @@ social-container {
 		<form class="login-form" id="loginForm">
 			<h1>Sign in</h1>
 			<input type="email" id="loginEmail" placeholder="Email" required/>
-			<input type="password" id="loginPassword" placeholder="Password" required/>
+			<div class="input-wrapper">
+				<input type="password" id="loginPassword" placeholder="Password" required/>
+				<span class="toggle-password" toggle="#loginPassword"><i class="fas fa-eye"></i></span>
+			</div>
 			<a href="forgot-password.html">Forgot your password?</a>
 			<button type="submit">Sign In</button>
 		</form>
@@ -288,6 +329,20 @@ social-container {
         container.classList.remove("right-panel-active");
     });
 </script>
+<script>
+	document.querySelectorAll('.toggle-password').forEach(function(toggle) {
+	  toggle.addEventListener('click', function() {
+		const input = document.querySelector(this.getAttribute('toggle'));
+		if (input.type === 'password') {
+		  input.type = 'text';
+		  this.innerHTML = '<i class="fas fa-eye-slash"></i>';
+		} else {
+		  input.type = 'password';
+		  this.innerHTML = '<i class="fas fa-eye"></i>';
+		}
+	  });
+	});
+	</script>
 <script type="module">
 // Login
 import { signInUser } from './supabaseClient.js';
