@@ -646,7 +646,7 @@ sidebarBtn.addEventListener("click", ()=>{
         history.forEach(record => {
             const tr = document.createElement('tr');
             tr.innerHTML = `
-                <td>${record.created_at ? new Date(record.created_at).toLocaleString('en-US', { timeZone: 'Asia/Manila', year: 'numeric', month: 'short', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' }) : ''}</td>
+                <td>${record.created_at ? new Date(record.created_at).toLocaleString() : ''}</td>
                 <td>${record.bmi}</td>
                 <td>${record.category}</td>
                 <td>${record.age}</td>
