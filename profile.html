@@ -971,7 +971,7 @@ document.getElementById('showPasswordToggle').addEventListener('change', functio
       // Set username, email, and created date
       document.getElementById('username').textContent = profile?.username || 'Guest';
       document.getElementById('displayUsername').textContent = profile?.username || 'Guest';
-      document.getElementById('displayEmail').textContent = profile?.email || user.email || '';
+      document.getElementById('displayEmail').textContent = user.email || '';
       document.getElementById('displayCreated').textContent = user.created_at
         ? new Date(user.created_at).toLocaleString()
         : '';
