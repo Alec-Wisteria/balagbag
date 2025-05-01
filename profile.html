@@ -835,6 +835,10 @@ body.dark-mode .tab-btn.active, body.dark-mode .tab-btn:focus {
         <!-- Password Tab -->
         <form id="editPasswordForm" class="edit-tab-form" style="display:none;">
           <div class="edit-profile-group">
+            <label for="currentPassword"><i class='bx bx-key'></i> Current Password</label>
+            <input type="password" id="currentPassword" name="currentPassword" required>
+          </div>
+          <div class="edit-profile-group">
             <label for="editPassword"><i class='bx bx-lock'></i> New Password</label>
             <input type="password" id="editPassword" name="password" required>
           </div>
@@ -844,7 +848,7 @@ body.dark-mode .tab-btn.active, body.dark-mode .tab-btn:focus {
           </div>
           <div class="edit-profile-group" style="text-align:left;">
             <input type="checkbox" id="showPasswordToggle" style="margin-right:6px;">
-            <label for="showPasswordToggle" style="font-size:15px;cursor:pointer;">Show Password</label>
+            <label for="showPasswordToggle" style="font-size:15px;cursor:pointer;">Show Passwords</label>
           </div>
           <button type="submit" class="edit-profile-save">Save Password</button>
           <div id="editPasswordMsg" class="edit-profile-msg"></div>
@@ -892,16 +896,11 @@ window.closeEditProfileModal = function() {
 document.getElementById('showPasswordToggle').addEventListener('change', function() {
   const pw = document.getElementById('editPassword');
   const cpw = document.getElementById('confirmPassword');
+  const curpw = document.getElementById('currentPassword');
   const type = this.checked ? 'text' : 'password';
   pw.type = type;
   cpw.type = type;
-});
-document.getElementById('showPasswordToggle').addEventListener('change', function() {
-  const pw = document.getElementById('editPassword');
-  const cpw = document.getElementById('confirmPassword');
-  const type = this.checked ? 'text' : 'password';
-  pw.type = type;
-  cpw.type = type;
+  curpw.type = type;
 });
 </script>
 <script type="module">
@@ -1228,21 +1227,52 @@ document.getElementById('showPasswordToggle').addEventListener('change', functio
   // Password update with confirm password check
   document.getElementById('editPasswordForm').addEventListener('submit', async function(e) {
   e.preventDefault();
-  const password = document.getElementById('editPassword').value;
+  const currentPassword = document.getElementById('currentPassword').value;
+  const newPassword = document.getElementById('editPassword').value;
   const confirmPassword = document.getElementById('confirmPassword').value;
   const msg = document.getElementById('editPasswordMsg');
-  if (password !== confirmPassword) {
+  msg.textContent = '';
+
+  if (!currentPassword || !newPassword || !confirmPassword) {
     msg.style.color = "#f44336";
-    msg.textContent = "Passwords do not match.";
+    msg.textContent = "All fields are required.";
     return;
   }
-  const { error } = await supabase.auth.updateUser({ password });
+  if (newPassword !== confirmPassword) {
+    msg.style.color = "#f44336";
+    msg.textContent = "New passwords do not match.";
+    return;
+  }
+
+  // Get current user
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) {
+    msg.style.color = "#f44336";
+    msg.textContent = "You must be logged in.";
+    return;
+  }
+
+  // Re-authenticate user with current password
+  const { error: signInError } = await supabase.auth.signInWithPassword({
+    email: user.email,
+    password: currentPassword
+  });
+
+  if (signInError) {
+    msg.style.color = "#f44336";
+    msg.textContent = "Current password is incorrect.";
+    return;
+  }
+
+  // Update password
+  const { error } = await supabase.auth.updateUser({ password: newPassword });
   if (error) {
     msg.style.color = "#f44336";
     msg.textContent = error.message;
   } else {
     msg.style.color = "#4CAF50";
     msg.textContent = "Password updated!";
+    document.getElementById('currentPassword').value = '';
     document.getElementById('editPassword').value = '';
     document.getElementById('confirmPassword').value = '';
   }
