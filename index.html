@@ -691,6 +691,12 @@ sidebarBtn.addEventListener("click", ()=>{
     alert(errorMsg);
     history.replaceState(null, "", window.location.pathname + window.location.search);
   }
+
+  // Show alert if #email_changed is present in the URL
+  if (hash.startsWith("#email_changed")) {
+    alert("Your email has been successfully changed!");
+    history.replaceState(null, "", window.location.pathname + window.location.search);
+  }
 });
 </script>
 <script>
