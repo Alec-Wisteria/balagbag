@@ -628,6 +628,10 @@ body.dark-mode .modal-content {
       <button id="deleteAccountBtn" style="background:#f44336;color:#fff;padding:10px 24px;border:none;border-radius:6px;cursor:pointer;margin-top:24px;">
         Delete Account
       </button>
+      <!-- Edit Profile Button -->
+      <button id="editProfileBtn" style="background:#4d79ff;color:#fff;padding:10px 24px;border:none;border-radius:6px;cursor:pointer;margin-top:18px;">
+        Edit Profile
+      </button>
     </div>
     <div class="edit-profile-container" style="max-width:400px;margin:30px auto;">
       <h3>Edit Profile</h3>
@@ -658,6 +662,25 @@ body.dark-mode .modal-content {
         <div id="deleteAccountError" style="color:#f44336;margin-top:8px;font-size:14px;"></div>
       </div>
     </div>
+    <!-- Edit Profile Modal -->
+    <div id="editProfileModal" class="modal" style="display:none;">
+      <div class="modal-content" style="max-width:400px;position:relative;">
+        <span class="close" onclick="closeEditProfileModal()" style="float:right;cursor:pointer;font-size:24px;">&times;</span>
+        <h3>Edit Profile</h3>
+        <form id="editProfileForm">
+          <div style="margin-bottom:12px;">
+            <label for="editUsername">Username:</label>
+            <input type="text" id="editUsername" name="username" style="width:100%;padding:8px;" required>
+          </div>
+          <div style="margin-bottom:12px;">
+            <label for="editEmail">Email:</label>
+            <input type="email" id="editEmail" name="email" style="width:100%;padding:8px;" required>
+          </div>
+          <button type="submit" style="background:#4d79ff;color:#fff;padding:10px 24px;border:none;border-radius:6px;cursor:pointer;">Save Changes</button>
+          <div id="editProfileMsg" style="margin-top:10px;font-size:14px;"></div>
+        </form>
+      </div>
+    </div>
   </section>
   <script>
     let arrow = document.querySelectorAll(".arrow");
@@ -674,6 +697,17 @@ console.log(sidebarBtn);
 sidebarBtn.addEventListener("click", ()=>{
   sidebar.classList.toggle("close");
 });
+
+// Show Edit Profile Modal
+document.getElementById('editProfileBtn').onclick = function() {
+  document.getElementById('editProfileModal').style.display = 'block';
+};
+
+// Close Edit Profile Modal
+window.closeEditProfileModal = function() {
+  document.getElementById('editProfileModal').style.display = 'none';
+  document.getElementById('editProfileMsg').textContent = '';
+};
 </script>
 <script type="module">
   import { supabase } from './supabaseClient.js';
