@@ -530,6 +530,41 @@ body.dark-mode .modal-content {
   box-shadow: 0 8px 24px rgba(77,121,255,0.18);
   color: #fff;
 }
+.modal-close-btn {
+  position: absolute;
+  top: 18px;
+  right: 22px;
+  background: #fff;
+  color: #4d79ff;
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  font-size: 1.7rem;
+  font-weight: bold;
+  box-shadow: 0 2px 8px rgba(77,121,255,0.10);
+  cursor: pointer;
+  z-index: 1001;
+  transition: background 0.2s, color 0.2s, transform 0.15s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  outline: none;
+}
+.modal-close-btn:hover, .modal-close-btn:focus {
+  background: #4d79ff;
+  color: #fff;
+  transform: scale(1.08);
+}
+body.dark-mode .modal-close-btn {
+  background: #23233a;
+  color: #a084ee;
+  box-shadow: 0 2px 8px rgba(160,132,238,0.10);
+}
+body.dark-mode .modal-close-btn:hover, body.dark-mode .modal-close-btn:focus {
+  background: #a084ee;
+  color: #23233a;
+}
 
 .edit-profile-modal {
   background: linear-gradient(135deg, #f8faff 60%, #e6e6fa 100%);
@@ -769,7 +804,7 @@ body.dark-mode .tab-btn.active, body.dark-mode .tab-btn:focus {
     <!-- Edit Profile Modal -->
     <div id="editProfileModal" class="modal" style="display:none;">
       <div class="modal-content edit-profile-modal" style="max-width:420px;position:relative;">
-        <span class="close" onclick="closeEditProfileModal()" style="float:right;cursor:pointer;font-size:24px;">&times;</span>
+        <button class="modal-close-btn" onclick="closeEditProfileModal()" aria-label="Close">&times;</button>
         <div class="edit-profile-header">
           <i class='bx bx-edit-alt' style="font-size:32px;color:#4d79ff;margin-bottom:8px;"></i>
           <h3>Edit Profile</h3>
