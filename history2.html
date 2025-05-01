@@ -801,16 +801,6 @@ async function confirmDeleteRecords() {
 <script type="module">
 import { supabase } from './supabaseClient.js';
 
-window.closeDeleteModal = function() {
-  document.getElementById('deleteModal').style.display = 'none';
-  document.getElementById('deletePassword').value = '';
-  document.getElementById('deleteError').textContent = '';
-};
-
-document.getElementById('deleteRecordsBtn').addEventListener('click', function () {
-  document.getElementById('deleteModal').style.display = 'block';
-});
-
 // Confirm Deletion Handler
 window.confirmDeleteRecords = async function() {
   const password = document.getElementById('deletePassword').value;
