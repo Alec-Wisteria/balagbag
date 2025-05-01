@@ -652,19 +652,40 @@ body.dark-mode .modal-content {
       <div class="modal-content" style="max-width:400px;position:relative;">
         <span class="close" onclick="closeEditProfileModal()" style="float:right;cursor:pointer;font-size:24px;">&times;</span>
         <h3>Edit Profile</h3>
-        <form id="editProfileForm">
+        <div style="display:flex;justify-content:center;margin-bottom:18px;">
+          <button type="button" class="tab-btn" id="tabUsername" onclick="showEditTab('username')" style="flex:1;">Username</button>
+          <button type="button" class="tab-btn" id="tabEmail" onclick="showEditTab('email')" style="flex:1;">Email</button>
+          <button type="button" class="tab-btn" id="tabPassword" onclick="showEditTab('password')" style="flex:1;">Password</button>
+        </div>
+        <!-- Username Tab -->
+        <form id="editUsernameForm" class="edit-tab-form">
           <div style="margin-bottom:12px;">
-            <label for="editUsername">Username:</label>
+            <label for="editUsername">New Username:</label>
             <input type="text" id="editUsername" name="username" style="width:100%;padding:8px;" required>
           </div>
+          <button type="submit" style="background:#4d79ff;color:#fff;padding:10px 24px;border:none;border-radius:6px;cursor:pointer;">Save Username</button>
+          <div id="editUsernameMsg" style="margin-top:10px;font-size:14px;"></div>
+        </form>
+        <!-- Email Tab -->
+        <form id="editEmailForm" class="edit-tab-form" style="display:none;">
           <div style="margin-bottom:12px;">
-            <label for="editEmail">Email:</label>
+            <label for="editEmail">New Email:</label>
             <input type="email" id="editEmail" name="email" style="width:100%;padding:8px;" required>
           </div>
-          <button type="submit" style="background:#4d79ff;color:#fff;padding:10px 24px;border:none;border-radius:6px;cursor:pointer;">Save Changes</button>
-          <div id="editProfileMsg" style="margin-top:10px;font-size:14px;"></div>
+          <button type="submit" style="background:#4d79ff;color:#fff;padding:10px 24px;border:none;border-radius:6px;cursor:pointer;">Save Email</button>
+          <div id="editEmailMsg" style="margin-top:10px;font-size:14px;"></div>
+        </form>
+        <!-- Password Tab -->
+        <form id="editPasswordForm" class="edit-tab-form" style="display:none;">
+          <div style="margin-bottom:12px;">
+            <label for="editPassword">New Password:</label>
+            <input type="password" id="editPassword" name="password" style="width:100%;padding:8px;" required>
+          </div>
+          <button type="submit" style="background:#4d79ff;color:#fff;padding:10px 24px;border:none;border-radius:6px;cursor:pointer;">Save Password</button>
+          <div id="editPasswordMsg" style="margin-top:10px;font-size:14px;"></div>
         </form>
       </div>
+    </div>
     </div>
   </section>
   <script>
@@ -684,14 +705,23 @@ sidebarBtn.addEventListener("click", ()=>{
 });
 
 // Show Edit Profile Modal
+function showEditTab(tab) {
+  document.getElementById('editUsernameForm').style.display = tab === 'username' ? 'block' : 'none';
+  document.getElementById('editEmailForm').style.display = tab === 'email' ? 'block' : 'none';
+  document.getElementById('editPasswordForm').style.display = tab === 'password' ? 'block' : 'none';
+  document.getElementById('tabUsername').classList.toggle('active', tab === 'username');
+  document.getElementById('tabEmail').classList.toggle('active', tab === 'email');
+  document.getElementById('tabPassword').classList.toggle('active', tab === 'password');
+}
 document.getElementById('editProfileBtn').onclick = function() {
   document.getElementById('editProfileModal').style.display = 'block';
+  showEditTab('username');
 };
-
-// Close Edit Profile Modal
 window.closeEditProfileModal = function() {
   document.getElementById('editProfileModal').style.display = 'none';
-  document.getElementById('editProfileMsg').textContent = '';
+  document.getElementById('editUsernameMsg').textContent = '';
+  document.getElementById('editEmailMsg').textContent = '';
+  document.getElementById('editPasswordMsg').textContent = '';
 };
 </script>
 <script type="module">
@@ -965,6 +995,59 @@ window.closeEditProfileModal = function() {
     }
   });
 </script>
+<script type="module">
+  // filepath: c:\Users\scare\OneDrive\Desktop\MALUPITON\profile.html
+  import { supabase } from './supabaseClient.js';
+  
+  // Username update
+  document.getElementById('editUsernameForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const username = document.getElementById('editUsername').value;
+    const msg = document.getElementById('editUsernameMsg');
+    const { error } = await supabase.auth.updateUser({ data: { username } });
+    if (error) {
+      msg.style.color = "#f44336";
+      msg.textContent = error.message;
+    } else {
+      msg.style.color = "#4CAF50";
+      msg.textContent = "Username updated!";
+      document.getElementById('displayUsername').textContent = username;
+      document.getElementById('username').textContent = username;
+    }
+  });
+  
+  // Email update
+  document.getElementById('editEmailForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const email = document.getElementById('editEmail').value;
+    const msg = document.getElementById('editEmailMsg');
+    const { error } = await supabase.auth.updateUser({ email });
+    if (error) {
+      msg.style.color = "#f44336";
+      msg.textContent = error.message;
+    } else {
+      msg.style.color = "#4CAF50";
+      msg.textContent = "Email updated!";
+      document.getElementById('displayEmail').textContent = email;
+    }
+  });
+  
+  // Password update
+  document.getElementById('editPasswordForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const password = document.getElementById('editPassword').value;
+    const msg = document.getElementById('editPasswordMsg');
+    const { error } = await supabase.auth.updateUser({ password });
+    if (error) {
+      msg.style.color = "#f44336";
+      msg.textContent = error.message;
+    } else {
+      msg.style.color = "#4CAF50";
+      msg.textContent = "Password updated!";
+      document.getElementById('editPassword').value = '';
+    }
+  });
+  </script>
 <script>
 function toggleDarkMode() {
   const body = document.body;
