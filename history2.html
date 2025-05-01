@@ -754,6 +754,11 @@ document.getElementById('downloadPdfBtn').addEventListener('click', function () 
 });
 
 document.getElementById('deleteRecordsBtn').addEventListener('click', function () {
+    const rows = Array.from(document.querySelectorAll('#historyBody tr'));
+    if (rows.length === 0) {
+        alert("You don't have any calculated BMI yet. Please calculate your BMI first to record and delete your history.");
+        return;
+    }
     document.getElementById('deleteModal').style.display = 'block';
 });
 
