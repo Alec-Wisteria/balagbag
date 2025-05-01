@@ -950,6 +950,20 @@ body.dark-mode .meter {
 
     <div class="content-wrapper">
       <!-- Top Left: BMI Results -->
+      <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 40px; margin-top: 40px;">
+        <!-- Disclaimer text -->
+        <div style="flex: 1 1 300px; max-width: 400px; min-width: 280px;">
+          <p style="text-align: justify; text-indent: 2em; font-size: 14px; line-height: 1.6; margin: 0;">
+            <strong>Reminder:</strong> These recommendations are general and science-based, they are not a substitute for professional medical advice. For personalized guidance, consult a healthcare provider.
+          </p>
+        </div>
+      
+        <!-- BMI Meter -->
+        <section class="bmi-meter-section" style="margin: 0; flex: 1 1 400px; max-width: 480px;">
+          <h3><i class="bx bx-line-chart"></i> BMI Meter Result</h3>
+          <img id="bmiMeter" src="images/default-meter.png" alt="BMI Meter" class="meter" onclick="openModal()">
+        </section>
+      </div>
       <div class="box box1">
         <h2><i class='bx bx-bar-chart-alt-2'></i> Your BMI Results<br><h4></h4></h2>
         <div class="bmi-grid">
@@ -999,20 +1013,7 @@ body.dark-mode .meter {
         </div>
       </div>
 
-      <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 40px; margin-top: 40px;">
-        <!-- Disclaimer text -->
-        <div style="flex: 1 1 300px; max-width: 400px; min-width: 280px;">
-          <p style="text-align: justify; text-indent: 2em; font-size: 14px; line-height: 1.6; margin: 0;">
-            <strong>Reminder:</strong> These recommendations are general and science-based, they are not a substitute for professional medical advice. For personalized guidance, consult a healthcare provider.
-          </p>
-        </div>
       
-        <!-- BMI Meter -->
-        <section class="bmi-meter-section" style="margin: 0; flex: 1 1 400px; max-width: 480px;">
-          <h3><i class="bx bx-line-chart"></i> BMI Meter Result</h3>
-          <img id="bmiMeter" src="images/default-meter.png" alt="BMI Meter" class="meter" onclick="openModal()">
-        </section>
-      </div>
 
       <!-- Modal for Viewing the Image -->
       <div id="imageModal" class="modal">
