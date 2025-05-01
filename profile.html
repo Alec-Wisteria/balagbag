@@ -888,9 +888,14 @@ window.closeEditProfileModal = function() {
   document.getElementById('editEmailMsg').textContent = '';
   document.getElementById('editPasswordMsg').textContent = '';
 };
-</script>
-<script>
 // Show/hide password logic
+document.getElementById('showPasswordToggle').addEventListener('change', function() {
+  const pw = document.getElementById('editPassword');
+  const cpw = document.getElementById('confirmPassword');
+  const type = this.checked ? 'text' : 'password';
+  pw.type = type;
+  cpw.type = type;
+});
 document.getElementById('showPasswordToggle').addEventListener('change', function() {
   const pw = document.getElementById('editPassword');
   const cpw = document.getElementById('confirmPassword');
@@ -1171,7 +1176,6 @@ document.getElementById('showPasswordToggle').addEventListener('change', functio
   });
 </script>
 <script type="module">
-  // filepath: c:\Users\scare\OneDrive\Desktop\MALUPITON\profile.html
   import { supabase } from './supabaseClient.js';
   
   // Username update
@@ -1223,26 +1227,26 @@ document.getElementById('showPasswordToggle').addEventListener('change', functio
   
   // Password update with confirm password check
   document.getElementById('editPasswordForm').addEventListener('submit', async function(e) {
-    e.preventDefault();
-    const password = document.getElementById('editPassword').value;
-    const confirmPassword = document.getElementById('confirmPassword').value;
-    const msg = document.getElementById('editPasswordMsg');
-    if (password !== confirmPassword) {
-      msg.style.color = "#f44336";
-      msg.textContent = "Passwords do not match.";
-      return;
-    }
-    const { error } = await supabase.auth.updateUser({ password });
-    if (error) {
-      msg.style.color = "#f44336";
-      msg.textContent = error.message;
-    } else {
-      msg.style.color = "#4CAF50";
-      msg.textContent = "Password updated!";
-      document.getElementById('editPassword').value = '';
-      document.getElementById('confirmPassword').value = '';
-    }
-  });
+  e.preventDefault();
+  const password = document.getElementById('editPassword').value;
+  const confirmPassword = document.getElementById('confirmPassword').value;
+  const msg = document.getElementById('editPasswordMsg');
+  if (password !== confirmPassword) {
+    msg.style.color = "#f44336";
+    msg.textContent = "Passwords do not match.";
+    return;
+  }
+  const { error } = await supabase.auth.updateUser({ password });
+  if (error) {
+    msg.style.color = "#f44336";
+    msg.textContent = error.message;
+  } else {
+    msg.style.color = "#4CAF50";
+    msg.textContent = "Password updated!";
+    document.getElementById('editPassword').value = '';
+    document.getElementById('confirmPassword').value = '';
+  }
+});
   </script>
 <script>
 function toggleDarkMode() {
