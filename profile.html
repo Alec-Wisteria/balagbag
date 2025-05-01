@@ -681,6 +681,14 @@ body.dark-mode .modal-content {
             <label for="editPassword">New Password:</label>
             <input type="password" id="editPassword" name="password" style="width:100%;padding:8px;" required>
           </div>
+          <div style="margin-bottom:12px;">
+            <label for="confirmPassword">Confirm Password:</label>
+            <input type="password" id="confirmPassword" name="confirmPassword" style="width:100%;padding:8px;" required>
+          </div>
+          <div style="margin-bottom:12px;text-align:left;">
+            <input type="checkbox" id="showPasswordToggle" style="margin-right:6px;">
+            <label for="showPasswordToggle" style="font-size:15px;cursor:pointer;">Show Password</label>
+          </div>
           <button type="submit" style="background:#4d79ff;color:#fff;padding:10px 24px;border:none;border-radius:6px;cursor:pointer;">Save Password</button>
           <div id="editPasswordMsg" style="margin-top:10px;font-size:14px;"></div>
         </form>
@@ -723,6 +731,16 @@ window.closeEditProfileModal = function() {
   document.getElementById('editEmailMsg').textContent = '';
   document.getElementById('editPasswordMsg').textContent = '';
 };
+</script>
+<script>
+// Show/hide password logic
+document.getElementById('showPasswordToggle').addEventListener('change', function() {
+  const pw = document.getElementById('editPassword');
+  const cpw = document.getElementById('confirmPassword');
+  const type = this.checked ? 'text' : 'password';
+  pw.type = type;
+  cpw.type = type;
+});
 </script>
 <script type="module">
   import { supabase } from './supabaseClient.js';
@@ -1046,11 +1064,17 @@ window.closeEditProfileModal = function() {
     }
   });
   
-  // Password update
+  // Password update with confirm password check
   document.getElementById('editPasswordForm').addEventListener('submit', async function(e) {
     e.preventDefault();
     const password = document.getElementById('editPassword').value;
+    const confirmPassword = document.getElementById('confirmPassword').value;
     const msg = document.getElementById('editPasswordMsg');
+    if (password !== confirmPassword) {
+      msg.style.color = "#f44336";
+      msg.textContent = "Passwords do not match.";
+      return;
+    }
     const { error } = await supabase.auth.updateUser({ password });
     if (error) {
       msg.style.color = "#f44336";
@@ -1059,6 +1083,7 @@ window.closeEditProfileModal = function() {
       msg.style.color = "#4CAF50";
       msg.textContent = "Password updated!";
       document.getElementById('editPassword').value = '';
+      document.getElementById('confirmPassword').value = '';
     }
   });
   </script>
