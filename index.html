@@ -663,6 +663,18 @@ sidebarBtn.addEventListener("click", ()=>{
       await supabase.auth.signOut();
       window.location.href = 'login.html'; // or wherever your login page is
     }
+    
+    // Check for a hash message in the URL
+window.addEventListener("DOMContentLoaded", () => {
+  const hash = window.location.hash;
+  if (hash.startsWith("#message=")) {
+    // Decode the message
+    const message = decodeURIComponent(hash.replace("#message=", ""));
+    alert(message);
+    // Optionally, remove the hash from the URL after showing the alert
+    history.replaceState(null, "", window.location.pathname + window.location.search);
+  }
+});
 </script>
 <script>
   function toggleDarkMode() {
