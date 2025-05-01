@@ -1056,6 +1056,14 @@ document.getElementById('showPasswordToggle').addEventListener('change', functio
     });
   });
 
+  document.addEventListener('DOMContentLoaded', async () => {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (user) {
+      document.getElementById('displayEmail').textContent = user.email || '';
+      // ...other profile info...
+    }
+  });
+
   window.showLogoutConfirmation = function () {
     document.getElementById('logoutModal').style.display = 'block';
   };
@@ -1150,9 +1158,9 @@ document.getElementById('showPasswordToggle').addEventListener('change', functio
       msg.style.color = "#f44336";
       msg.textContent = error.message;
     } else {
-      msg.style.color = "#4CAF50";
-      msg.textContent = "Email updated!";
-      document.getElementById('displayEmail').textContent = email;
+      msg.style.color = "#4d79ff";
+      msg.textContent = "A confirmation link has been sent to your new email. Please click the link while you are still logged in to complete the change.";
+      // Do NOT update the displayed email yet
     }
   });
   
