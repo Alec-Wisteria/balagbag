@@ -1004,11 +1004,19 @@ window.closeEditProfileModal = function() {
     e.preventDefault();
     const username = document.getElementById('editUsername').value;
     const msg = document.getElementById('editUsernameMsg');
+    // Update Auth metadata
     const { error } = await supabase.auth.updateUser({ data: { username } });
     if (error) {
       msg.style.color = "#f44336";
       msg.textContent = error.message;
     } else {
+      // Also update in profiles table
+      const user = (await supabase.auth.getUser()).data.user;
+      await supabase
+        .from('profiles')
+        .update({ username })
+        .eq('id', user.id);
+
       msg.style.color = "#4CAF50";
       msg.textContent = "Username updated!";
       document.getElementById('displayUsername').textContent = username;
