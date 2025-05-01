@@ -663,15 +663,23 @@ sidebarBtn.addEventListener("click", ()=>{
       await supabase.auth.signOut();
       window.location.href = 'login.html'; // or wherever your login page is
     }
-    
+
     // Check for a hash message in the URL
 window.addEventListener("DOMContentLoaded", () => {
+  // Existing theme logic...
+  const savedTheme = localStorage.getItem("theme");
+  if (savedTheme === "dark") {
+    document.body.classList.add("dark-mode");
+    document.documentElement.classList.add("dark-mode");
+  }
+
+  // Show alert if #message= is present in the URL
   const hash = window.location.hash;
   if (hash.startsWith("#message=")) {
-    // Decode the message
-    const message = decodeURIComponent(hash.replace("#message=", ""));
+    // Replace + with space and decode URI components
+    const message = decodeURIComponent(hash.replace("#message=", "").replace(/\+/g, " "));
     alert(message);
-    // Optionally, remove the hash from the URL after showing the alert
+    // Optionally remove the hash from the URL
     history.replaceState(null, "", window.location.pathname + window.location.search);
   }
 });
