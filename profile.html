@@ -296,14 +296,16 @@ body.dark-mode .sidebar .nav-links li:hover {
   }
 }
 .settings-container {
-        background: white;
-        padding: 25px;
-        border-radius: 15px;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-        width: 90%;
-        max-width: 500px;
-        margin: 50px auto;
-      }
+  background: white;
+  padding: 40px 40px;
+  border-radius: 18px;
+  box-shadow: 0 6px 32px rgba(0, 0, 0, 0.18);
+  width: 90%;
+  max-width: 700px;
+  margin: 60px auto;
+  font-size: 18px;
+  transition: max-width 0.3s, padding 0.3s;
+}
 
       .settings-container h2 {
         margin-bottom: 20px;
@@ -620,6 +622,7 @@ body.dark-mode .modal-content {
       <div style="margin: 20px 0;">
         <input type="file" id="profilePicInput" accept="image/*" style="display:none;">
         <button id="changePicBtn">Change Profile Picture</button>
+        <button id="confirmPicBtn" style="display:none; margin-left:10px; background: #4CAF50; color: #fff; border-radius: 25px; padding: 12px 28px; font-size: 16px; font-weight: 600; border: none; cursor: pointer; box-shadow: 0 4px 16px rgba(77,121,255,0.10); transition: background 0.3s, transform 0.2s, box-shadow 0.2s;">Confirm</button>
       </div>
     </div>
   </section>
@@ -743,19 +746,22 @@ sidebarBtn.addEventListener("click", ()=>{
 
     // Profile picture change logic
     const changePicBtn = document.getElementById('changePicBtn');
+    const confirmPicBtn = document.getElementById('confirmPicBtn');
     const profilePicInput = document.getElementById('profilePicInput');
     const previewImg = document.getElementById('previewImage');
     const sidebarImg = document.getElementById('sidebarProfileImg');
+    let selectedFile = null;
 
     changePicBtn.addEventListener('click', () => {
       profilePicInput.click();
     });
 
-    profilePicInput.addEventListener('change', async (event) => {
+    profilePicInput.addEventListener('change', (event) => {
       const file = event.target.files[0];
       if (!file || !currentUser) return;
 
-      // Optional: Show preview before upload
+      selectedFile = file;
+      // Show preview
       const reader = new FileReader();
       reader.onload = (e) => {
         previewImg.src = e.target.result;
@@ -763,14 +769,21 @@ sidebarBtn.addEventListener("click", ()=>{
       };
       reader.readAsDataURL(file);
 
+      // Show confirm button
+      confirmPicBtn.style.display = 'inline-block';
+    });
+
+    confirmPicBtn.addEventListener('click', async () => {
+      if (!selectedFile || !currentUser) return;
+
       // Upload to Supabase Storage
-      const fileExt = file.name.split('.').pop();
+      const fileExt = selectedFile.name.split('.').pop();
       const filePath = `${currentUser.id}_${Date.now()}.${fileExt}`;
 
       let { error: uploadError } = await supabase
         .storage
         .from('avatars')
-        .upload(filePath, file, { upsert: true });
+        .upload(filePath, selectedFile, { upsert: true });
 
       if (uploadError) {
         alert('Failed to upload image.');
@@ -795,6 +808,8 @@ sidebarBtn.addEventListener("click", ()=>{
       }
 
       alert('Profile picture updated successfully.');
+      confirmPicBtn.style.display = 'none';
+      selectedFile = null;
     });
   });
 
