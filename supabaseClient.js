@@ -389,12 +389,3 @@ export async function fetchChatParticipants() {
 
     return Array.from(uniqueParticipants.values());
 }
-
-// After fetching the latest user info (e.g., on profile page load)
-const { data: { user } } = await supabase.auth.getUser();
-if (user) {
-  await supabase
-    .from('profiles')
-    .update({ email: user.email })
-    .eq('id', user.id);
-}
