@@ -216,14 +216,20 @@ body.dark-mode .sidebar .nav-links li:hover {
 .sidebar.close .profile-details img{
   padding: 10px;
 }
-.sidebar .profile-details .profile_name,
-.sidebar .profile-details .job{
+.sidebar .profile-details .profile_name {
   color: #000000;
   font-size: 18px;
   font-weight: 500;
-  white-space: nowrap;
-  word-break: break-word;   /* Break long words if needed */        /* Optional: limit width for better wrapping */
+  white-space: normal;
+  word-break: break-word;
+  max-width: 120px;
   line-height: 1.2;
+}
+.sidebar .profile-details .job {
+  color: #000000;
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
 }
 .sidebar.close .profile-details i,
 .sidebar.close .profile-details .profile_name,
