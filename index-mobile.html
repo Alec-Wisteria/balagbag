@@ -502,6 +502,92 @@ sidebarBtn.addEventListener("click", ()=>{
   sidebar.classList.toggle("close");
 });
 </script>
+<script type="module">
+    import { supabase } from './supabaseClient.js';
+    // Profile details elements
+    document.addEventListener('DOMContentLoaded', async () => {
+      const { data: { user } } = await supabase.auth.getUser();
 
+      if (user) {
+        // Fetch additional profile info if stored in a 'profiles' table
+        const { data: profile } = await supabase
+          .from('profiles')
+          .select('*')
+          .eq('id', user.id)
+          .single();
+
+        // Show the profile section
+        document.getElementById('profile-details').style.display = 'flex';
+        document.getElementById('username').textContent = profile?.username || 'Guest';
+
+        // Set sidebar profile image
+        const sidebarProfileImg = document.querySelector('#profile-details img');
+        let avatarUrl = 'images/placeholder.png';
+        const avatarPath = profile?.avatar_url;
+        if (avatarPath) {
+          if (avatarPath.startsWith('http')) {
+            avatarUrl = avatarPath;
+          } else {
+            const { data } = supabase
+              .storage
+              .from('avatars')
+              .getPublicUrl(avatarPath);
+            if (data && data.publicUrl) {
+              avatarUrl = data.publicUrl;
+            }
+          }
+        }
+        if (sidebarProfileImg) sidebarProfileImg.src = avatarUrl;
+      }
+    });
+
+    window.showLogoutConfirmation = function () {
+      document.getElementById('logoutModal').style.display = 'block';
+    }
+
+    window.closeLogoutModal = function () {
+      document.getElementById('logoutModal').style.display = 'none';
+    }
+
+    window.logout = async function () {
+      await supabase.auth.signOut();
+      window.location.href = 'login.html'; // or wherever your login page is
+    }
+
+    // Check for a hash message in the URL
+    window.addEventListener("DOMContentLoaded", () => {
+  // Existing theme logic...
+  const savedTheme = localStorage.getItem("theme");
+  if (savedTheme === "dark") {
+    document.body.classList.add("dark-mode");
+    document.documentElement.classList.add("dark-mode");
+  }
+
+  // Show alert if #message= is present in the URL
+  const hash = window.location.hash;
+  if (hash.startsWith("#message=")) {
+    // Replace + with space and decode URI components
+    const message = decodeURIComponent(hash.replace("#message=", "").replace(/\+/g, " "));
+    alert(message);
+    history.replaceState(null, "", window.location.pathname + window.location.search);
+  }
+
+  // Show alert if #error= is present in the URL
+  if (hash.startsWith("#error=")) {
+    // Extract error message from hash (handles both error and error_description)
+    const params = new URLSearchParams(hash.substring(1));
+    let errorMsg = params.get("error_description") || params.get("error") || "An error occurred.";
+    errorMsg = decodeURIComponent(errorMsg.replace(/\+/g, " "));
+    alert(errorMsg);
+    history.replaceState(null, "", window.location.pathname + window.location.search);
+  }
+
+  // Show alert if #email_changed is present in the URL
+  if (hash.startsWith("#email_changed")) {
+    alert("Your email has been successfully changed!");
+    history.replaceState(null, "", window.location.pathname + window.location.search);
+  }
+});
+</script>
 </body>
 </html>
