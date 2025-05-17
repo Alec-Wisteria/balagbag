@@ -125,44 +125,52 @@ section {
     display: none;
 }
 .header .profile-details{
-  display: none;
+  position: fixed;
+  bottom: 0;
+  width: 260px;
+  display: flex;
   align-items: center;
-  gap: 10px;
-  background: none;
-  position: static;
-  width: auto;
-  padding: 0;
-  margin-left: auto;
+  justify-content: space-between;
+  background: #c2c1d4;
+  padding: 12px 0;
+  transition: all 0.5s ease;
 }
-.header .profile-details.show {
-  display: flex !important;
+.header.close .profile-details{
+  background: none;
+}
+.header.close .profile-details{
+  width: 78px;
+}
+.header .profile-details .profile-content{
+  display: flex;
+  align-items: center;
 }
 .header .profile-details img{
-  height: 38px;
-  width: 38px;
+  height: 52px;
+  width: 52px;
   object-fit: cover;
-  border-radius: 50%;
-  border: 2px solid #a084ee;
-  background: #fff;
-  margin: 0;
+  border-radius: 16px;
+  margin: 0 14px 0 12px;
+  background: #1d1b31;
+  transition: all 0.5s ease;
+}
+.header.close .profile-details img{
+  padding: 10px;
 }
 .header .profile-details .profile_name {
-  color: #4d79ff;
-  font-size: 1.2rem;
-  font-weight: 600;
-  max-width: 80px;
+  color: #000000;
+  font-size: 18px;
+  font-weight: 500;
   white-space: normal;
-  word-break: break-word;
+  max-width: 120px;
 }
-.header .profile-details i {
-  font-size: 1.6rem;
-  cursor: pointer;
-  color: #4d79ff;
-  margin-left: 6px;
-  transition: color 0.2s;
+.header.close .profile-details i,
+.header.close .profile-details .profile_name,
+.header.close .profile-details .job{
+  display: none;
 }
-.header .profile-details i:hover {
-  color: #23233a;
+.header .profile-details .job{
+  font-size: 12px;
 }
 .modal {
         display: none;
@@ -418,6 +426,7 @@ section {
           <div class="name-job">
               <div class="profile_name" id="username"></div>
           </div>
+          <!-- The logout icon now triggers the modal -->
           <i class='bx bx-log-out' onclick="showLogoutConfirmation()"></i>
       </div>
       
@@ -494,7 +503,6 @@ document.querySelectorAll('.image-slider img').forEach(image => {
 
         // Show the profile section
         document.getElementById('profile-details').style.display = 'flex';
-        document.getElementById('profile-details').classList.add('show');
         document.getElementById('username').textContent = profile?.username || 'Guest';
 
         // Set sidebar profile image
