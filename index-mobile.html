@@ -404,8 +404,42 @@ section {
         width: 100%;
     }
 }
-
-
+.header-profile-details {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.header-profile-details img {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 2px solid #a084ee;
+  object-fit: cover;
+  background: #fff;
+}
+.header-profile-details span {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #4d79ff;
+  max-width: 80px;
+  white-space: normal;
+  word-break: break-word;
+}
+.header-profile-details i {
+  font-size: 1.6rem;
+  cursor: pointer;
+  color: #4d79ff;
+  margin-left: 6px;
+  transition: color 0.2s;
+}
+.header-profile-details i:hover {
+  color: #23233a;
+}
+@media (max-width: 768px) {
+  .header-profile-details {
+    display: flex !important;
+  }
+}
 </style>
 
 <body>
@@ -413,13 +447,7 @@ section {
 <header class="header">
     <div id="menu-btn" class="fas fa-bars"></div>
     <a href="index.html" class="logo">BodyCheck Fitness</a>
-
-    <nav class="navbar">
-        <a href="index-mobile.html" class="navbar-link">home</a>
-        <a href="calculator-mobile.html" class="navbar-link">calculator</a>
-        <a href="profile-mobile.html" class="navbar-link">buy</a>
-        <a href="download.html" class="navbar-link">Download</a>
-        <div class="profile-details" id="profile-details" style="display: none;">
+    <div class="profile-details" id="profile-details" style="display: none;">
           <div class="profile-content">
               <img src="images/placeholder.png" alt="profileImg">
           </div>
@@ -441,6 +469,13 @@ section {
   </li>
 </ul>
   </div>
+
+    <nav class="navbar">
+        <a href="index-mobile.html" class="navbar-link">home</a>
+        <a href="calculator-mobile.html" class="navbar-link">calculator</a>
+        <a href="profile-mobile.html" class="navbar-link">buy</a>
+        <a href="download.html" class="navbar-link">Download</a>
+        
     </nav>
 </header>
 
@@ -506,7 +541,7 @@ document.querySelectorAll('.image-slider img').forEach(image => {
         document.getElementById('username').textContent = profile?.username || 'Guest';
 
         // Set sidebar profile image
-        const headerProfileImg = document.querySelector('#profile-details img');
+        const headerProfileImg = document.querySelector('header-profile-details img');
         let avatarUrl = 'images/placeholder.png';
         const avatarPath = profile?.avatar_url;
         if (avatarPath) {
