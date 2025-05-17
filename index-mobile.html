@@ -124,6 +124,54 @@ section {
     cursor: pointer;
     display: none;
 }
+.header .profile-details{
+  position: fixed;
+  bottom: 0;
+  width: 260px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #c2c1d4;
+  padding: 12px 0;
+  transition: all 0.5s ease;
+}
+.header.close .profile-details{
+  background: none;
+}
+.header.close .profile-details{
+  width: 78px;
+}
+.header .profile-details .profile-content{
+  display: flex;
+  align-items: center;
+}
+.header .profile-details img{
+  height: 52px;
+  width: 52px;
+  object-fit: cover;
+  border-radius: 16px;
+  margin: 0 14px 0 12px;
+  background: #1d1b31;
+  transition: all 0.5s ease;
+}
+.header.close .profile-details img{
+  padding: 10px;
+}
+.header .profile-details .profile_name {
+  color: #000000;
+  font-size: 18px;
+  font-weight: 500;
+  white-space: normal;
+  max-width: 120px;
+}
+.header.close .profile-details i,
+.header.close .profile-details .profile_name,
+.header.close .profile-details .job{
+  display: none;
+}
+.header .profile-details .job{
+  font-size: 12px;
+}
 
 /* HOME */
 
@@ -145,6 +193,44 @@ section {
 .home-section .home-content .text{
   font-size: 26px;
   font-weight: 600;
+}
+
+.modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+      }
+      .modal-content {
+        background-color: white;
+        margin: 15% auto;
+        padding: 20px;
+        border-radius: 8px;
+        width: 300px;
+        text-align: center;
+      }
+      .modal-button {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin: 10px;
+        font-size: 16px;
+      }
+      .modal-button.confirm {
+        background-color: #4CAF50;
+        color: white;
+      }
+      .modal-button.cancel {
+        background-color: #f44336;
+        color: white;
+      }
+      :root {
+  --menu-color: #11101d;
 }
 
 .container {
@@ -333,6 +419,28 @@ section {
         <a href="profile-mobile.html" class="navbar-link">buy</a>
         <a href="download.html" class="navbar-link">Download</a>
     </nav>
+    <div class="profile-details" id="profile-details" style="display: none;">
+          <div class="profile-content">
+              <img src="images/placeholder.png" alt="profileImg">
+          </div>
+          <div class="name-job">
+              <div class="profile_name" id="username"></div>
+          </div>
+          <!-- The logout icon now triggers the modal -->
+          <i class='bx bx-log-out' onclick="showLogoutConfirmation()"></i>
+      </div>
+      
+      <!-- Logout Confirmation Modal -->
+      <div id="logoutModal" class="modal">
+          <div class="modal-content">
+              <h3>Are you sure you want to log out?</h3>
+              <button class="modal-button confirm" onclick="logout()">Confirm</button>
+              <button class="modal-button cancel" onclick="closeLogoutModal()">Cancel</button>
+          </div>
+      </div>                
+  </li>
+</ul>
+  </div>
 </header>
 
 <section class="home-section">
@@ -376,6 +484,22 @@ document.querySelectorAll('.image-slider img').forEach(image => {
         var src = image.getAttribute('src');  // Get the src of the clicked image
         document.querySelector('.main-home-image').src = src;  // Set it as the main image
     };
+});
+</script>
+<script>
+    let arrow = document.querySelectorAll(".arrow");
+for (var i = 0; i < arrow.length; i++) {
+  arrow[i].addEventListener("click", (e)=>{
+ let arrowParent = e.target.parentElement.parentElement;
+ arrowParent.classList.toggle("showMenu");
+  });
+}
+
+let sidebar = document.querySelector(".sidebar");
+let sidebarBtn = document.querySelector(".bx-menu");
+console.log(sidebarBtn);
+sidebarBtn.addEventListener("click", ()=>{
+  sidebar.classList.toggle("close");
 });
 </script>
 
