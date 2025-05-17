@@ -541,7 +541,7 @@ document.querySelectorAll('.image-slider img').forEach(image => {
         document.getElementById('username').textContent = profile?.username || 'Guest';
 
         // Set sidebar profile image
-        const headerProfileImg = document.querySelector('header-profile-details img');
+        const headerProfileImg = document.querySelector('#profile-details img');
         let avatarUrl = 'images/placeholder.png';
         const avatarPath = profile?.avatar_url;
         if (avatarPath) {
