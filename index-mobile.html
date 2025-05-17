@@ -124,6 +124,37 @@ section {
     cursor: pointer;
     display: none;
 }
+.header-profile-details {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.header-profile-details img {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 2px solid #a084ee;
+  object-fit: cover;
+  background: #fff;
+}
+.header-profile-details span {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #4d79ff;
+  max-width: 80px;
+  white-space: normal;
+  word-break: break-word;
+}
+.header-profile-details i {
+  font-size: 1.6rem;
+  cursor: pointer;
+  color: #4d79ff;
+  margin-left: 6px;
+  transition: color 0.2s;
+}
+.header-profile-details i:hover {
+  color: #23233a;
+}
 .header .profile-details{
   position: fixed;
   bottom: 0;
@@ -413,7 +444,11 @@ section {
 <header class="header">
     <div id="menu-btn" class="fas fa-bars"></div>
     <a href="index.html" class="logo">BodyCheck Fitness</a>
-
+    <div class="header-profile-details" id="header-profile-details" style="display: none;">
+        <img id="header-profile-img" src="images/placeholder.png" alt="profileImg">
+        <span id="header-username">Guest</span>
+        <i class='bx bx-log-out' onclick="showLogoutConfirmation()"></i>
+    </div>
     <nav class="navbar">
         <a href="index-mobile.html" class="navbar-link">home</a>
         <a href="calculator-mobile.html" class="navbar-link">calculator</a>
@@ -485,22 +520,6 @@ document.querySelectorAll('.image-slider img').forEach(image => {
         var src = image.getAttribute('src');  // Get the src of the clicked image
         document.querySelector('.main-home-image').src = src;  // Set it as the main image
     };
-});
-</script>
-<script>
-    let arrow = document.querySelectorAll(".arrow");
-for (var i = 0; i < arrow.length; i++) {
-  arrow[i].addEventListener("click", (e)=>{
- let arrowParent = e.target.parentElement.parentElement;
- arrowParent.classList.toggle("showMenu");
-  });
-}
-
-let sidebar = document.querySelector(".sidebar");
-let sidebarBtn = document.querySelector(".bx-menu");
-console.log(sidebarBtn);
-sidebarBtn.addEventListener("click", ()=>{
-  sidebar.classList.toggle("close");
 });
 </script>
 <script type="module">
