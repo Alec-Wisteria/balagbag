@@ -125,52 +125,44 @@ section {
     display: none;
 }
 .header .profile-details{
-  position: fixed;
-  bottom: 0;
-  width: 260px;
-  display: flex;
+  display: none;
   align-items: center;
-  justify-content: space-between;
-  background: #c2c1d4;
-  padding: 12px 0;
-  transition: all 0.5s ease;
-}
-.header.close .profile-details{
+  gap: 10px;
   background: none;
+  position: static;
+  width: auto;
+  padding: 0;
+  margin-left: auto;
 }
-.header.close .profile-details{
-  width: 78px;
-}
-.header .profile-details .profile-content{
-  display: flex;
-  align-items: center;
+.header .profile-details.show {
+  display: flex !important;
 }
 .header .profile-details img{
-  height: 52px;
-  width: 52px;
+  height: 38px;
+  width: 38px;
   object-fit: cover;
-  border-radius: 16px;
-  margin: 0 14px 0 12px;
-  background: #1d1b31;
-  transition: all 0.5s ease;
-}
-.header.close .profile-details img{
-  padding: 10px;
+  border-radius: 50%;
+  border: 2px solid #a084ee;
+  background: #fff;
+  margin: 0;
 }
 .header .profile-details .profile_name {
-  color: #000000;
-  font-size: 18px;
-  font-weight: 500;
+  color: #4d79ff;
+  font-size: 1.2rem;
+  font-weight: 600;
+  max-width: 80px;
   white-space: normal;
-  max-width: 120px;
+  word-break: break-word;
 }
-.header.close .profile-details i,
-.header.close .profile-details .profile_name,
-.header.close .profile-details .job{
-  display: none;
+.header .profile-details i {
+  font-size: 1.6rem;
+  cursor: pointer;
+  color: #4d79ff;
+  margin-left: 6px;
+  transition: color 0.2s;
 }
-.header .profile-details .job{
-  font-size: 12px;
+.header .profile-details i:hover {
+  color: #23233a;
 }
 .modal {
         display: none;
@@ -404,42 +396,6 @@ section {
         width: 100%;
     }
 }
-.header-profile-details {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.header-profile-details img {
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  border: 2px solid #a084ee;
-  object-fit: cover;
-  background: #fff;
-}
-.header-profile-details span {
-  font-size: 1.2rem;
-  font-weight: 600;
-  color: #4d79ff;
-  max-width: 80px;
-  white-space: normal;
-  word-break: break-word;
-}
-.header-profile-details i {
-  font-size: 1.6rem;
-  cursor: pointer;
-  color: #4d79ff;
-  margin-left: 6px;
-  transition: color 0.2s;
-}
-.header-profile-details i:hover {
-  color: #23233a;
-}
-@media (max-width: 768px) {
-  .header-profile-details {
-    display: flex !important;
-  }
-}
 </style>
 
 <body>
@@ -454,7 +410,6 @@ section {
           <div class="name-job">
               <div class="profile_name" id="username"></div>
           </div>
-          <!-- The logout icon now triggers the modal -->
           <i class='bx bx-log-out' onclick="showLogoutConfirmation()"></i>
       </div>
       
