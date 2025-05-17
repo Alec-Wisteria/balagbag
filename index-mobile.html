@@ -489,46 +489,42 @@ document.querySelectorAll('.image-slider img').forEach(image => {
 </script>
 <script type="module">
     import { supabase } from './supabaseClient.js';
+    // Profile details elements
+    document.addEventListener('DOMContentLoaded', async () => {
+      const { data: { user } } = await supabase.auth.getUser();
 
-document.addEventListener('DOMContentLoaded', async () => {
-  const { data: { user } } = await supabase.auth.getUser();
+      if (user) {
+        // Fetch additional profile info if stored in a 'profiles' table
+        const { data: profile } = await supabase
+          .from('profiles')
+          .select('*')
+          .eq('id', user.id)
+          .single();
 
-  // Always hide profile details by default
-  const headerProfileDetails = document.getElementById('header-profile-details');
-  if (headerProfileDetails) headerProfileDetails.style.display = 'none';
+        // Show the profile section
+        document.getElementById('profile-details').style.display = 'flex';
+        document.getElementById('username').textContent = profile?.username || 'Guest';
 
-  if (user) {
-    // Fetch additional profile info if stored in a 'profiles' table
-    const { data: profile } = await supabase
-      .from('profiles')
-      .select('*')
-      .eq('id', user.id)
-      .single();
-
-    // Show the profile section
-    if (headerProfileDetails) headerProfileDetails.style.display = 'flex';
-    document.getElementById('header-username').textContent = profile?.username || 'Guest';
-
-    // Set profile image
-    const headerProfileImg = document.getElementById('header-profile-img');
-    let avatarUrl = 'images/placeholder.png';
-    const avatarPath = profile?.avatar_url;
-    if (avatarPath) {
-      if (avatarPath.startsWith('http')) {
-        avatarUrl = avatarPath;
-      } else {
-        const { data } = supabase
-          .storage
-          .from('avatars')
-          .getPublicUrl(avatarPath);
-        if (data && data.publicUrl) {
-          avatarUrl = data.publicUrl;
+        // Set sidebar profile image
+        const headerProfileImg = document.querySelector('#profile-details img');
+        let avatarUrl = 'images/placeholder.png';
+        const avatarPath = profile?.avatar_url;
+        if (avatarPath) {
+          if (avatarPath.startsWith('http')) {
+            avatarUrl = avatarPath;
+          } else {
+            const { data } = supabase
+              .storage
+              .from('avatars')
+              .getPublicUrl(avatarPath);
+            if (data && data.publicUrl) {
+              avatarUrl = data.publicUrl;
+            }
+          }
         }
+        if (headerProfileImg) headerProfileImg.src = avatarUrl;
       }
-    }
-    if (headerProfileImg) headerProfileImg.src = avatarUrl;
-  }
-});
+    });
 
     window.showLogoutConfirmation = function () {
       document.getElementById('logoutModal').style.display = 'block';
