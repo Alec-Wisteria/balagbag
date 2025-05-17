@@ -124,37 +124,6 @@ section {
     cursor: pointer;
     display: none;
 }
-.header-profile-details {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.header-profile-details img {
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  border: 2px solid #a084ee;
-  object-fit: cover;
-  background: #fff;
-}
-.header-profile-details span {
-  font-size: 1.2rem;
-  font-weight: 600;
-  color: #4d79ff;
-  max-width: 80px;
-  white-space: normal;
-  word-break: break-word;
-}
-.header-profile-details i {
-  font-size: 1.6rem;
-  cursor: pointer;
-  color: #4d79ff;
-  margin-left: 6px;
-  transition: color 0.2s;
-}
-.header-profile-details i:hover {
-  color: #23233a;
-}
 .header .profile-details{
   position: fixed;
   bottom: 0;
@@ -444,11 +413,7 @@ section {
 <header class="header">
     <div id="menu-btn" class="fas fa-bars"></div>
     <a href="index.html" class="logo">BodyCheck Fitness</a>
-    <div class="header-profile-details" id="header-profile-details" style="display: none;">
-        <img id="header-profile-img" src="images/placeholder.png" alt="profileImg">
-        <span id="header-username">Guest</span>
-        <i class='bx bx-log-out' onclick="showLogoutConfirmation()"></i>
-    </div>
+
     <nav class="navbar">
         <a href="index-mobile.html" class="navbar-link">home</a>
         <a href="calculator-mobile.html" class="navbar-link">calculator</a>
@@ -524,42 +489,46 @@ document.querySelectorAll('.image-slider img').forEach(image => {
 </script>
 <script type="module">
     import { supabase } from './supabaseClient.js';
-    // Profile details elements
-    document.addEventListener('DOMContentLoaded', async () => {
-      const { data: { user } } = await supabase.auth.getUser();
 
-      if (user) {
-        // Fetch additional profile info if stored in a 'profiles' table
-        const { data: profile } = await supabase
-          .from('profiles')
-          .select('*')
-          .eq('id', user.id)
-          .single();
+document.addEventListener('DOMContentLoaded', async () => {
+  const { data: { user } } = await supabase.auth.getUser();
 
-        // Show the profile section
-        document.getElementById('profile-details').style.display = 'flex';
-        document.getElementById('username').textContent = profile?.username || 'Guest';
+  // Always hide profile details by default
+  const headerProfileDetails = document.getElementById('header-profile-details');
+  if (headerProfileDetails) headerProfileDetails.style.display = 'none';
 
-        // Set sidebar profile image
-        const sidebarProfileImg = document.querySelector('#profile-details img');
-        let avatarUrl = 'images/placeholder.png';
-        const avatarPath = profile?.avatar_url;
-        if (avatarPath) {
-          if (avatarPath.startsWith('http')) {
-            avatarUrl = avatarPath;
-          } else {
-            const { data } = supabase
-              .storage
-              .from('avatars')
-              .getPublicUrl(avatarPath);
-            if (data && data.publicUrl) {
-              avatarUrl = data.publicUrl;
-            }
-          }
+  if (user) {
+    // Fetch additional profile info if stored in a 'profiles' table
+    const { data: profile } = await supabase
+      .from('profiles')
+      .select('*')
+      .eq('id', user.id)
+      .single();
+
+    // Show the profile section
+    if (headerProfileDetails) headerProfileDetails.style.display = 'flex';
+    document.getElementById('header-username').textContent = profile?.username || 'Guest';
+
+    // Set profile image
+    const headerProfileImg = document.getElementById('header-profile-img');
+    let avatarUrl = 'images/placeholder.png';
+    const avatarPath = profile?.avatar_url;
+    if (avatarPath) {
+      if (avatarPath.startsWith('http')) {
+        avatarUrl = avatarPath;
+      } else {
+        const { data } = supabase
+          .storage
+          .from('avatars')
+          .getPublicUrl(avatarPath);
+        if (data && data.publicUrl) {
+          avatarUrl = data.publicUrl;
         }
-        if (sidebarProfileImg) sidebarProfileImg.src = avatarUrl;
       }
-    });
+    }
+    if (headerProfileImg) headerProfileImg.src = avatarUrl;
+  }
+});
 
     window.showLogoutConfirmation = function () {
       document.getElementById('logoutModal').style.display = 'block';
