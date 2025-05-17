@@ -172,29 +172,6 @@ section {
 .header .profile-details .job{
   font-size: 12px;
 }
-
-/* HOME */
-
-.home-content{
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-}
-.home-section .home-content .bx-menu,
-.home-section .home-content .text{
-  color: var(--menu-color);
-  transition: color 0.3s ease;
-}
-.home-section .home-content .bx-menu{
-  cursor: pointer;
-  margin-right: 10px;
-  font-size: 35px;
-}
-.home-section .home-content .text{
-  font-size: 26px;
-  font-weight: 600;
-}
-
 .modal {
         display: none;
         position: fixed;
@@ -232,6 +209,30 @@ section {
       :root {
   --menu-color: #11101d;
 }
+
+/* HOME */
+
+.home-content{
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.home-section .home-content .bx-menu,
+.home-section .home-content .text{
+  color: var(--menu-color);
+  transition: color 0.3s ease;
+}
+.home-section .home-content .bx-menu{
+  cursor: pointer;
+  margin-right: 10px;
+  font-size: 35px;
+}
+.home-section .home-content .text{
+  font-size: 26px;
+  font-weight: 600;
+}
+
+
 
 .container {
     display: flex;
@@ -418,8 +419,7 @@ section {
         <a href="calculator-mobile.html" class="navbar-link">calculator</a>
         <a href="profile-mobile.html" class="navbar-link">buy</a>
         <a href="download.html" class="navbar-link">Download</a>
-    </nav>
-    <div class="profile-details" id="profile-details" style="display: none;">
+        <div class="profile-details" id="profile-details" style="display: none;">
           <div class="profile-content">
               <img src="images/placeholder.png" alt="profileImg">
           </div>
@@ -441,6 +441,7 @@ section {
   </li>
 </ul>
   </div>
+    </nav>
 </header>
 
 <section class="home-section">
