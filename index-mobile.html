@@ -124,31 +124,27 @@ section {
     cursor: pointer;
     display: none;
 }
-.header .profile-details {
+.header .profile-details{
   display: none;
   align-items: center;
-  gap: 12px;
-  background: linear-gradient(90deg, #f8faff 60%, #e6e6fa 100%);
-  border: 2.5px solid #a084ee;
-  border-radius: 18px;
-  box-shadow: 0 2px 12px rgba(160,132,238,0.10);
-  padding: 8px 18px 8px 10px;
+  gap: 10px;
+  background: none;
+  position: static;
+  width: auto;
+  padding: 0;
   margin-left: auto;
-  margin-right: 0;
-  transition: box-shadow 0.2s, background 0.2s;
 }
 .header .profile-details.show {
   display: flex !important;
 }
-.header .profile-details img {
+.header .profile-details img{
   height: 38px;
   width: 38px;
   object-fit: cover;
   border-radius: 50%;
-  border: 2px solid #4d79ff;
+  border: 2px solid #a084ee;
   background: #fff;
   margin: 0;
-  box-shadow: 0 2px 8px rgba(77,121,255,0.10);
 }
 .header .profile-details .profile_name {
   color: #4d79ff;
@@ -157,21 +153,16 @@ section {
   max-width: 80px;
   white-space: normal;
   word-break: break-word;
-  letter-spacing: 0.5px;
 }
 .header .profile-details i {
   font-size: 1.6rem;
   cursor: pointer;
-  color: #a084ee;
-  margin-left: 8px;
-  padding: 6px;
-  border-radius: 50%;
-  background: #f8faff;
-  transition: background 0.2s, color 0.2s;
+  color: #4d79ff;
+  margin-left: 6px;
+  transition: color 0.2s;
 }
 .header .profile-details i:hover {
-  background: #a084ee;
-  color: #fff;
+  color: #23233a;
 }
 .modal {
         display: none;
